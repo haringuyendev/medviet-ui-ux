@@ -10,23 +10,23 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
-export type EmrColumn<T> = {
+export type GridColumn<T> = {
   key: string;
   title: ReactNode;
   /** Cell content; defaults to row[key]. */
   render?: (row: T, index: number) => ReactNode;
   width?: number | string;
+  /** Defaults to the theme's --table-align (DS v1 left, EMR centre). */
   align?: "left" | "center" | "right";
 };
 
 /**
- * web-emr's table (antd Table with the ProviderAntd theme): --primary-brand header with white text and rounded top
- * corners, 12px cells with 4px padding, centred, --border_tbl lines, hovered row --primary-hover, selected row
- * --primary-active. For sorting/filtering/pagination use DataTable with these classes.
+ * A simple grid of records (web-emr Table / antd Table look) whose header fill, type size, cell padding, row hover
+ * and selection come from the table tokens. Sorting, filtering, pagination: DataTable.
  *
- *   <EmrTable rowKey={(r) => r.id} columns={[{ key: "stt", title: "STT", width: 60, render: (_, i) => i + 1 }, …]} data={rows} />
+ *   <GridTable rowKey={(r) => r.id} data={rows} columns={[{ key: "stt", title: "STT", width: 60, render: (_, i) => i + 1 }, …]} />
  */
-export function EmrTable<T>({
+export function GridTable<T>({
   columns,
   data,
   rowKey,
@@ -35,7 +35,7 @@ export function EmrTable<T>({
   empty = "Không có dữ liệu",
   className,
 }: {
-  columns: EmrColumn<T>[];
+  columns: GridColumn<T>[];
   data: T[];
   rowKey: (row: T, index: number) => Key;
   selectedKey?: Key | null;
@@ -43,25 +43,29 @@ export function EmrTable<T>({
   empty?: ReactNode;
   className?: string;
 }) {
-  const align = (a: EmrColumn<T>["align"] = "center") =>
-    a === "left" ? "text-left" : a === "right" ? "text-right" : "text-center";
+  // the theme's --table-align as an inline style: the table primitive's own text-left can't win over it
+  const alignStyle = (a?: GridColumn<T>["align"]) => ({
+    textAlign: a ?? ("var(--table-align)" as "left"),
+  });
+  const cell =
+    "border-r border-table-border px-(--table-cell-padding-x) py-(--table-cell-padding-y) text-(length:--table-font-size) last:border-r-0";
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-t-[8px] border-[0.5px] border-emr-border-tbl",
+        "overflow-hidden rounded-t-(--table-radius) border border-table-border",
         className,
       )}
     >
-      <Table className="text-[12px]">
+      <Table>
         <TableHeader>
-          <TableRow className="border-0 bg-emr-primary-brand hover:bg-emr-primary-brand">
+          <TableRow className="border-0 bg-table-header hover:bg-table-header">
             {columns.map((c) => (
               <TableHead
                 key={c.key}
-                style={{ width: c.width }}
+                style={{ width: c.width, ...alignStyle(c.align) }}
                 className={cn(
-                  "h-auto border-r border-emr-border-tbl px-1 py-1 text-[12px] font-semibold text-white last:border-r-0",
-                  align(c.align),
+                  cell,
+                  "h-auto font-(weight:--table-header-weight) text-table-header-foreground",
                 )}
               >
                 {c.title}
@@ -74,7 +78,7 @@ export function EmrTable<T>({
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className="px-1 py-4 text-center text-emr-text-secondary"
+                className={cn(cell, "py-4 text-center text-muted-foreground")}
               >
                 {empty}
               </TableCell>
@@ -88,17 +92,15 @@ export function EmrTable<T>({
                 data-state={selectedKey === k ? "selected" : undefined}
                 onClick={onRowClick ? () => onRowClick(row) : undefined}
                 className={cn(
-                  "border-emr-border-tbl hover:bg-emr-primary-hover data-[state=selected]:bg-emr-primary-active",
+                  "border-table-border hover:bg-table-row-hover data-[state=selected]:bg-table-row-selected",
                   onRowClick && "cursor-pointer",
                 )}
               >
                 {columns.map((c) => (
                   <TableCell
                     key={c.key}
-                    className={cn(
-                      "border-r border-emr-border-tbl px-1 py-1 text-[12px] text-emr-text-primary last:border-r-0",
-                      align(c.align),
-                    )}
+                    style={alignStyle(c.align)}
+                    className={cn(cell, "text-control-fg")}
                   >
                     {c.render
                       ? c.render(row, i)

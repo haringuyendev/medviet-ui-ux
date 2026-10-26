@@ -1,0 +1,149 @@
+/*
+ * EMR theme: the look of web-emr, on the same tokens as MedViet DS v1. Turn it on with <html data-theme="emr">
+ * (or on any element that wraps a screen). Components don't change; only token values do.
+ *
+ * Every value comes from web-emr: public/assets/css/root.css (palette), assets/styles/app.scss (body),
+ * pattern/cores/ProviderAntd (antd theme: tables, selects) and libs/cake/* /styles.module.scss (controls).
+ * `:root[data-theme]` outranks the plain `:root` defaults whatever the order of the files.
+ */
+:root[data-theme="emr"],
+[data-theme="emr"] {
+  /* palette (root.css) */
+  --background: #f8f8f9; /* app.scss body */
+  --foreground: #3d4c63; /* --normal */
+  --card: #ffffff;
+  --card-foreground: #3d4c63;
+  --popover: #ffffff;
+  --popover-foreground: #333333;
+  --list-bg: #f3f3f3; /* antd Select colorBgElevated: --bg-secondary */
+  --primary: #38a696; /* --primary-brand, as EMR (white text 2.97:1: EMR's own contrast) */
+  --primary-foreground: #ffffff;
+  --brand: #38a696;
+  --secondary: #f3f3f3; /* --bg-secondary */
+  --secondary-foreground: #333333; /* --text-primary */
+  --muted: #f3f3f3;
+  --muted-foreground: #646464; /* --text-secondary */
+  --accent: #eefffd; /* --primary-hover */
+  --accent-foreground: #3e9084; /* --primary-text */
+  --destructive: #ff5075; /* --danger-main */
+  --success: #36b37e; /* --success-main */
+  --warning: #ffb762; /* --warning-main */
+  --info: #3b9bf3; /* --info-main */
+  --border: #f0f0f0; /* --border_tbl */
+  --input: #bababa; /* --text-stroke */
+  --ring: #bae6df; /* --primary-active */
+  --readonly: #f3f3f3; /* TextField .isReadOnly: --bg-secondary */
+  --disabled: #e3e3e3; /* --bg-disable */
+  --disabled-foreground: #333333;
+  --surface: #fbfbfb; /* --bg-teriary */
+
+  /* form controls (TextField, MaskDate, Select, PhoneField) */
+  --control-height: 1.5rem; /* .tag_input min/max-height 24px */
+  --control-font-size: 0.75rem;
+  --control-radius: 0.3125rem; /* 5px */
+  --control-border-width: 0.5px;
+  --control-padding-x: 0.25rem;
+  --control-fg: #333333; /* --text-primary */
+  --control-placeholder: #586983; /* --info */
+  --control-placeholder-size: 0.875rem;
+  --control-readonly: #f3f3f3;
+  --control-disabled: #e3e3e3;
+  /* Label */
+  --label-font-size: 0.75rem;
+  --label-font-weight: 400;
+  --label-color: #333333;
+  --label-gap: 0.5rem;
+  --required-color: #ff5075; /* .sup --danger-main */
+  --required-size: 0.875rem;
+  /* Check / Tick */
+  --check-size: 1rem;
+  --check-border-width: 2px; /* 0.125rem */
+  --check-border: #bababa;
+  --check-radius: 0.25rem;
+  --check-on: #38a696;
+  --check-checked-bg: #ffffff; /* .selected keeps a white box with a brand tick */
+  --check-checked-fg: #38a696;
+  --check-label-size: 0.75rem;
+  --check-label-on: #38a696; /* selected label turns brand */
+  /* Button (.Button + btn_<type>) */
+  --button-height: 1.5rem;
+  --button-font-size: 0.75rem;
+  --button-font-weight: 600;
+  --button-radius: 6px;
+  --button-padding-x: 0.5rem;
+  --button-primary-bg: linear-gradient(
+    270deg,
+    #0bb59c 0%,
+    #3e978a 100%
+  ); /* --gadient-green-enable */
+  --button-primary-fg: #ffffff;
+  --button-success-bg: #36b37e; /* btn_confirm */
+  --button-success-fg: #ffffff;
+  --button-warning-bg: linear-gradient(
+    90deg,
+    #f19427 0%,
+    #f0ba79 100%
+  ); /* --btn_warning */
+  --button-warning-fg: #ffffff;
+  --button-destructive-bg: linear-gradient(
+    270deg,
+    #e37a7a 0%,
+    #d04a4a 100%
+  ); /* --btn_error */
+  --button-destructive-fg: #ffffff;
+  --button-info-bg: #3b9bf3; /* btn_outline_active: --secondary-normal */
+  --button-info-fg: #ffffff;
+  --button-neutral-bg: #dee1e6; /* btn_cancel / btn_back */
+  --button-neutral-fg: #333333;
+  --button-soft-bg: #f3fffd; /* btn_none_background: --primary-light */
+  --button-soft-fg: #3d4c63;
+  /* Table (antd theme in ProviderAntd + Table.module.scss) */
+  --table-font-size: 0.75rem; /* cellFontSize 12 */
+  --table-header-bg: #38a696; /* headerBg --primary-brand */
+  --table-header-fg: #ffffff; /* headerColor --whites */
+  --table-header-weight: 600;
+  --table-cell-padding-y: 0.25rem; /* cellPaddingBlock 4 */
+  --table-cell-padding-x: 0.25rem; /* cellPaddingInline 4 */
+  --table-radius: 8px;
+  --table-border: #f0f0f0;
+  --table-row-hover: #eefffd; /* rowHoverBg --primary-hover */
+  --table-row-selected: #bae6df; /* rowSelectedBg --primary-active */
+  --table-align: center;
+  /* TextField tag_textarea */
+  --textarea-min-height: 4rem;
+  /* Switch (40 × 20, 2px --text-primary border, knob --primary-brand_light; on: track brand_light, knob white) */
+  --switch-width: 40px;
+  --switch-height: 20px;
+  --switch-knob: 12px;
+  --switch-border-width: 2px;
+  --switch-padding: 4px;
+  --switch-border: #333333;
+  --switch-track: #ffffff;
+  --switch-track-on: #97d9d0;
+  --switch-knob-bg: #97d9d0;
+  --switch-knob-on: #ffffff;
+  /* TabPro (--brrs 8px, --bg --bg-secondary, --bgActive white) */
+  --tab-height: 2rem;
+  --tab-font-size: 0.75rem;
+  --tab-font-weight: 500;
+  --tab-radius: 8px;
+  --tab-bg: #f3f3f3;
+  --tab-fg: #646464;
+  --tab-active-bg: #ffffff;
+  --tab-active-fg: #38a696;
+  --tab-line: #38a696;
+  /* Modal (radius 0.625rem, 1px --text-stroke border, padding 0.8rem, overlay --overlay; title primary-dark 16/500 centred) */
+  --dialog-radius: 0.625rem;
+  --dialog-border: #bababa;
+  --dialog-padding: 0.8rem;
+  --dialog-overlay: rgba(1, 149, 146, 0.2);
+  --dialog-overlay-blur: 0px; /* EMR's overlay is a flat tint */
+  --dialog-title-size: 1rem;
+  --dialog-title-weight: 500;
+  --dialog-title-color: #1d535d;
+  --dialog-title-align: center;
+  /* section titles (Text in the showcase: brand, bold) */
+  --section-title-size: 1rem;
+  --section-title-weight: 700;
+  --section-title-color: #38a696;
+}

@@ -24,12 +24,26 @@ for (const block of css.matchAll(/(^|\n)(:root|\.dark)\s*\{([\s\S]*?)\n\}/g)) {
     if (mode === 'light') t.source = fromV1 ? 'medviet-ds-v1' : 'turbo-web'
   }
 }
+// themes (template/src/themes/<name>.css): the values a theme gives each token
+const themesDir = path.join(root, 'template', 'src', 'themes')
+const themes = {}
+for (const f of fs.existsSync(themesDir) ? fs.readdirSync(themesDir).filter((x) => x.endsWith('.css')) : []) {
+  const name = f.replace(/\.css$/, '')
+  const src = fs.readFileSync(path.join(themesDir, f), 'utf8')
+  const body = src.match(/\{([\s\S]*)\}/)?.[1] ?? ''
+  for (const decl of body.matchAll(/--([\w-]+):\s*([\s\S]*?);(?:[ \t]*\/\*\s*([\s\S]*?)\s*\*\/)?/g)) {
+    const [, tok, value, note] = decl
+    ;(themes[name] ??= {})[tok] = { value: value.replace(/\s+/g, ' ').trim(), ...(note && { source: note.replace(/\s+/g, ' ') }) }
+    if (tokens[tok]) (tokens[tok].themes ??= {})[name] = value.replace(/\s+/g, ' ').trim()
+  }
+}
 const out = {
   name: 'MedViet Design System',
-  version: '1.0.0',
+  version: '1.1.0',
   generatedFrom: 'template/src/index.css',
   font: { sans: 'Roboto Variable', heading: 'Roboto Variable' },
   radius: '0.625rem',
+  themes: Object.fromEntries(Object.entries(themes).map(([k, v]) => [k, { selector: `[data-theme="${k}"]`, tokens: Object.keys(v).length }])),
   tokens: Object.values(tokens).sort((a, b) => a.name.localeCompare(b.name)),
 }
 fs.mkdirSync(path.join(root, 'design'), { recursive: true })

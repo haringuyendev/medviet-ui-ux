@@ -174,7 +174,47 @@ sửa → `Pencil`, xoá → `Trash2`, thao tác khác → `Ellipsis`.
 - Bảng màu biểu đồ chưa được kiểm tra với người mù màu.
 - Chưa có quy chuẩn chuyển động và quy chuẩn cho in ấn ngoài khổ A4.
 
+## 15. Theme và token component
+Màu, cỡ chữ, chiều cao control, bo góc, nền nút, đầu bảng… đều là **token của design system**. Primitive chỉ đọc
+token, không gắn cứng giá trị nào. Một theme là một bộ giá trị cho cùng các token đó.
+
+| Theme | Bật bằng | Dùng khi |
+|---|---|---|
+| **DS v1** (mặc định) | không cần gì | app mới, màn hình mới: chuẩn MedViet, đạt tương phản AA |
+| **EMR** | `<html data-theme="emr">` (xem thử: `?ds=emr`) | màn hình phải nhìn giống hệt web-emr: chuyển màn EMR sang, hoặc app chạy cạnh EMR |
+
+Theme EMR (`template/src/themes/emr.css`) lấy mọi giá trị từ web-emr: `root.css`, `app.scss`, theme antd trong
+`ProviderAntd` và SCSS của `libs/cake`. Nó giữ cả những gì web-emr đang có, kể cả nút chính `#38a696` với chữ trắng chỉ
+đạt 2,97:1. Vì vậy chỉ dùng theme EMR khi cần giống EMR; màn hình mới dùng DS v1.
+
+**Nhóm token component** (giá trị DS v1 → EMR):
+
+| Nhóm | Token | DS v1 | EMR |
+|---|---|---|---|
+| Control | `--control-height`, `--control-font-size`, `--control-radius`, `--control-border-width`, `--control-placeholder` | 32px, 14px, 8px, 1px, muted | 24px, 12px, 5px, 0,5px, `#586983` |
+| Nhãn | `--label-font-size`, `--label-font-weight`, `--required-color` | 14px, 500, `destructive-text` | 12px, 400, `#ff5075` (`*` chỉ số trên) |
+| Checkbox | `--check-size`, `--check-border-width`, `--check-checked-bg/fg`, `--check-label-on` | 16px, 1px, tô kín | 16px, 2px, ô trắng tick teal, nhãn teal |
+| Nút | `--button-height`, `--button-font-size/weight`, `--button-<intent>-bg/fg` | 32px, 14/500, màu phẳng | 24px, 12/600, gradient EMR |
+| Bảng | `--table-header-bg/fg`, `--table-font-size`, `--table-cell-padding-*`, `--table-row-hover/selected`, `--table-align` | nền surface, 14px, trái | teal + chữ trắng, 12px, đệm 4px, giữa |
+| Tab | `--tab-bg`, `--tab-active-bg/fg`, `--tab-radius`, `--tab-line` | muted, thẻ trắng | `#f3f3f3`, thẻ trắng chữ teal, 8px |
+| Switch | `--switch-width/height/knob`, `--switch-track(-on)`, `--switch-border` | 32 × 18 | 40 × 20, viền 2px |
+| Hộp thoại | `--dialog-radius`, `--dialog-border`, `--dialog-padding`, `--dialog-overlay(-blur)`, `--dialog-title-*` | đen 10% có blur, tiêu đề trái | teal 20% không blur, tiêu đề giữa `#1d535d` |
+| Tiêu đề khu vực | `--section-title-size/weight/color` | 18px, 600, foreground | 16px, 700, teal |
+
+**Primitive dùng token** (`template/src/components/blocks`), dựng lại theo chức năng của `libs/cake` trong web-emr:
+`TextField`, `DateField`, `DatePickerField`, `DateRangeField`, `SelectField`, `AutocompleteField`, `PhoneField`,
+`MaskedField`, `TextAreaField`, `SearchField`, `CheckboxGroup` / `RadioList`, `CheckboxField`, `SwitchField`,
+`ActionButton` (nhận cả 29 tên `btnType` của EMR), `GridTable`, `SectionTitle`, `TabBar`, `DialogFrame`, `ExpandableText`,
+`ControlField` / `ControlLabel`. Danh mục ghi kèm tên component EMR tương ứng, nên `aura find "ModalPro"` hay
+`aura find "CheckGroup"` đều ra primitive đúng.
+
+Thêm token: khai báo giá trị DS v1 trong khối "component tokens" của `index.css` (đăng ký màu trong `@theme inline`),
+rồi khai báo giá trị cho từng theme. Theme mới: thêm `template/src/themes/<tên>.css` với selector `:root[data-theme="<tên>"]`.
+
 ## Thay đổi
+- **v1.1 (27/10/2026):**
+  - thêm token component và theme EMR;
+  - thêm 20 primitive dùng token, dựng lại theo `libs/cake` của web-emr (chức năng giống EMR, giao diện theo theme).
 - **v1.0 (27/10/2026):**
   - lần đầu viết thành văn bản;
   - `primary` đổi sang `#287a6f`, thêm `brand`, `accent-foreground` dùng `primary`;

@@ -24,6 +24,12 @@ hooks:
    TanStack Table v9 + react-hook-form/zod + zustand + nuqs + react-error-boundary, the MedViet tokens and Roboto,
    MedViet blocks (`src/components/blocks`) and vi-VN formatters (`src/lib/format.ts`). Don't switch frameworks or
    add another UI library.
+   **Form controls and actions:** compose screens from the token-driven primitives in `src/components/blocks`
+   (TextField, DateField, DatePickerField, DateRangeField, SelectField, AutocompleteField, PhoneField, MaskedField,
+   TextAreaField, SearchField, CheckboxGroup/RadioList, CheckboxField, SwitchField, ActionButton, GridTable,
+   SectionTitle, TabBar, DialogFrame, ExpandableText). They follow the theme: DS v1 by default, the web-emr look with
+   `<html data-theme="emr">` when a screen must match EMR (porting an EMR screen: same component names in the catalog,
+   `btnType` works on ActionButton). Don't size or colour a control by hand to look like EMR.
 2. **Existing app without `.aura/`?** Run the `medviet-ui-ux:init` skill first (one-time scan).
 3. **Find components with the `medviet-ui-ux:find` skill** (`node .aura/bin/aura.mjs find "<need>"`, `snippet`,
    `tokens`) instead of reading component folders. Prefer a block over re-assembling its primitives.

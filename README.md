@@ -41,6 +41,15 @@ Gốc lấy từ turbo-web (`references/design-system.md`). Token y hệt `turbo
 
 Không app nào tự đổi màu hay font. Muốn đổi thì đổi ở turbo-web trước, rồi chạy `scripts/sync-turbo.mjs`.
 
+**Theme và primitive dùng token.** Kích thước, cỡ chữ, nền nút, đầu bảng… cũng là token. Có hai theme:
+- **DS v1** (mặc định);
+- **EMR** (`<html data-theme="emr">`): giống hệt web-emr.
+
+20 primitive trong `components/blocks` dựng lại theo chức năng `libs/cake` của web-emr, chỉ dùng token, nên chạy được ở cả
+hai theme mà không phải sửa code. Gồm TextField, DateField, DatePickerField, DateRangeField, SelectField, AutocompleteField,
+PhoneField, MaskedField, TextAreaField, SearchField, CheckboxGroup/RadioList, CheckboxField, SwitchField, ActionButton
+(nhận `btnType` của EMR), GridTable, SectionTitle, TabBar, DialogFrame, ExpandableText, ControlField. Xem `design/DESIGN.md` §15.
+
 **Template (MedViet starter, `template/`).** Cùng stack với turbo-web: React 19, Vite, TypeScript, Tailwind v4, TanStack
 Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-boundary, Biome.
 - `src/components/ui/`: 63 primitive chép nguyên từ `packages/ui` (shadcn `base-vega` trên Base UI), có `data-table` và
@@ -110,12 +119,12 @@ node scripts/design-tokens.mjs && node scripts/design-preview.mjs   # cập nh�
 
 ## Cấu trúc
 ```
-.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.0.0)
+.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.2.0)
 hooks/            hook của Aura (SessionStart, PreToolUse, PostToolUse, Stop, SubagentStop)
 skills/           10 skill ở trên
 manager/          engine Aura: aura.mjs (init, find, add, scaffold, variant, check, verify, inspect, studio, new, setup…)
 template/         MedViet starter
-catalog/          components.json: 87 mục, từ điển Việt–Anh cho aura find
+catalog/          components.json: 108 mục, từ điển Việt–Anh cho aura find
 addons/           7 add-on
 design/           DESIGN.md (Design System v1), preview.html, tokens.json
 upstream/         turbo-web-theme-v1.patch (token v1 + badge cho turbo-web)

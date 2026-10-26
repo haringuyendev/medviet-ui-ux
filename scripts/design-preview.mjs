@@ -11,6 +11,11 @@ const css = fs.readFileSync(path.join(root, 'template', 'src', 'index.css'), 'ut
 const vars = [...css.matchAll(/(^|\n)(:root|\.dark)\s*\{([\s\S]*?)\n\}/g)]
   .map((m) => `${m[2] === ':root' ? ':root' : 'html.dark'} {${m[3]}\n}`)
   .join('\n')
+// themes (template/src/themes/*.css), switchable on the page
+const themesDir = path.join(root, 'template', 'src', 'themes')
+const themeCss = fs.existsSync(themesDir) ? fs.readdirSync(themesDir).filter((f) => f.endsWith('.css')).map((f) => fs.readFileSync(path.join(themesDir, f), 'utf8')).join('\n') : ''
+// component tokens block (sizes, button fills…) as plain CSS
+const compBlock = (css.match(/component tokens[\s\S]*?\n(:root \{[\s\S]*?\n\})/) || [, ''])[1]
 const tokens = JSON.parse(fs.readFileSync(path.join(root, 'design', 'tokens.json'), 'utf8'))
 const TAGS = ['blue', 'cyan', 'green', 'navy', 'orange', 'pink', 'red', 'violet', 'yellow', 'brown', 'gray']
 
@@ -27,6 +32,8 @@ const html = `<!doctype html>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 ${vars}
+${compBlock}
+${themeCss}
 :root { --font-sans: "Roboto", "Helvetica Neue", Arial, sans-serif; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--background); color: var(--foreground); font: 14px/20px var(--font-sans); }
@@ -73,6 +80,21 @@ tr.sel td { background: var(--accent); color: var(--accent-foreground); }
 .two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 .kpi b { font-size: 28px; line-height: 36px; font-weight: 600; font-variant-numeric: tabular-nums; display: block; }
 .kpi .bad { color: var(--destructive-text); }
+.cf { display: inline-flex; align-items: center; gap: var(--label-gap); }
+.cl { font-size: var(--label-font-size); font-weight: var(--label-font-weight); color: var(--label-color); white-space: nowrap; }
+.cl sup { color: var(--required-color); font-size: var(--required-size); }
+.ci { height: var(--control-height); font: inherit; font-size: var(--control-font-size); color: var(--control-fg); border: var(--control-border-width) solid var(--input); border-radius: var(--control-radius); padding: 0 var(--control-padding-x); background: var(--card); width: 140px; }
+.ci.ro { background: var(--control-readonly); }
+.ci::placeholder { color: var(--control-placeholder); font-size: var(--control-placeholder-size); }
+.cb { display: inline-flex; align-items: center; height: var(--button-height); padding: 0 var(--button-padding-x); border-radius: var(--button-radius); font-size: var(--button-font-size); font-weight: var(--button-font-weight); }
+.cb.p { background: var(--button-primary-bg); color: var(--button-primary-fg); }
+.cb.w { background: var(--button-warning-bg); color: var(--button-warning-fg); }
+.cb.d { background: var(--button-destructive-bg); color: var(--button-destructive-fg); }
+.cb.n { background: var(--button-neutral-bg); color: var(--button-neutral-fg); }
+.gt { font-size: var(--table-font-size); border: 1px solid var(--table-border); }
+.gt th { background: var(--table-header-bg); color: var(--table-header-fg); font-weight: var(--table-header-weight); padding: var(--table-cell-padding-y) var(--table-cell-padding-x); text-align: var(--table-align); border-bottom: 0; }
+.gt td { padding: var(--table-cell-padding-y) var(--table-cell-padding-x); text-align: var(--table-align); border-bottom: 1px solid var(--table-border); }
+.gt th:first-child { border-top-left-radius: var(--table-radius); } .gt th:last-child { border-top-right-radius: var(--table-radius); }
 @media (max-width: 640px) { th:nth-child(4), td:nth-child(4) { display: none; } }
 </style>
 </head>
@@ -83,7 +105,10 @@ tr.sel td { background: var(--accent); color: var(--accent-foreground); }
     <h1>MedViet Design System v1</h1>
     <p class="lead">Token thật của MedViet starter (turbo-web + bổ sung v1), tạo từ <code>template/src/index.css</code>. Số trên mỗi ô là độ tương phản giữa chữ và nền, đo ngay trong trình duyệt; ô đỏ là chưa đạt 4,5:1.</p>
   </div>
-  <button class="btn outline" id="mode" type="button">Chế độ tối</button>
+  <div class="row">
+    <button class="btn outline" id="theme" type="button">Theme EMR</button>
+    <button class="btn outline" id="mode" type="button">Chế độ tối</button>
+  </div>
 </header>
 
 <h2>Thương hiệu và hành động chính</h2>
@@ -153,6 +178,20 @@ tr.sel td { background: var(--accent); color: var(--accent-foreground); }
   <div class="kpi"><span><b>44</b></span><code>text-3xl font-semibold tabular-nums · KPI</code></div>
 </div>
 
+<h2>Control theo token component</h2>
+<p class="note">Cùng một đoạn HTML; kích thước, cỡ chữ, viền, nền nút (có thể là gradient) và đầu bảng lấy từ token component. Bấm "Theme EMR" để thấy giao diện EMR.</p>
+<div class="card" style="display:flex;flex-direction:column;gap:14px">
+  <div class="row" style="gap:16px">
+    <label class="cf"><span class="cl">Mã NB:</span><input class="ci ro" value="NB-00128" readonly></label>
+    <label class="cf"><span class="cl">Tên NB:<sup class="req">*</sup></span><input class="ci" value="Nguyễn Thị Lan"></label>
+    <label class="cf"><span class="cl">Ngày sinh:<sup class="req">*</sup></span><input class="ci" placeholder="DD/MM/YYYY" style="text-align:center"></label>
+  </div>
+  <div class="row" style="gap:16px">
+    <span class="cb p">Lưu</span><span class="cb w">Sửa</span><span class="cb d">Huỷ</span><span class="cb n">Đóng</span>
+  </div>
+  <table class="gt"><thead><tr><th>STT</th><th>Tên</th><th>Tuổi</th></tr></thead><tbody><tr><td>1</td><td>Nguyễn Văn A</td><td>30</td></tr><tr><td>2</td><td>Trần Thị B</td><td>28</td></tr></tbody></table>
+</div>
+
 <h2>Mẫu màn hình</h2>
 <div class="two">
   <div class="card">
@@ -197,6 +236,7 @@ function measure() {
     el.classList.toggle('fail', r < 4.5 && !chip.dataset.bg.startsWith('disabled'))
   }
 }
+document.getElementById('theme').onclick = (e) => { const emr = document.documentElement.dataset.theme !== 'emr'; if (emr) document.documentElement.dataset.theme = 'emr'; else delete document.documentElement.dataset.theme; e.target.textContent = emr ? 'Theme DS v1' : 'Theme EMR'; measure() }
 document.getElementById('mode').onclick = (e) => { const dark = document.documentElement.classList.toggle('dark'); e.target.textContent = dark ? 'Chế độ sáng' : 'Chế độ tối'; measure() }
 measure()
 </script>

@@ -83,7 +83,14 @@ In turbo-web, `@medviet/ui` mirrors the shadcn registry (added with `bun run ui-
 PR to `packages/ui`. Patterns that 2+ apps need (status badge, time input, row actions…) live as blocks in the starter
 and are candidates for `@medviet/*`.
 
-## 6. Pitfalls
+## 6. Themes and component tokens
+Sizes and per-component colours are tokens too (control height, label size, button fills, table header, tabs,
+switch, dialog: `design/DESIGN.md` §15). The primitives in `components/blocks` (TextField, SelectField, ActionButton,
+GridTable, DialogFrame…) read only tokens. `<html data-theme="emr">` switches every token to web-emr's values (24px
+controls, 12px type, gradients, teal table header); use it only for screens that must match web-emr. Never put a size
+or colour in a component to imitate EMR: the theme does it.
+
+## 7. Pitfalls
 - Base UI states orientation as `data-orientation="vertical"`: keep the `data-horizontal`/`data-vertical` custom
   variants in `index.css`, or sliders, scrollbars and tabs flatten silently.
 - `#root { isolation: isolate }` keeps portaled popups above page content; don't remove it.

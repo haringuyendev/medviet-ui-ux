@@ -2,12 +2,15 @@ import type { ReactNode } from "react";
 import { useId } from "react";
 
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
-import { cn } from "@/lib/utils";
-import { EmrField } from "./emr-field";
-import type { EmrKindStyle } from "./emr-text-field";
-import { KIND, KIND_READONLY } from "./emr-text-field";
+import type { ControlAppearance } from "./control-field";
+import {
+  ControlField,
+  controlBox,
+  controlText,
+  widthStyle,
+} from "./control-field";
 
-/** Digits typed → "DD/MM/YYYY" (slashes fill themselves; day ≤ 31, month ≤ 12). */
+/** Digits typed → "DD/MM/YYYY" (slashes fill themselves; day ≤ 31, month 1–12). */
 export function maskDate(input: string): string {
   const d = input.replace(/\D/g, "").slice(0, 8);
   const day = d.slice(0, 2);
@@ -27,17 +30,21 @@ export function parseDate(value: string): Date | null {
   return date.getDate() === Number(m[1]) ? date : null;
 }
 
+/** Date → "DD/MM/YYYY". */
+export const formatDateField = (date: Date) =>
+  `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
+
 /**
- * web-emr's MaskDate: a typed date in a 24px box with the "DD/MM/YYYY" placeholder centred, as on EMR forms
- * (Ngày sinh). value/onChange carry the masked text; parseDate turns it into a Date.
+ * A typed date (web-emr MaskDate): digits become "DD/MM/YYYY" as they are typed, centred like EMR. For picking from a
+ * calendar use DatePicker; this is for fast keyboard entry (ngày sinh, ngày cấp).
  */
-export function EmrDateInput({
+export function DateField({
   id,
   label,
-  isSup,
+  required,
   value,
   onChange,
-  kindStyle = "border_enter",
+  appearance = "outline",
   width = 130,
   readOnly,
   disabled,
@@ -47,10 +54,10 @@ export function EmrDateInput({
 }: {
   id?: string;
   label?: ReactNode;
-  isSup?: boolean;
+  required?: boolean;
   value: string;
   onChange: (masked: string) => void;
-  kindStyle?: EmrKindStyle;
+  appearance?: ControlAppearance;
   width?: number | string;
   readOnly?: boolean;
   disabled?: boolean;
@@ -61,23 +68,21 @@ export function EmrDateInput({
   const autoId = useId();
   const inputId = id ?? autoId;
   return (
-    <EmrField
+    <ControlField
       id={inputId}
       label={label}
-      isSup={isSup}
+      required={required}
       error={error}
       vertical={vertical}
     >
       <InputGroup
-        style={{ width: typeof width === "number" ? `${width}px` : width }}
-        className={cn(
-          "h-6 min-h-6 rounded-[0.3rem] shadow-none has-[[data-slot=input-group-control]:focus-visible]:ring-0",
-          KIND[kindStyle],
-          readOnly && "bg-emr-bg-readonly",
-          readOnly && KIND_READONLY[kindStyle] === "" && "bg-transparent",
-          disabled && "bg-emr-bg-disable",
-          error && "border-emr-danger-main",
-        )}
+        style={widthStyle(width)}
+        className={controlBox({
+          appearance,
+          readOnly,
+          disabled,
+          invalid: !!error,
+        })}
       >
         <InputGroupInput
           id={inputId}
@@ -86,11 +91,12 @@ export function EmrDateInput({
           value={value}
           readOnly={readOnly}
           disabled={disabled}
+          required={required}
           aria-invalid={error ? true : undefined}
           onChange={(e) => onChange(maskDate(e.target.value))}
-          className="h-[18px] px-1 py-0 text-center text-[12px] text-emr-text-primary placeholder:text-[0.875rem] placeholder:text-emr-info"
+          className={`${controlText} text-center`}
         />
       </InputGroup>
-    </EmrField>
+    </ControlField>
   );
 }

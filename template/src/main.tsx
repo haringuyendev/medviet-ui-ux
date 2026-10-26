@@ -3,8 +3,12 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 
-if (new URLSearchParams(location.search).get("theme") === "dark")
+const params = new URLSearchParams(location.search);
+if (params.get("theme") === "dark")
   document.documentElement.classList.add("dark");
+// design-system theme for previews: ?ds=emr (themes/emr.css); an app sets data-theme on <html> itself
+const ds = params.get("ds");
+if (ds) document.documentElement.dataset.theme = ds;
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>

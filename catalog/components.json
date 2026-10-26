@@ -1,5 +1,39 @@
 [
   {
+    "name": "action-button",
+    "category": "action",
+    "kind": "block",
+    "summary": "Button with an intent (primary, success, warning, destructive, info, neutral, soft) and appearance (solid, outline, ghost, link); fills can be gradients (EMR); btnType accepts the 29 web-emr names. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "Lưu, Sửa, Huỷ, Ký, Xác nhận in MedViet screens",
+      "porting an EMR screen (btnType)"
+    ],
+    "avoid_when": "Icon-only toolbar buttons: Button size icon.",
+    "keywords": [
+      "button",
+      "nút",
+      "lưu",
+      "sửa",
+      "huỷ",
+      "xác nhận",
+      "ký",
+      "web-emr Button",
+      "btnType",
+      "btntype"
+    ],
+    "example": "<ActionButton btnType=\"outline\" compact iconLeft={<SaveIcon />}>Lưu</ActionButton>",
+    "related": [
+      "button",
+      "confirm-dialog"
+    ],
+    "import": "@/components/blocks/action-button",
+    "exports": [
+      "ActionButton"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "button",
     "category": "action",
     "summary": "Primary, secondary, outline, ghost, destructive and link buttons in several sizes.",
@@ -616,6 +650,35 @@
     "deps": []
   },
   {
+    "name": "expandable-text",
+    "category": "data",
+    "kind": "block",
+    "summary": "Long text clamped to N lines with Xem thêm / Thu gọn, shown only when cut (web-emr CollapsedText). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "tóm tắt bệnh án, lý do, ghi chú dài trong danh sách hoặc thẻ"
+    ],
+    "avoid_when": "Editable text: textarea-field.",
+    "keywords": [
+      "expand",
+      "xem thêm",
+      "thu gọn",
+      "rút gọn",
+      "đoạn văn dài",
+      "web-emr CollapsedText",
+      "collapsedtext"
+    ],
+    "example": "<ExpandableText lines={2} text={record.summary} />",
+    "related": [
+      "readonly-field"
+    ],
+    "import": "@/components/blocks/expandable-text",
+    "exports": [
+      "ExpandableText"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "export-menu",
     "category": "data",
     "kind": "addon",
@@ -644,6 +707,35 @@
     "install": "node <this-skill-folder>/scripts/add-block.mjs data-export <app-dir>",
     "exports": [
       "ExportMenu"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "grid-table",
+    "category": "data",
+    "kind": "block",
+    "summary": "Simple record grid with themed header fill, cell padding, type size, row hover/selection and alignment (web-emr Table / antd Table look). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "danh sách ngắn trong form, bảng kết quả, chi tiết dịch vụ"
+    ],
+    "avoid_when": "Sorting, filters, pagination: DataTable.",
+    "keywords": [
+      "table",
+      "bảng",
+      "lưới",
+      "danh sách",
+      "web-emr Table",
+      "antd table"
+    ],
+    "example": "<GridTable rowKey={(r) => r.id} data={rows} columns={[{ key: \"stt\", title: \"STT\", render: (_, i) => i + 1 }]} />",
+    "related": [
+      "data-table",
+      "table"
+    ],
+    "import": "@/components/blocks/grid-table",
+    "exports": [
+      "GridTable"
     ],
     "variants": {},
     "deps": []
@@ -1267,6 +1359,37 @@
     "kind": "primitive"
   },
   {
+    "name": "autocomplete-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Type to search, pick one: static options filtered, or loadOptions(query) for remote lists with debounce, loading and empty states (web-emr AutoComplete). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "ICD-10, thuốc, bác sĩ, bệnh nhân: long or server-side lists"
+    ],
+    "avoid_when": "Fewer than ~15 fixed options: select-field.",
+    "keywords": [
+      "autocomplete",
+      "tìm và chọn",
+      "gợi ý",
+      "icd10",
+      "tra cứu",
+      "search select",
+      "web-emr AutoComplete",
+      "AutoCompletes"
+    ],
+    "example": "<AutocompleteField label=\"Chẩn đoán:\" loadOptions={(q) => api.icd10(q)} value={icd} onValueChange={setIcd} />",
+    "related": [
+      "select-field",
+      "combobox"
+    ],
+    "import": "@/components/blocks/autocomplete-field",
+    "exports": [
+      "AutocompleteField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "calendar",
     "category": "form",
     "summary": "Month calendar for picking a date or a date range (react-day-picker).",
@@ -1332,6 +1455,69 @@
     "kind": "primitive"
   },
   {
+    "name": "checkbox-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "One labelled checkbox (web-emr Tick); fill = the square that fills when on (web-emr Turn). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "ưu tiên, đồng ý, một tuỳ chọn bật/tắt trong form"
+    ],
+    "avoid_when": "Several options: choice-group. Settings that apply at once: switch-field.",
+    "keywords": [
+      "checkbox",
+      "ô tích",
+      "đánh dấu",
+      "ưu tiên",
+      "bật tắt",
+      "web-emr Tick",
+      "Turn",
+      "tick"
+    ],
+    "example": "<CheckboxField label=\"Ưu tiên\" fill checked={prio} onCheckedChange={setPrio} />",
+    "related": [
+      "choice-group",
+      "switch-field"
+    ],
+    "import": "@/components/blocks/checkbox-field",
+    "exports": [
+      "CheckboxField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "choice-group",
+    "category": "form",
+    "kind": "block",
+    "summary": "Titled checkbox list (CheckboxGroup, web-emr CheckGroup) and radio list (RadioList, web-emr Tick radio), vertical or horizontal. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "chế độ chăm sóc, nguy cơ té ngã, chọn nhiều tuỳ chọn"
+    ],
+    "avoid_when": "A single on/off: checkbox-field or switch-field.",
+    "keywords": [
+      "checkbox",
+      "radio",
+      "chọn nhiều",
+      "chọn một",
+      "nhóm lựa chọn",
+      "web-emr CheckGroup",
+      "Tick",
+      "checkgroup"
+    ],
+    "example": "<CheckboxGroup label=\"Chế độ chăm sóc:\" options={CARE} value={care} onValueChange={setCare} />",
+    "related": [
+      "checkbox-field",
+      "radio-group"
+    ],
+    "import": "@/components/blocks/choice-group",
+    "exports": [
+      "CheckboxGroup",
+      "RadioList"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "combobox",
     "category": "form",
     "summary": "Searchable select, single or multiple, with chips.",
@@ -1382,6 +1568,73 @@
     "kind": "primitive"
   },
   {
+    "name": "control-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Label + control + error layout (ControlField) and the token-styled label with a superscript required mark (ControlLabel); horizontal like EMR or vertical. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "building a custom field that must look like the other MedViet fields"
+    ],
+    "avoid_when": "Plain forms with react-hook-form: Field/FieldLabel or the form block.",
+    "keywords": [
+      "label",
+      "nhãn",
+      "nhãn trường",
+      "bố cục trường",
+      "dấu sao",
+      "web-emr Label",
+      "FormField"
+    ],
+    "example": "<ControlField id={id} label=\"Mã NB:\" required>…</ControlField>",
+    "related": [
+      "text-field",
+      "field"
+    ],
+    "import": "@/components/blocks/control-field",
+    "exports": [
+      "ControlLabel",
+      "ControlField",
+      "controlBox",
+      "controlText",
+      "widthStyle"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "date-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Typed date DD/MM/YYYY with an auto-filling mask (web-emr MaskDate); parseDate/formatDateField helpers. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "ngày sinh, ngày cấp: fast keyboard entry"
+    ],
+    "avoid_when": "Picking on a calendar: date-picker-field or DatePicker.",
+    "keywords": [
+      "date",
+      "ngày",
+      "ngày sinh",
+      "nhập ngày",
+      "dd/mm/yyyy",
+      "web-emr MaskDate",
+      "maskdate"
+    ],
+    "example": "<DateField label=\"Ngày sinh:\" required value={dob} onChange={setDob} />",
+    "related": [
+      "date-picker-field",
+      "date-range-field"
+    ],
+    "import": "@/components/blocks/date-field",
+    "exports": [
+      "maskDate",
+      "parseDate",
+      "formatDateField",
+      "DateField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "date-picker",
     "category": "form",
     "kind": "primitive",
@@ -1420,6 +1673,68 @@
     "deps": [
       "react-day-picker"
     ]
+  },
+  {
+    "name": "date-picker-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Date typed as DD/MM/YYYY or picked from a Vietnamese calendar popover, kept in sync (web-emr SelectDate / PickerDate). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "ngày khám, ngày hẹn when users both type and pick"
+    ],
+    "avoid_when": "Range: date-range-field / DateRangePicker.",
+    "keywords": [
+      "date picker",
+      "chọn ngày",
+      "lịch",
+      "ngày khám",
+      "ngày hẹn",
+      "web-emr SelectDate",
+      "PickerDate",
+      "selectdate"
+    ],
+    "example": "<DatePickerField label=\"Ngày khám:\" value={day} onChange={setDay} />",
+    "related": [
+      "date-field",
+      "calendar"
+    ],
+    "import": "@/components/blocks/date-picker-field",
+    "exports": [
+      "DatePickerField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "date-range-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Từ ngày – đến ngày typed in one box, both masked, reports an end before the start (web-emr RangeDate); isValidRange helper. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "lọc báo cáo, danh sách theo khoảng ngày"
+    ],
+    "avoid_when": "Calendar range picking: DateRangePicker.",
+    "keywords": [
+      "date range",
+      "khoảng ngày",
+      "từ ngày",
+      "đến ngày",
+      "lọc ngày",
+      "web-emr RangeDate",
+      "rangedate"
+    ],
+    "example": "<DateRangeField label=\"Khoảng ngày:\" value={range} onChange={setRange} />",
+    "related": [
+      "date-field",
+      "date-picker"
+    ],
+    "import": "@/components/blocks/date-range-field",
+    "exports": [
+      "isValidRange",
+      "DateRangeField"
+    ],
+    "variants": {},
+    "deps": []
   },
   {
     "name": "field",
@@ -1656,6 +1971,44 @@
     "kind": "primitive"
   },
   {
+    "name": "masked-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Input formatted while typing from a preset (time, time-seconds, datetime, cccd, bhyt, phone) or a pattern (0 digit, A letter, * any); unmask helper (web-emr Mask). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "giờ thực hiện có giây, số CCCD, mã thẻ BHYT"
+    ],
+    "avoid_when": "Plain text: text-field. Dates: date-field.",
+    "keywords": [
+      "mask",
+      "định dạng",
+      "cccd",
+      "căn cước",
+      "bhyt",
+      "thẻ bảo hiểm",
+      "giờ phút giây",
+      "web-emr Mask",
+      "nhập cccd",
+      "số cccd",
+      "nhập bhyt",
+      "mã bhyt"
+    ],
+    "example": "<MaskedField label=\"Số CCCD:\" mask=\"cccd\" value={id} onChange={setId} />",
+    "related": [
+      "text-field",
+      "time-input"
+    ],
+    "import": "@/components/blocks/masked-field",
+    "exports": [
+      "MASKS",
+      "applyMask",
+      "unmask",
+      "MaskedField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "native-select",
     "category": "form",
     "summary": "Browser-native select styled to match.",
@@ -1708,6 +2061,37 @@
     "import": "@/components/blocks/number-input",
     "exports": [
       "NumberInput"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "phone-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Phone number with a country flag picker, formatted while typing; isValidPhone (libphonenumber-js) (web-emr PhoneField). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "số điện thoại bệnh nhân, người nhà"
+    ],
+    "avoid_when": "Other formatted numbers: masked-field.",
+    "keywords": [
+      "phone",
+      "số điện thoại",
+      "điện thoại",
+      "sđt",
+      "mã quốc gia",
+      "web-emr PhoneField",
+      "phonefield"
+    ],
+    "example": "<PhoneField label=\"Số điện thoại:\" value={phone} onChange={setPhone} />",
+    "related": [
+      "masked-field",
+      "text-field"
+    ],
+    "import": "@/components/blocks/phone-field",
+    "exports": [
+      "isValidPhone",
+      "PhoneField"
     ],
     "variants": {},
     "deps": []
@@ -1850,6 +2234,35 @@
     "deps": []
   },
   {
+    "name": "search-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Search box: magnifier, clear button, search on Enter or after a debounce (web-emr Search). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "tìm bệnh nhân, hồ sơ, dịch vụ above a list or table"
+    ],
+    "avoid_when": "Picking a value: autocomplete-field.",
+    "keywords": [
+      "search",
+      "tìm kiếm",
+      "ô tìm",
+      "lọc nhanh",
+      "web-emr Search",
+      "SearchBar"
+    ],
+    "example": "<SearchField placeholder=\"Tìm theo mã hoặc tên\" onSearch={setQuery} debounce={300} />",
+    "related": [
+      "data-table",
+      "autocomplete-field"
+    ],
+    "import": "@/components/blocks/search-field",
+    "exports": [
+      "SearchField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "select",
     "category": "form",
     "summary": "Dropdown to pick one option from a short list.",
@@ -1891,6 +2304,36 @@
       "@base-ui/react/select"
     ],
     "kind": "primitive"
+  },
+  {
+    "name": "select-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Labelled select with static options (web-emr Select / AutoComplete static); option list on --list-bg. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "giới tính, quốc tịch, nghề nghiệp, khoa: short fixed lists"
+    ],
+    "avoid_when": "Long or remote lists: autocomplete-field.",
+    "keywords": [
+      "select",
+      "chọn",
+      "danh sách chọn",
+      "dropdown",
+      "giới tính",
+      "web-emr Select",
+      "CustomSelect"
+    ],
+    "example": "<SelectField label=\"Giới tính:\" required options={GENDERS} value={sex} onValueChange={setSex} />",
+    "related": [
+      "autocomplete-field",
+      "select"
+    ],
+    "import": "@/components/blocks/select-field",
+    "exports": [
+      "SelectField"
+    ],
+    "variants": {},
+    "deps": []
   },
   {
     "name": "signature-pad",
@@ -1981,6 +2424,67 @@
     "kind": "primitive"
   },
   {
+    "name": "switch-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Labelled on/off switch; track, knob, border and travel from the switch tokens (EMR 40×20 with border) (web-emr Switch). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "cài đặt áp dụng ngay: gửi thông báo, hiển thị đã huỷ"
+    ],
+    "avoid_when": "A value saved with a form: checkbox-field.",
+    "keywords": [
+      "switch",
+      "công tắc",
+      "bật tắt",
+      "toggle",
+      "web-emr Switch"
+    ],
+    "example": "<SwitchField label=\"Gửi thông báo\" checked={on} onCheckedChange={setOn} />",
+    "related": [
+      "checkbox-field",
+      "switch"
+    ],
+    "import": "@/components/blocks/switch-field",
+    "exports": [
+      "SwitchField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "text-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Labelled text input (web-emr TextField): label beside the box, read-only fill, error border, appearance outline/underline/plain/bare (EMR kindStyle). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "mã, tên, passport, số hồ sơ… in data-entry forms",
+      "read-only values shown in the form grid"
+    ],
+    "avoid_when": "Multi-line: textarea-field. Formatted values: masked-field.",
+    "keywords": [
+      "text field",
+      "ô nhập",
+      "ô văn bản",
+      "nhập liệu",
+      "readonly",
+      "web-emr TextField",
+      "kindStyle",
+      "textfield"
+    ],
+    "example": "<TextField label=\"Tên NB:\" required width={130} value={name} onChange={(e) => setName(e.target.value)} />",
+    "related": [
+      "masked-field",
+      "textarea-field",
+      "control-field"
+    ],
+    "import": "@/components/blocks/text-field",
+    "exports": [
+      "TextField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "textarea",
     "category": "form",
     "summary": "Multi-line text input.",
@@ -2003,6 +2507,36 @@
     "variants": {},
     "deps": [],
     "kind": "primitive"
+  },
+  {
+    "name": "textarea-field",
+    "category": "form",
+    "kind": "block",
+    "summary": "Labelled multi-line field with the control tokens and a themed min height (web-emr TextField textarea). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "ghi chú, lý do, kết luận, tóm tắt"
+    ],
+    "avoid_when": "One line: text-field. Formatting: rich-text-editor add-on.",
+    "keywords": [
+      "textarea",
+      "ghi chú",
+      "nhiều dòng",
+      "lý do",
+      "kết luận",
+      "web-emr TextField textarea",
+      "textfield"
+    ],
+    "example": "<TextAreaField label=\"Ghi chú:\" value={note} onChange={(e) => setNote(e.target.value)} />",
+    "related": [
+      "text-field",
+      "rich-text-editor"
+    ],
+    "import": "@/components/blocks/textarea-field",
+    "exports": [
+      "TextAreaField"
+    ],
+    "variants": {},
+    "deps": []
   },
   {
     "name": "time-input",
@@ -2381,6 +2915,35 @@
     "kind": "primitive"
   },
   {
+    "name": "section-title",
+    "category": "layout",
+    "kind": "block",
+    "summary": "Title of a block of a screen or form; size, weight and colour from the section-title tokens (EMR: brand bold). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "tiêu đề nhóm trường: Thông tin hành chính, Sinh hiệu"
+    ],
+    "avoid_when": "Page title: page-header.",
+    "keywords": [
+      "section title",
+      "tiêu đề",
+      "tiêu đề nhóm",
+      "tiêu đề khối",
+      "web-emr Text title",
+      "text",
+      "title"
+    ],
+    "example": "<SectionTitle>Thông tin hành chính</SectionTitle>",
+    "related": [
+      "page-header"
+    ],
+    "import": "@/components/blocks/section-title",
+    "exports": [
+      "SectionTitle"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "separator",
     "category": "layout",
     "summary": "Thin horizontal or vertical divider line.",
@@ -2695,6 +3258,37 @@
     "deps": []
   },
   {
+    "name": "tab-bar",
+    "category": "navigation",
+    "kind": "block",
+    "summary": "Tabs in three looks from the tab tokens: folder (web-emr TabPro record tabs), underline (web-emr Tabs underlined), pill; items with optional panels. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "các phần của hồ sơ bệnh án, nhóm trạng thái danh sách"
+    ],
+    "avoid_when": "Navigation between pages: sidebar or navigation-menu.",
+    "keywords": [
+      "tabs",
+      "tab",
+      "thẻ",
+      "phân trang nội dung",
+      "web-emr TabPro",
+      "Tabs",
+      "tabpro",
+      "tab hồ sơ",
+      "thẻ hồ sơ bệnh án"
+    ],
+    "example": "<TabBar variant=\"folder\" items={[{ value: \"hc\", label: \"Hành chính\", content: <Info /> }]} />",
+    "related": [
+      "tabs"
+    ],
+    "import": "@/components/blocks/tab-bar",
+    "exports": [
+      "TabBar"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "tabs",
     "category": "navigation",
     "summary": "Switch between views of the same context; 'line' variant for page-level tabs.",
@@ -2842,6 +3436,38 @@
       "@base-ui/react/dialog"
     ],
     "kind": "primitive"
+  },
+  {
+    "name": "dialog-frame",
+    "category": "overlay",
+    "kind": "block",
+    "summary": "Modal with title, body and action row; radius, border, padding, overlay tint/blur and title style from the dialog tokens (EMR: centred primary-dark title, teal overlay); full screen option (web-emr Modal / ModalPro). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "use_when": [
+      "form trong hộp thoại, xem chi tiết, xác nhận có nội dung"
+    ],
+    "avoid_when": "A yes/no question: confirm-dialog.",
+    "keywords": [
+      "dialog",
+      "modal",
+      "hộp thoại",
+      "cửa sổ",
+      "popup",
+      "web-emr Modal",
+      "ModalPro",
+      "modalpro"
+    ],
+    "example": "<DialogFrame open={open} onOpenChange={setOpen} title=\"Xác nhận ký\" footer={…}>…</DialogFrame>",
+    "related": [
+      "confirm-dialog",
+      "dialog",
+      "sheet"
+    ],
+    "import": "@/components/blocks/dialog-frame",
+    "exports": [
+      "DialogFrame"
+    ],
+    "variants": {},
+    "deps": []
   },
   {
     "name": "drawer",

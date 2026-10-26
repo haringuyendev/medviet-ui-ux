@@ -9,20 +9,24 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { EmrField } from "./emr-field";
+import { ControlField, widthStyle } from "./control-field";
 
-export type EmrOption = { value: string; label: ReactNode; disabled?: boolean };
+export type FieldOption = {
+  value: string;
+  label: ReactNode;
+  disabled?: boolean;
+};
 
 /**
- * web-emr's Select / AutoComplete (static options) with the antd theme of ProviderAntd: 24px box, 12px Roboto,
- * chevron, options on --bg-secondary, hovered option --primary-hover, selected --bg-secondary (normal weight).
+ * A labelled select (web-emr Select / AutoComplete with static options): the trigger takes the control tokens, the
+ * list the popover colours; the hovered option is --accent. Type-to-search over a long or remote list: Combobox.
  *
- *   <EmrSelect label="Giới tính:" isSup width={146} options={GENDERS} value={sex} onValueChange={setSex} />
+ *   <SelectField label="Giới tính:" required width={146} options={GENDERS} value={sex} onValueChange={setSex} />
  */
-export function EmrSelect({
+export function SelectField({
   id,
   label,
-  isSup,
+  required,
   options,
   value,
   onValueChange,
@@ -35,8 +39,8 @@ export function EmrSelect({
 }: {
   id?: string;
   label?: ReactNode;
-  isSup?: boolean;
-  options: EmrOption[];
+  required?: boolean;
+  options: FieldOption[];
   value?: string | null;
   onValueChange?: (value: string | null) => void;
   placeholder?: string;
@@ -49,10 +53,10 @@ export function EmrSelect({
   const autoId = useId();
   const triggerId = id ?? autoId;
   return (
-    <EmrField
+    <ControlField
       id={triggerId}
       label={label}
-      isSup={isSup}
+      required={required}
       error={error}
       vertical={vertical}
     >
@@ -66,28 +70,29 @@ export function EmrSelect({
           id={triggerId}
           size="sm"
           aria-invalid={error ? true : undefined}
-          style={{ width: typeof width === "number" ? `${width}px` : width }}
+          aria-required={required || undefined}
+          style={widthStyle(width)}
           className={cn(
-            "h-6 min-h-6 data-[size=sm]:h-6 rounded-[5px] border-[0.5px] border-emr-text-stroke bg-white px-1.5 py-0 text-[12px] text-emr-text-primary shadow-none focus-visible:border-emr-primary-active focus-visible:ring-0 data-placeholder:text-emr-text-primary",
-            readOnly && "bg-emr-bg-secondary disabled:opacity-100",
-            error && "border-emr-danger-main",
+            "h-(--control-height) min-h-(--control-height) rounded-(--control-radius) border-(length:--control-border-width) border-input bg-card px-(--control-padding-x) py-0 text-(length:--control-font-size) text-control-fg shadow-none focus-visible:border-ring focus-visible:ring-0 data-[size=sm]:h-(--control-height) data-placeholder:text-control-placeholder",
+            readOnly && "bg-control-readonly disabled:opacity-100",
+            error && "border-destructive",
           )}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-emr-bg-secondary text-[12px]">
+        <SelectContent className="bg-list text-(length:--control-font-size)">
           {options.map((o) => (
             <SelectItem
               key={o.value}
               value={o.value}
               disabled={o.disabled}
-              className="text-[12px] text-emr-text-primary focus:bg-emr-primary-hover data-selected:bg-emr-bg-secondary data-selected:font-normal"
+              className="text-(length:--control-font-size) focus:bg-accent focus:text-accent-foreground"
             >
               {o.label}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-    </EmrField>
+    </ControlField>
   );
 }
