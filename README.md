@@ -10,10 +10,11 @@ Claude Desktop, dựng trên engine của [aura-ui](https://github.com/haringuye
 
 ## Cài đặt
 ```
-/plugin marketplace add ~/MedViet/medviet-ui-ux
+/plugin marketplace add haringuyendev/medviet-ui-ux      # repo private: cần quyền đọc repo và gh auth login
 /plugin install medviet-ui-ux@medviet-ui-ux
 /medviet-ui-ux:setup
 ```
+Đang sửa plugin trên máy thì có thể thêm marketplace từ thư mục local: `/plugin marketplace add ~/MedViet/medviet-ui-ux`.
 - CLI và phiên local của Desktop đọc chung cấu hình, nên cài ở một chỗ là chỗ kia cũng có. Tab chat thường không chạy được
   hook: hãy dùng tab **Code**.
 - Máy chưa có Node.js: `/medviet-ui-ux:setup` hỏi một câu rồi tự cài bản LTS chính thức vào `~/.medviet-ui-ux/node` (trên
