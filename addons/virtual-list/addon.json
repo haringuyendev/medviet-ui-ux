@@ -1,0 +1,5 @@
+{
+  "name": "virtual-list",
+  "summary": "Danh sách dài (hàng trăm, hàng nghìn dòng) chỉ vẽ phần đang nhìn thấy; dưới 100 mục vẫn vẽ đủ để Ctrl+F còn tìm được (health-exam).",
+  "dependencies": { "@tanstack/react-virtual": "^3.14.10" }
+}

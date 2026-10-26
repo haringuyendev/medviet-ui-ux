@@ -1,0 +1,21 @@
+{
+  "description": "Aura component manager: keeps .aura/registry.json in sync, checks UI edits (Write/Edit and shell), asks the user before primitives are added, and requires aura verify before the agent finishes. Silent in repos without .aura/.",
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook session-start", "timeout": 30 }] }
+    ],
+    "PreToolUse": [
+      { "matcher": "Bash|Write", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook pre-tool", "timeout": 15 }] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Write|Edit", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook post-edit", "timeout": 30 }] },
+      { "matcher": "Bash", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook post-bash", "timeout": 30 }] }
+    ],
+    "Stop": [
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook stop", "timeout": 30 }] }
+    ],
+    "SubagentStop": [
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook subagent-stop", "timeout": 30 }] }
+    ]
+  }
+}

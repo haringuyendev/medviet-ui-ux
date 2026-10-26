@@ -1,0 +1,114 @@
+# medviet-ui-ux
+
+Bộ skill nội bộ của MedViet để làm UI/UX nhanh và đồng bộ giữa các app. Plugin cho Claude Code CLI và tab **Code** của
+Claude Desktop, dựng trên engine của [aura-ui](https://github.com/haringuyendev/aura-ui) (bản `f9d82a9`), gồm 4 phần:
+- **Design system của turbo-web:** màu EMR teal theo web-emr, font Roboto, màu trạng thái dùng chung.
+- **Primitive của `@medviet/ui`:** làm template.
+- **Block dùng chung:** những component các app đang viết lại mỗi app một kiểu, nay gom thành bản chuẩn.
+- **Add-on và lớp kiểm tra của Aura:** hook chặn UI tự dựng, chặn màu thô, chặn component trùng; `aura verify` kiểm tra
+  trang đã render.
+
+## Cài đặt
+```
+/plugin marketplace add ~/MedViet/medviet-ui-ux
+/plugin install medviet-ui-ux@medviet-ui-ux
+/medviet-ui-ux:setup
+```
+- CLI và phiên local của Desktop đọc chung cấu hình, nên cài ở một chỗ là chỗ kia cũng có. Tab chat thường không chạy được
+  hook: hãy dùng tab **Code**.
+- Máy chưa có Node.js: `/medviet-ui-ux:setup` hỏi một câu rồi tự cài bản LTS chính thức vào `~/.medviet-ui-ux/node` (trên
+  Windows là `%LOCALAPPDATA%\medviet-ui-ux\node`), không cần quyền admin. Cài xong, thoát hẳn Claude Desktop rồi mở lại.
+- **Đã cài aura-ui:** trong các repo MedViet, chỉ để một plugin chạy hook. Có hai cách:
+  - tắt aura-ui cho repo đó (`/plugin` → disable);
+  - hoặc thêm `"plugin": "medviet-ui-ux"` vào `.aura/rules.json`, để chỉ medviet-ui-ux cập nhật `.aura/bin`.
+
+  Cả hai dùng chung thư mục `.aura/`. Với repo đã chạy aura-ui (như turbo-web), medviet-ui-ux thay `.aura/bin` bằng CLI
+  của mình ở lần chạy đầu.
+
+## Có gì
+**Design system** (`references/design-system.md`). Token y hệt `turbo-web/tooling/tailwind/theme.css`:
+- màu chính `#38a696`, nền `#f8f8f9`, chữ `#3d4c63`;
+- màu trạng thái: info `#3b9bf3` (đang làm, đang duyệt), warning `#ffb762` (chờ), success `#36b37e` (xong), destructive
+  `#ff5075` (thiếu, huỷ);
+- `chart-1…5` theo đúng thứ tự trạng thái của web-emr; Roboto Variable; radius 0.625rem; dark mode dẫn xuất.
+
+Không app nào tự đổi màu hay font. Muốn đổi thì đổi ở turbo-web trước, rồi chạy `scripts/sync-turbo.mjs`.
+
+**Template (MedViet starter, `template/`).** Cùng stack với turbo-web: React 19, Vite, TypeScript, Tailwind v4, TanStack
+Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-boundary, Biome.
+- `src/components/ui/`: 63 primitive chép nguyên từ `packages/ui` (shadcn `base-vega` trên Base UI), có `data-table` và
+  `date-picker`. Giữ nguyên như bản gốc để dễ đồng bộ.
+- `src/components/blocks/`: các block MedViet:
+
+  | Block | Lấy từ | Dùng cho |
+  |---|---|---|
+  | `status-badge` (`defineStatuses`) | health-exam, gmhs | trạng thái hồ sơ/phiếu: nền nhạt + chấm màu, một tone cho mỗi trạng thái |
+  | `time-input` | gmhs, health-exam | nhập giờ `HH:mm` 24h có mặt nạ |
+  | `row-actions-menu` | gmhs | thao tác của dòng trong bảng sau nút ⋯ |
+  | `confirm-dialog` | health-exam | "Bỏ thay đổi?", "Xoá hồ sơ?" |
+  | `readonly-field` | health-exam | chế độ Xem giống hệt form, tone cảnh báo cho dị ứng |
+  | `retry-alert` | health-exam | lỗi tải/lưu ngay tại chỗ, có nút Thử lại |
+  | `info-hint` | gmhs | ⓘ giải thích ngắn |
+  | `required-mark` | gmhs, manage-form | dấu * của trường bắt buộc |
+  | `page-header`, `stat`, `description-list`, `form`, `number-input`, `file-upload`, `stepper` | aura | tiêu đề trang, KPI, form… |
+
+- `src/pages`: `NotFound` và `ServerError` dựng bằng token (bản trong template của turbo-web dùng màu xám thô).
+  `src/lib/format.ts`: định dạng vi-VN. `src/hooks`: các hook của `@medviet/hook`.
+
+**Add-on** (cài khi cần: `node scripts/add-block.mjs <tên> <app>`; `aura find` tự in lệnh cài khi khớp nhu cầu):
+
+| Add-on | Dùng cho |
+|---|---|
+| `signature-pad` | người bệnh ký tên (health-exam) |
+| `data-export` | nút Xuất Excel/CSV cho bảng, danh sách |
+| `excel-import` | nhập danh sách từ Excel, file mẫu, báo dòng lỗi (health-exam) |
+| `print-sheet` | bản in A4: phiếu, biên bản, bảng bàn giao (gmhs) |
+| `virtual-list` | danh sách hàng nghìn dòng (health-exam) |
+| `rich-text-editor` | soạn văn bản có định dạng (Tiptap) |
+| `file-lightbox` | xem ảnh, PDF, Word, Excel |
+
+**Skill** (`/medviet-ui-ux:<tên>`):
+
+| Skill | Việc |
+|---|---|
+| `build` | luật thiết kế màn hình MedViet, tự kích hoạt khi làm UI |
+| `find` | tìm component phù hợp bằng tiếng Việt |
+| `check` | sửa lỗi khi hook chặn |
+| `inspect` | `aura verify` trước khi báo xong |
+| `init`, `scan` | quét repo |
+| `describe` | mô tả component cho registry |
+| `new-app` | app mới từ MedViet starter |
+| `studio` | trang chat và preview kiểu Lovable |
+| `setup` | kiểm tra máy, tự cài Node |
+
+## Dùng trong turbo-web
+Ở thư mục gốc turbo-web chạy `aura init` một lần. turbo-web đã có `.aura/` từ aura-ui nên lệnh này cập nhật lại. Sau đó:
+- Primitive lấy từ `@medviet/ui/components/*`; primitive còn thiếu thêm bằng `bun run ui-add` trong `packages/ui`, sau khi
+  người dùng đồng ý.
+- Block MedViet chưa có trong `@medviet/ui`: agent chép block cần dùng từ `template/src/components/blocks` vào app, rồi
+  đổi import sang `@medviet/ui/...`. Khi đã có 2 app cùng dùng thì đề xuất đưa lên package chung, đúng quy tắc của
+  turbo-web.
+- App mới để ship thì tạo bằng `bun run gen:app`; prototype hoặc tool riêng thì dùng `/medviet-ui-ux:new-app` hoặc Studio.
+
+## Giữ đồng bộ với turbo-web
+```bash
+node scripts/sync-turbo.mjs --dry-run        # xem khác gì (chỉ đọc turbo-web)
+node scripts/sync-turbo.mjs                  # chép primitive, hook, utils, token vào template
+cd template && npm install && npx tsc -b && npx biome check .
+node scripts/catalog.mjs sync                # primitive mới cần mục trong catalog (từ khoá tiếng Việt)
+node scripts/smoke.mjs                       # test end-to-end: app mới, check, scaffold, hook, verify, Studio
+```
+
+## Cấu trúc
+```
+.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.0.0)
+hooks/            hook của Aura (SessionStart, PreToolUse, PostToolUse, Stop, SubagentStop)
+skills/           10 skill ở trên
+manager/          engine Aura: aura.mjs (init, find, add, scaffold, variant, check, verify, inspect, studio, new, setup…)
+template/         MedViet starter
+catalog/          components.json: 87 mục, từ điển Việt–Anh cho aura find
+addons/           7 add-on
+references/       design-system.md (MedViet), dashboard.md
+scripts/          sync-turbo.mjs, add-block.mjs, catalog.mjs, smoke.mjs, install-node.sh|ps1, find-node.sh|ps1
+```
+Lệnh của engine: `node manager/aura.mjs help`.

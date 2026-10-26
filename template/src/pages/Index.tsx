@@ -1,0 +1,15 @@
+// Placeholder page. Replace it with the screen the user asked for.
+export default function Index() {
+  return (
+    <main className="flex min-h-svh items-center justify-center bg-background">
+      <div className="text-center">
+        <h1 className="mb-2 text-2xl font-semibold text-foreground">
+          Ứng dụng MedViet mới
+        </h1>
+        <p className="text-muted-foreground">
+          Trang này sẽ được thay bằng màn hình đầu tiên.
+        </p>
+      </div>
+    </main>
+  );
+}

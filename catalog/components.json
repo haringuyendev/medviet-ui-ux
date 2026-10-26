@@ -1,0 +1,3070 @@
+[
+  {
+    "name": "button",
+    "category": "action",
+    "summary": "Primary, secondary, outline, ghost, destructive and link buttons in several sizes.",
+    "use_when": [
+      "every action"
+    ],
+    "avoid_when": "Navigation that is really a link; use link variant or <a>.",
+    "keywords": [
+      "button",
+      "cta",
+      "action",
+      "nút",
+      "hành động"
+    ],
+    "example": "<Button>Lưu</Button> <Button variant=\"outline\" size=\"sm\">Huỷ</Button>",
+    "related": [
+      "button-group"
+    ],
+    "import": "@/components/ui/button",
+    "exports": [
+      "Button",
+      "buttonVariants"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "outline",
+        "secondary",
+        "ghost",
+        "destructive",
+        "destructive-outline",
+        "link"
+      ],
+      "size": [
+        "default",
+        "xs",
+        "sm",
+        "lg",
+        "icon",
+        "icon-xs",
+        "icon-sm",
+        "icon-lg"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/button"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "button-group",
+    "category": "action",
+    "summary": "Visually joined buttons or button + text.",
+    "use_when": [
+      "split buttons, pagination-like controls, grouped actions"
+    ],
+    "avoid_when": "Unrelated actions.",
+    "keywords": [
+      "split button",
+      "grouped buttons",
+      "nhóm nút"
+    ],
+    "example": "<ButtonGroup><Button variant=\"outline\">Xuất</Button><Button variant=\"outline\" size=\"icon\"><ChevronDownIcon /></Button></ButtonGroup>",
+    "related": [],
+    "import": "@/components/ui/button-group",
+    "exports": [
+      "ButtonGroup",
+      "ButtonGroupSeparator",
+      "ButtonGroupText",
+      "buttonGroupVariants"
+    ],
+    "variants": {
+      "orientation": [
+        "horizontal",
+        "vertical"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/merge-props",
+      "@base-ui/react/use-render"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "context-menu",
+    "category": "action",
+    "summary": "Right-click menu.",
+    "use_when": [
+      "power-user tools (files, canvas)"
+    ],
+    "avoid_when": "Only path to an action; also expose it visibly.",
+    "keywords": [
+      "right click",
+      "menu chuột phải"
+    ],
+    "example": "<ContextMenu><ContextMenuTrigger>…</ContextMenuTrigger><ContextMenuContent>…</ContextMenuContent></ContextMenu>",
+    "related": [],
+    "import": "@/components/ui/context-menu",
+    "exports": [
+      "ContextMenu",
+      "ContextMenuCheckboxItem",
+      "ContextMenuContent",
+      "ContextMenuGroup",
+      "ContextMenuItem",
+      "ContextMenuLabel",
+      "ContextMenuPortal",
+      "ContextMenuRadioGroup",
+      "ContextMenuRadioItem",
+      "ContextMenuSeparator",
+      "ContextMenuShortcut",
+      "ContextMenuSub",
+      "ContextMenuSubContent",
+      "ContextMenuSubTrigger",
+      "ContextMenuTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/context-menu"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "dropdown-menu",
+    "category": "action",
+    "summary": "Menu of actions opened from a button.",
+    "use_when": [
+      "row actions (⋯)",
+      "secondary actions",
+      "account menu"
+    ],
+    "avoid_when": "Choosing a form value; use select.",
+    "keywords": [
+      "menu",
+      "more actions",
+      "kebab",
+      "thao tác",
+      "menu ba chấm"
+    ],
+    "example": "<DropdownMenu><DropdownMenuTrigger render={<Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Thao tác\"><MoreHorizontalIcon /></Button>} /><DropdownMenuContent><DropdownMenuItem>Sửa</DropdownMenuItem></DropdownMenuContent></DropdownMenu>",
+    "related": [
+      "context-menu"
+    ],
+    "import": "@/components/ui/dropdown-menu",
+    "exports": [
+      "DropdownMenu",
+      "DropdownMenuCheckboxItem",
+      "DropdownMenuContent",
+      "DropdownMenuGroup",
+      "DropdownMenuItem",
+      "DropdownMenuLabel",
+      "DropdownMenuPortal",
+      "DropdownMenuRadioGroup",
+      "DropdownMenuRadioItem",
+      "DropdownMenuSeparator",
+      "DropdownMenuShortcut",
+      "DropdownMenuSub",
+      "DropdownMenuSubContent",
+      "DropdownMenuSubTrigger",
+      "DropdownMenuTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/menu"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "attachment",
+    "category": "chat",
+    "summary": "File/media attachment chip or card with title, description and actions.",
+    "use_when": [
+      "uploaded files in chat, forms or records"
+    ],
+    "avoid_when": "Picking files to upload; use file-upload (it renders attachments for you).",
+    "keywords": [
+      "file chip",
+      "attachment card",
+      "file preview",
+      "tệp đính kèm",
+      "hiển thị tệp"
+    ],
+    "example": "<Attachment><AttachmentMedia>…</AttachmentMedia><AttachmentContent><AttachmentTitle>hoa-don.pdf</AttachmentTitle></AttachmentContent></Attachment>",
+    "related": [],
+    "import": "@/components/ui/attachment",
+    "exports": [
+      "Attachment",
+      "AttachmentAction",
+      "AttachmentActions",
+      "AttachmentContent",
+      "AttachmentDescription",
+      "AttachmentGroup",
+      "AttachmentMedia",
+      "AttachmentTitle",
+      "AttachmentTrigger"
+    ],
+    "variants": {
+      "size": [
+        "default",
+        "sm",
+        "xs"
+      ],
+      "orientation": [
+        "horizontal",
+        "vertical"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/merge-props",
+      "@base-ui/react/use-render"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "bubble",
+    "category": "chat",
+    "summary": "Chat bubble with variants and reactions.",
+    "use_when": [
+      "message bodies in chat UIs"
+    ],
+    "avoid_when": "Cards or alerts.",
+    "keywords": [
+      "chat bubble",
+      "reaction",
+      "bong bóng chat"
+    ],
+    "example": "<Bubble variant=\"secondary\"><BubbleContent>Xin chào</BubbleContent></Bubble>",
+    "related": [
+      "message"
+    ],
+    "import": "@/components/ui/bubble",
+    "exports": [
+      "Bubble",
+      "BubbleContent",
+      "BubbleGroup",
+      "BubbleReactions"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "secondary",
+        "muted",
+        "tinted",
+        "outline",
+        "ghost",
+        "destructive"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/merge-props",
+      "@base-ui/react/use-render"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "message",
+    "category": "chat",
+    "summary": "Chat message layout: avatar, header, content, footer; grouped messages.",
+    "use_when": [
+      "chat and assistant UIs, comment threads"
+    ],
+    "avoid_when": "Non-conversational lists.",
+    "keywords": [
+      "chat",
+      "conversation",
+      "comment",
+      "tin nhắn",
+      "trò chuyện",
+      "bình luận"
+    ],
+    "example": "<MessageGroup><Message><MessageAvatar>…</MessageAvatar><MessageContent>…</MessageContent></Message></MessageGroup>",
+    "related": [
+      "bubble",
+      "message-scroller"
+    ],
+    "import": "@/components/ui/message",
+    "exports": [
+      "Message",
+      "MessageAvatar",
+      "MessageContent",
+      "MessageFooter",
+      "MessageGroup",
+      "MessageHeader"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "message-scroller",
+    "category": "chat",
+    "summary": "Scroll container that sticks to the newest message, with jump-to-bottom button.",
+    "use_when": [
+      "chat transcripts, live logs"
+    ],
+    "avoid_when": "Static content.",
+    "keywords": [
+      "chat scroll",
+      "auto scroll",
+      "cuộn tin nhắn"
+    ],
+    "example": "<MessageScrollerProvider><MessageScroller><MessageScrollerViewport><MessageScrollerContent>…</MessageScrollerContent></MessageScrollerViewport><MessageScrollerButton /></MessageScroller></MessageScrollerProvider>",
+    "related": [],
+    "import": "@/components/ui/message-scroller",
+    "exports": [
+      "MessageScroller",
+      "MessageScrollerButton",
+      "MessageScrollerContent",
+      "MessageScrollerItem",
+      "MessageScrollerProvider",
+      "MessageScrollerViewport",
+      "useMessageScroller",
+      "useMessageScrollerScrollable",
+      "useMessageScrollerVisibility"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "avatar",
+    "category": "data",
+    "summary": "User image with initials fallback; groups with overflow count.",
+    "use_when": [
+      "people lists, assignees, comments"
+    ],
+    "avoid_when": "Decoration where the face doesn't help recognition.",
+    "keywords": [
+      "user",
+      "profile picture",
+      "initials",
+      "ảnh đại diện",
+      "người dùng"
+    ],
+    "example": "<Avatar><AvatarImage src={u.photo} alt={u.name} /><AvatarFallback>NA</AvatarFallback></Avatar>",
+    "related": [],
+    "import": "@/components/ui/avatar",
+    "exports": [
+      "Avatar",
+      "AvatarBadge",
+      "AvatarFallback",
+      "AvatarGroup",
+      "AvatarGroupCount",
+      "AvatarImage"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/avatar"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "badge",
+    "category": "data",
+    "summary": "Small label for status, category or count.",
+    "use_when": [
+      "status of a record",
+      "tags",
+      "counts next to tabs/filters"
+    ],
+    "avoid_when": "Marking normal/OK values; leave them unmarked. Add status variants (success/warning) via cva, not classes.",
+    "keywords": [
+      "status",
+      "tag",
+      "label",
+      "chip",
+      "pill",
+      "trạng thái",
+      "nhãn",
+      "thẻ tag"
+    ],
+    "example": "<Badge variant=\"destructive\">Quá hạn</Badge>",
+    "related": [
+      "alert"
+    ],
+    "import": "@/components/ui/badge",
+    "exports": [
+      "Badge",
+      "badgeVariants"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "secondary",
+        "destructive",
+        "success",
+        "warning",
+        "info",
+        "outline",
+        "ghost",
+        "link"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/merge-props",
+      "@base-ui/react/use-render"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "carousel",
+    "category": "data",
+    "summary": "Swipeable horizontal slides.",
+    "use_when": [
+      "image galleries, testimonials on landing pages"
+    ],
+    "avoid_when": "Hiding important content in back-office screens.",
+    "keywords": [
+      "slider",
+      "gallery",
+      "slideshow",
+      "băng chuyền",
+      "trình chiếu"
+    ],
+    "example": "<Carousel><CarouselContent><CarouselItem>…</CarouselItem></CarouselContent><CarouselPrevious /><CarouselNext /></Carousel>",
+    "related": [],
+    "import": "@/components/ui/carousel",
+    "exports": [
+      "Carousel",
+      "CarouselApi",
+      "CarouselContent",
+      "CarouselItem",
+      "CarouselNext",
+      "CarouselPrevious",
+      "useCarousel"
+    ],
+    "variants": {},
+    "deps": [
+      "embla-carousel-react"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "chart",
+    "category": "data",
+    "summary": "Recharts wrapper: themed container, tooltip and legend that read chart-1…5 tokens.",
+    "use_when": [
+      "trends over time, comparisons, distributions, sparklines"
+    ],
+    "avoid_when": "Showing one number (use a stat card) or rankings of a few items (use a bar list with progress).",
+    "keywords": [
+      "graph",
+      "line chart",
+      "bar chart",
+      "area",
+      "sparkline",
+      "recharts",
+      "biểu đồ",
+      "đồ thị",
+      "xu hướng"
+    ],
+    "example": "<ChartContainer config={{ visits: { label: \"Lượt khám\", color: \"var(--chart-1)\" } }} className=\"h-64\"><BarChart data={data}><XAxis dataKey=\"hour\" /><Bar dataKey=\"visits\" fill=\"var(--color-visits)\" /><ChartTooltip content={<ChartTooltipContent />} /></BarChart></ChartContainer>",
+    "related": [
+      "card",
+      "progress"
+    ],
+    "import": "@/components/ui/chart",
+    "exports": [
+      "ChartContainer",
+      "ChartLegend",
+      "ChartLegendContent",
+      "ChartStyle",
+      "ChartTooltip",
+      "ChartTooltipContent"
+    ],
+    "variants": {},
+    "deps": [
+      "recharts"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "data-table",
+    "category": "data",
+    "kind": "primitive",
+    "summary": "Data table on TanStack Table v9 (@medviet/ui): sorting, filtering, pagination, row selection, column visibility; the standard list of records in MedViet apps.",
+    "use_when": [
+      "danh sách hồ sơ, bệnh nhân, phiếu, dịch vụ có sắp xếp/lọc/phân trang",
+      "any list of records a user scans, filters or acts on"
+    ],
+    "avoid_when": "A handful of fixed rows: use table. Spreadsheet-like editing: keep cells as inputs inside table.",
+    "keywords": [
+      "data table",
+      "bảng dữ liệu",
+      "danh sách",
+      "bảng hồ sơ",
+      "phân trang",
+      "sắp xếp",
+      "lọc",
+      "chọn dòng",
+      "pagination",
+      "sorting",
+      "filter",
+      "row selection"
+    ],
+    "example": "<DataTable columns={columns} data={records} />  // columns via createColumnHelper; row actions: RowActionsMenu; status: StatusBadge; export: ExportMenu (data-export add-on)",
+    "related": [
+      "table",
+      "pagination",
+      "row-actions-menu",
+      "status-badge",
+      "export-menu"
+    ],
+    "import": "@/components/ui/data-table",
+    "exports": [
+      "createDataTableColumnHelper",
+      "DataTable",
+      "DataTableColumnHeader",
+      "DataTableFeatures",
+      "dataTableFeatures"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "description-list",
+    "category": "data",
+    "kind": "block",
+    "summary": "Label–value pairs in a responsive grid; empty values show '—'.",
+    "use_when": [
+      "record detail pages and drawers",
+      "order/patient/customer summaries",
+      "confirmation steps"
+    ],
+    "avoid_when": "Editable forms; use form fields.",
+    "keywords": [
+      "details",
+      "key value",
+      "properties",
+      "definition list",
+      "thông tin chi tiết",
+      "cặp nhãn giá trị",
+      "chi tiết"
+    ],
+    "example": "<DescriptionList columns={2} items={[{ label: \"Khách hàng\", value: \"Nguyễn An\" }, { label: \"Địa chỉ\", value: addr, full: true }]} />",
+    "related": [
+      "card",
+      "sheet"
+    ],
+    "import": "@/components/blocks/description-list",
+    "exports": [
+      "DescriptionItem",
+      "DescriptionList"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "excel-import",
+    "category": "data",
+    "kind": "addon",
+    "summary": "Read rows from an Excel/CSV file by header (accents/case/spaces ignored, aliases), with per-row errors; download a template with required columns and an example row.",
+    "use_when": [
+      "nhập danh sách bệnh nhân, nhân viên, dịch vụ từ Excel",
+      "đăng ký đoàn khám từ file"
+    ],
+    "avoid_when": "Ongoing sync with another system: an API import.",
+    "keywords": [
+      "import",
+      "nhập excel",
+      "nhập file",
+      "tải lên danh sách",
+      "file mẫu",
+      "import excel",
+      "đọc excel"
+    ],
+    "example": "const { rows, missingColumns } = await readSheet(file, [{ key: \"name\", header: \"Họ tên\", required: true }, { key: \"phone\", header: \"Số điện thoại\", aliases: [\"SĐT\"] }]);",
+    "related": [
+      "file-upload",
+      "export-menu",
+      "data-table"
+    ],
+    "import": "@/lib/excel-import",
+    "install": "node <this-skill-folder>/scripts/add-block.mjs excel-import <app-dir>",
+    "exports": [
+      "readSheet",
+      "downloadImportTemplate"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "export-menu",
+    "category": "data",
+    "kind": "addon",
+    "summary": "[Xuất] → Excel (.xlsx with bold frozen header, filter, real numbers/dates) or CSV (UTF-8 BOM) for any rows; columns give raw values.",
+    "use_when": [
+      "xuất danh sách hồ sơ, báo cáo ra Excel",
+      "tải dữ liệu đang lọc"
+    ],
+    "avoid_when": "Print-exact forms: print-sheet.",
+    "keywords": [
+      "export",
+      "xuất excel",
+      "xuất file",
+      "tải xuống",
+      "csv",
+      "xlsx",
+      "báo cáo excel",
+      "download"
+    ],
+    "example": "<ExportMenu fileName=\"ho-so\" rows={rows} columns={[{ header: \"Mã\", value: (r) => r.code }, { header: \"Ngày khám\", value: (r) => new Date(r.at) }]} />",
+    "related": [
+      "data-table",
+      "excel-import"
+    ],
+    "import": "@/components/blocks/export-menu",
+    "install": "node <this-skill-folder>/scripts/add-block.mjs data-export <app-dir>",
+    "exports": [
+      "ExportMenu"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "item",
+    "category": "data",
+    "summary": "Flexible list row: media, title, description, actions; groups with separators.",
+    "use_when": [
+      "lists of people, files, notifications, settings rows",
+      "mobile replacements for table rows",
+      "attention/alert lists"
+    ],
+    "avoid_when": "Tabular data compared across columns on desktop; use table.",
+    "keywords": [
+      "list item",
+      "row",
+      "list",
+      "dòng",
+      "mục",
+      "danh sách"
+    ],
+    "example": "<ItemGroup><Item><ItemMedia><Avatar>…</Avatar></ItemMedia><ItemContent><ItemTitle>Nguyễn An</ItemTitle><ItemDescription>Kế toán</ItemDescription></ItemContent><ItemActions><Button size=\"sm\">Gọi</Button></ItemActions></Item></ItemGroup>",
+    "related": [
+      "table",
+      "card"
+    ],
+    "import": "@/components/ui/item",
+    "exports": [
+      "Item",
+      "ItemActions",
+      "ItemContent",
+      "ItemDescription",
+      "ItemFooter",
+      "ItemGroup",
+      "ItemHeader",
+      "ItemMedia",
+      "ItemSeparator",
+      "ItemTitle"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "outline",
+        "muted"
+      ],
+      "size": [
+        "default",
+        "sm",
+        "xs"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/merge-props",
+      "@base-ui/react/use-render"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "kbd",
+    "category": "data",
+    "summary": "Keyboard key hint.",
+    "use_when": [
+      "shortcut hints in menus and tooltips"
+    ],
+    "avoid_when": "Anywhere without a real shortcut.",
+    "keywords": [
+      "shortcut",
+      "hotkey",
+      "phím tắt"
+    ],
+    "example": "<Kbd>⌘K</Kbd>",
+    "related": [],
+    "import": "@/components/ui/kbd",
+    "exports": [
+      "Kbd",
+      "KbdGroup"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "marker",
+    "category": "data",
+    "summary": "Small inline marker line with icon/text, optionally as a centered separator or bordered row.",
+    "use_when": [
+      "date separators in feeds ('Hôm nay')",
+      "inline notes between list sections"
+    ],
+    "avoid_when": "Headings; use typography.",
+    "keywords": [
+      "divider label",
+      "date separator",
+      "note",
+      "mốc",
+      "phân cách ngày"
+    ],
+    "example": "<Marker variant=\"separator\"><MarkerContent>Hôm nay</MarkerContent></Marker>",
+    "related": [],
+    "import": "@/components/ui/marker",
+    "exports": [
+      "Marker",
+      "MarkerContent",
+      "MarkerIcon",
+      "markerVariants"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "separator",
+        "border"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/merge-props",
+      "@base-ui/react/use-render"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "progress",
+    "category": "data",
+    "summary": "Horizontal bar showing a value against a maximum.",
+    "use_when": [
+      "capacity, quota, completion, ranked bar lists"
+    ],
+    "avoid_when": "Unknown-duration loading; use spinner/skeleton.",
+    "keywords": [
+      "progress bar",
+      "capacity",
+      "percentage bar",
+      "thanh tiến độ",
+      "công suất",
+      "tỉ lệ"
+    ],
+    "example": "<Progress value={82} />",
+    "related": [],
+    "import": "@/components/ui/progress",
+    "exports": [
+      "Progress",
+      "ProgressIndicator",
+      "ProgressLabel",
+      "ProgressTrack",
+      "ProgressValue"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/progress"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "readonly-field",
+    "category": "data",
+    "kind": "block",
+    "summary": "A value shown but not editable, drawn like a filled-in input (dt/dd), so Xem and Sửa modes line up; destructive tone for clinical-safety values.",
+    "use_when": [
+      "chế độ Xem của form: thông tin hành chính, tiền sử, kết luận",
+      "dị ứng, cảnh báo lâm sàng (tone destructive)"
+    ],
+    "avoid_when": "Dense key-value summaries: description-list.",
+    "keywords": [
+      "readonly",
+      "chỉ đọc",
+      "xem thông tin",
+      "trường chỉ đọc",
+      "chế độ xem",
+      "view mode",
+      "dị ứng"
+    ],
+    "example": "<dl className=\"grid gap-3 md:grid-cols-2\"><ReadonlyField label=\"Họ tên\" value={p.name} /><ReadonlyField label=\"Dị ứng\" value={p.allergy} tone=\"destructive\" /></dl>",
+    "related": [
+      "description-list",
+      "field",
+      "input"
+    ],
+    "import": "@/components/blocks/readonly-field",
+    "exports": [
+      "ReadonlyField"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "rich-text-content",
+    "category": "data",
+    "kind": "addon",
+    "summary": "Read-only rendering of rich text HTML, sanitized with DOMPurify, with the same typography as the editor.",
+    "use_when": [
+      "showing saved notes, orders or descriptions written with RichTextEditor or coming from another system"
+    ],
+    "avoid_when": "Plain text; render it directly.",
+    "keywords": [
+      "render html",
+      "rich text view",
+      "sanitize",
+      "hiển thị nội dung",
+      "xem ghi chú",
+      "nội dung định dạng"
+    ],
+    "example": "<RichTextContent html={order.noteHtml} />",
+    "related": [
+      "rich-text-editor"
+    ],
+    "import": "@/components/blocks/rich-text-content",
+    "install": "node <this-skill-folder>/scripts/add-block.mjs rich-text-editor <app-dir>",
+    "exports": [
+      "RichTextContent",
+      "richTextStyles"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "row-actions-menu",
+    "category": "data",
+    "kind": "block",
+    "summary": "A table row's actions behind one ⋯ button (DropdownMenu), keeping the action column narrow.",
+    "use_when": [
+      "thao tác của từng dòng trong bảng: Xem, Sửa, In, Huỷ",
+      "rows with more than 2 actions"
+    ],
+    "avoid_when": "One obvious action per row: a single Button.",
+    "keywords": [
+      "row actions",
+      "thao tác",
+      "menu dòng",
+      "ba chấm",
+      "more actions",
+      "kebab menu",
+      "sửa xoá"
+    ],
+    "example": "<RowActionsMenu><DropdownMenuItem onClick={edit}>Sửa</DropdownMenuItem><DropdownMenuItem variant=\"destructive\" onClick={remove}>Huỷ hồ sơ</DropdownMenuItem></RowActionsMenu>",
+    "related": [
+      "dropdown-menu",
+      "data-table"
+    ],
+    "import": "@/components/blocks/row-actions-menu",
+    "exports": [
+      "RowActionsMenu"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "stat",
+    "category": "data",
+    "kind": "block",
+    "summary": "KPI card (Stat) with big tabular value, unit, change (Delta) and baseline caption; Delta colors the change by good/bad.",
+    "use_when": [
+      "KPIs and summary numbers on dashboards, reports and record headers",
+      "showing change vs a previous period"
+    ],
+    "avoid_when": "Long lists of numbers; use a table. More than 5 in a row.",
+    "keywords": [
+      "kpi",
+      "metric",
+      "stat card",
+      "number card",
+      "delta",
+      "change",
+      "so với kỳ trước",
+      "chỉ số",
+      "thẻ số liệu",
+      "tăng giảm"
+    ],
+    "example": "<Stat label=\"Thời gian chờ TB\" value={formatDuration(125)} delta={<Delta value={31} good=\"down\" format={(v) => formatSigned(v, \" giây\", 0)} />} caption=\"ngưỡng 2 phút\" />",
+    "related": [
+      "chart",
+      "progress",
+      "format"
+    ],
+    "import": "@/components/blocks/stat",
+    "exports": [
+      "Delta",
+      "Stat"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "status-badge",
+    "category": "data",
+    "kind": "block",
+    "summary": "Status chip: tinted Badge + full-strength dot, one tone per status (neutral, info, warning, success, destructive); typed status→tone/label map with defineStatuses.",
+    "use_when": [
+      "trạng thái hồ sơ, phiếu, đơn, ca khám trong bảng, thẻ, tiêu đề",
+      "any workflow state that must be scannable by colour"
+    ],
+    "avoid_when": "Counts or categories without a workflow meaning: use badge. Long explanations: use alert.",
+    "keywords": [
+      "status",
+      "trạng thái",
+      "nhãn trạng thái",
+      "chờ khám",
+      "đang khám",
+      "đã khám",
+      "đã huỷ",
+      "chờ duyệt",
+      "hoàn thành",
+      "thiếu hồ sơ",
+      "chip",
+      "pill"
+    ],
+    "example": "const RECORD = defineStatuses<Status>({ waiting: { tone: \"warning\", label: \"Chờ khám\" }, done: { tone: \"success\", label: \"Đã khám\" } });  <StatusBadge {...RECORD[row.status]} />",
+    "related": [
+      "badge",
+      "data-table"
+    ],
+    "import": "@/components/blocks/status-badge",
+    "exports": [
+      "StatusBadge",
+      "defineStatuses"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "table",
+    "category": "data",
+    "summary": "Semantic table primitives (header, rows, cells, footer).",
+    "use_when": [
+      "any list where users compare values across columns",
+      "comparison tables on dashboards"
+    ],
+    "avoid_when": "Fewer than ~3 columns or mobile-first lists; use item list or cards below md.",
+    "keywords": [
+      "data table",
+      "grid",
+      "list",
+      "rows",
+      "columns",
+      "bảng",
+      "danh sách",
+      "lưới dữ liệu"
+    ],
+    "example": "<Table><TableHeader><TableRow><TableHead>Khách</TableHead><TableHead className=\"text-right\">Tổng</TableHead></TableRow></TableHeader><TableBody>…</TableBody></Table>",
+    "related": [
+      "pagination",
+      "item",
+      "checkbox"
+    ],
+    "import": "@/components/ui/table",
+    "exports": [
+      "Table",
+      "TableBody",
+      "TableCaption",
+      "TableCell",
+      "TableFooter",
+      "TableHead",
+      "TableHeader",
+      "TableRow",
+      "tableHeaderVariants"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "virtual-list",
+    "category": "data",
+    "kind": "addon",
+    "summary": "Long list (hundreds–thousands) that renders only the visible window; renders everything under 100 items so Ctrl+F still works.",
+    "use_when": [
+      "danh sách rất dài: hồ sơ đoàn, dịch vụ, danh mục"
+    ],
+    "avoid_when": "Paged data: data-table with pagination.",
+    "keywords": [
+      "virtual list",
+      "danh sách dài",
+      "cuộn vô hạn",
+      "hiệu năng",
+      "virtualized",
+      "nhiều dòng",
+      "lazy list"
+    ],
+    "example": "<VirtualList className=\"h-[60vh]\" items={patients} estimateSize={64} getItemKey={(p) => p.id} renderItem={(p) => <Item>…</Item>} />",
+    "related": [
+      "item",
+      "scroll-area",
+      "data-table"
+    ],
+    "import": "@/components/blocks/virtual-list",
+    "install": "node <this-skill-folder>/scripts/add-block.mjs virtual-list <app-dir>",
+    "exports": [
+      "VIRTUALIZE_FROM_ITEMS",
+      "VirtualList"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "alert",
+    "category": "feedback",
+    "summary": "Inline message box with icon, title, description and optional action.",
+    "use_when": [
+      "page- or section-level warnings and errors",
+      "critical value banners"
+    ],
+    "avoid_when": "Transient confirmations; use toast.",
+    "keywords": [
+      "banner",
+      "warning",
+      "error message",
+      "notice",
+      "cảnh báo",
+      "thông báo lỗi"
+    ],
+    "example": "<Alert variant=\"destructive\"><TriangleAlertIcon /><AlertTitle>Không tải được dữ liệu</AlertTitle><AlertDescription>…</AlertDescription></Alert>",
+    "related": [
+      "toast",
+      "empty"
+    ],
+    "import": "@/components/ui/alert",
+    "exports": [
+      "Alert",
+      "AlertAction",
+      "AlertDescription",
+      "AlertTitle"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "destructive"
+      ]
+    },
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "empty",
+    "category": "feedback",
+    "summary": "Empty state: icon, title, description and actions.",
+    "use_when": [
+      "no data yet",
+      "no search results",
+      "nothing to do"
+    ],
+    "avoid_when": "Loading; use skeleton.",
+    "keywords": [
+      "empty state",
+      "no data",
+      "no results",
+      "trống",
+      "không có dữ liệu",
+      "không tìm thấy"
+    ],
+    "example": "<Empty><EmptyHeader><EmptyMedia variant=\"icon\"><InboxIcon /></EmptyMedia><EmptyTitle>Chưa có đơn</EmptyTitle><EmptyDescription>…</EmptyDescription></EmptyHeader><EmptyContent><Button>Tạo đơn</Button></EmptyContent></Empty>",
+    "related": [],
+    "import": "@/components/ui/empty",
+    "exports": [
+      "Empty",
+      "EmptyContent",
+      "EmptyDescription",
+      "EmptyHeader",
+      "EmptyMedia",
+      "EmptyTitle"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "icon"
+      ]
+    },
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "info-hint",
+    "category": "feedback",
+    "kind": "block",
+    "summary": "An ⓘ that shows a secondary line on hover/focus (Tooltip); the text stays in the DOM for screen readers.",
+    "use_when": [
+      "giải thích ngắn cạnh nhãn, tiêu đề cột, chỉ số"
+    ],
+    "avoid_when": "Information the user must read to act: show it inline.",
+    "keywords": [
+      "info",
+      "gợi ý",
+      "chú thích",
+      "tooltip",
+      "giải thích",
+      "hint",
+      "help icon"
+    ],
+    "example": "<span className=\"inline-flex items-center gap-1\">Thời gian chờ<InfoHint text=\"Tính từ lúc check-in\" /></span>",
+    "related": [
+      "tooltip",
+      "hover-card"
+    ],
+    "import": "@/components/blocks/info-hint",
+    "exports": [
+      "InfoHint"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "retry-alert",
+    "category": "feedback",
+    "kind": "block",
+    "summary": "Inline error strip with [Thử lại] right under what failed, instead of a toast; keeps what the user typed.",
+    "use_when": [
+      "một phần trang tải lỗi",
+      "lưu thất bại cần thử lại tại chỗ"
+    ],
+    "avoid_when": "Whole-page failure: ServerError page / empty state.",
+    "keywords": [
+      "retry",
+      "thử lại",
+      "lỗi tải",
+      "tải lại",
+      "error",
+      "failed",
+      "không tải được"
+    ],
+    "example": "{query.isError && <RetryAlert message=\"Không tải được lịch sử khám\" onRetry={() => query.refetch()} isRetrying={query.isFetching} />}",
+    "related": [
+      "alert",
+      "empty",
+      "toast"
+    ],
+    "import": "@/components/blocks/retry-alert",
+    "exports": [
+      "RetryAlert"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "skeleton",
+    "category": "feedback",
+    "summary": "Placeholder blocks while content loads.",
+    "use_when": [
+      "initial load of lists, cards, charts"
+    ],
+    "avoid_when": "Actions in progress; use spinner.",
+    "keywords": [
+      "loading",
+      "placeholder",
+      "shimmer",
+      "đang tải"
+    ],
+    "example": "<Skeleton className=\"h-4 w-32\" />",
+    "related": [
+      "spinner"
+    ],
+    "import": "@/components/ui/skeleton",
+    "exports": [
+      "Skeleton"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "spinner",
+    "category": "feedback",
+    "summary": "Indeterminate loading indicator.",
+    "use_when": [
+      "buttons while submitting",
+      "small async regions"
+    ],
+    "avoid_when": "Whole-page loads; use skeleton.",
+    "keywords": [
+      "loading",
+      "spinner",
+      "đang xử lý"
+    ],
+    "example": "<Button disabled><Spinner /> Đang lưu</Button>",
+    "related": [
+      "skeleton"
+    ],
+    "import": "@/components/ui/spinner",
+    "exports": [
+      "Spinner"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "toast",
+    "category": "feedback",
+    "summary": "Transient notification (Base UI toast manager).",
+    "use_when": [
+      "confirm a completed action ('Đã lưu')",
+      "background errors"
+    ],
+    "avoid_when": "Information the user must act on; use alert/dialog.",
+    "keywords": [
+      "notification",
+      "snackbar",
+      "sonner",
+      "thông báo",
+      "đã lưu"
+    ],
+    "example": "toast.add({ title: \"Đã lưu chương trình\" })  // <Toaster> is mounted in App.tsx",
+    "related": [],
+    "import": "@/components/ui/toast",
+    "exports": [
+      "createToastManager",
+      "Toast",
+      "ToastAction",
+      "ToastClose",
+      "ToastContent",
+      "ToastDescription",
+      "Toaster",
+      "ToastPortal",
+      "ToastProvider",
+      "ToastTitle",
+      "ToastViewport",
+      "toast",
+      "useToastManager"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/toast"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "calendar",
+    "category": "form",
+    "summary": "Month calendar for picking a date or a date range (react-day-picker).",
+    "use_when": [
+      "date pickers inside a popover",
+      "date range filters",
+      "booking"
+    ],
+    "avoid_when": "Free typing of known dates; offer an input too.",
+    "keywords": [
+      "date picker",
+      "date range",
+      "calendar",
+      "lịch",
+      "chọn ngày",
+      "khoảng ngày"
+    ],
+    "example": "<Popover><PopoverTrigger render={<Button variant=\"outline\">23/10/2026</Button>} /><PopoverContent><Calendar mode=\"range\" selected={range} onSelect={setRange} /></PopoverContent></Popover>",
+    "related": [
+      "popover"
+    ],
+    "import": "@/components/ui/calendar",
+    "exports": [
+      "Calendar",
+      "CalendarDayButton"
+    ],
+    "variants": {},
+    "deps": [
+      "react-day-picker"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "checkbox",
+    "category": "form",
+    "summary": "Boolean or multi-choice checkbox, with indeterminate state.",
+    "use_when": [
+      "multi-select options",
+      "row selection in tables",
+      "agree to terms"
+    ],
+    "avoid_when": "Instant on/off settings; use switch.",
+    "keywords": [
+      "check",
+      "tick",
+      "select row",
+      "ô chọn",
+      "đánh dấu"
+    ],
+    "example": "<Checkbox checked={v} onCheckedChange={setV} />",
+    "related": [
+      "switch",
+      "radio-group"
+    ],
+    "import": "@/components/ui/checkbox",
+    "exports": [
+      "Checkbox"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/checkbox"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "combobox",
+    "category": "form",
+    "summary": "Searchable select, single or multiple, with chips.",
+    "use_when": [
+      "long lists (products, customers)",
+      "multi-select with tags",
+      "async search"
+    ],
+    "avoid_when": "A few options; use select or radio.",
+    "keywords": [
+      "autocomplete",
+      "searchable select",
+      "multi select",
+      "typeahead",
+      "tìm và chọn",
+      "chọn nhiều",
+      "ô chọn có tìm kiếm",
+      "chọn có tìm kiếm",
+      "select có tìm kiếm",
+      "gõ để tìm"
+    ],
+    "example": "<Combobox items={products}><ComboboxInput placeholder=\"Chọn sản phẩm\" /><ComboboxContent><ComboboxList>{(p) => <ComboboxItem value={p}>{p.name}</ComboboxItem>}</ComboboxList></ComboboxContent></Combobox>",
+    "related": [
+      "select",
+      "command"
+    ],
+    "import": "@/components/ui/combobox",
+    "exports": [
+      "Combobox",
+      "ComboboxChip",
+      "ComboboxChips",
+      "ComboboxChipsInput",
+      "ComboboxCollection",
+      "ComboboxContent",
+      "ComboboxEmpty",
+      "ComboboxGroup",
+      "ComboboxInput",
+      "ComboboxItem",
+      "ComboboxLabel",
+      "ComboboxList",
+      "ComboboxSeparator",
+      "ComboboxTrigger",
+      "ComboboxValue",
+      "useComboboxAnchor"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "date-picker",
+    "category": "form",
+    "kind": "primitive",
+    "summary": "Date input with calendar popover in vi-VN (@medviet/ui): DatePicker, DatePickerInput (typed dd/mm/yyyy + calendar), DateRangePicker (từ ngày – đến ngày).",
+    "use_when": [
+      "ngày sinh, ngày khám, ngày hẹn",
+      "lọc theo khoảng ngày (từ ngày – đến ngày)"
+    ],
+    "avoid_when": "Only a time: use time-input. Free-text dates.",
+    "keywords": [
+      "date picker",
+      "chọn ngày",
+      "ngày sinh",
+      "ngày khám",
+      "khoảng ngày",
+      "từ ngày",
+      "đến ngày",
+      "date range",
+      "lịch",
+      "calendar input"
+    ],
+    "example": "<DatePickerInput value={date} onChange={setDate} />  <DateRangePicker value={range} onChange={setRange} />",
+    "related": [
+      "calendar",
+      "time-input",
+      "popover",
+      "field"
+    ],
+    "import": "@/components/ui/date-picker",
+    "exports": [
+      "DatePicker",
+      "DatePickerInput",
+      "DateRangePicker"
+    ],
+    "variants": {},
+    "deps": [
+      "react-day-picker"
+    ]
+  },
+  {
+    "name": "field",
+    "category": "form",
+    "summary": "Form field layout: label, control, description, error; groups and fieldsets.",
+    "use_when": [
+      "every form control that needs a label, help text or validation message"
+    ],
+    "avoid_when": "—",
+    "keywords": [
+      "form field",
+      "label",
+      "validation",
+      "error message",
+      "trường",
+      "biểu mẫu",
+      "form",
+      "lỗi nhập"
+    ],
+    "example": "<Field><FieldLabel htmlFor=\"name\">Tên chương trình</FieldLabel><Input id=\"name\" /><FieldDescription>Hiển thị cho khách</FieldDescription><FieldError>…</FieldError></Field>",
+    "related": [
+      "input",
+      "label"
+    ],
+    "import": "@/components/ui/field",
+    "exports": [
+      "Field",
+      "FieldContent",
+      "FieldDescription",
+      "FieldError",
+      "FieldGroup",
+      "FieldLabel",
+      "FieldLegend",
+      "FieldSeparator",
+      "FieldSet",
+      "FieldTitle"
+    ],
+    "variants": {
+      "orientation": [
+        "vertical",
+        "horizontal",
+        "responsive"
+      ]
+    },
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "file-upload",
+    "category": "form",
+    "kind": "block",
+    "summary": "Drag-and-drop or click-to-pick file area, size limit with message, chosen files listed as removable attachments.",
+    "use_when": [
+      "attaching documents, images or invoices to a record or form"
+    ],
+    "avoid_when": "Avatar pickers with cropping (build on top of it).",
+    "keywords": [
+      "upload",
+      "file",
+      "dropzone",
+      "attachment",
+      "drag and drop",
+      "tải lên",
+      "tệp",
+      "đính kèm",
+      "kéo thả",
+      "chọn tệp",
+      "upload file"
+    ],
+    "example": "<FileUpload value={files} onChange={setFiles} accept=\"image/*,.pdf\" maxSize={10e6} hint=\"PDF hoặc ảnh, tối đa 10 MB\" />",
+    "related": [
+      "attachment",
+      "form"
+    ],
+    "import": "@/components/blocks/file-upload",
+    "exports": [
+      "FileUpload"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "form",
+    "category": "form",
+    "kind": "block",
+    "summary": "Form wired to react-hook-form with a zod resolver; FormField renders label, control, description and the validation message.",
+    "use_when": [
+      "any form with validation: create/edit records, settings, sign-up"
+    ],
+    "avoid_when": "A single search box or instant filters.",
+    "keywords": [
+      "form",
+      "validation",
+      "react-hook-form",
+      "zod",
+      "submit",
+      "biểu mẫu",
+      "kiểm tra dữ liệu",
+      "báo lỗi",
+      "nhập liệu"
+    ],
+    "example": "const form = useForm({ resolver: zodResolver(schema), defaultValues }); <Form form={form} onSubmit={save}><FormField name=\"name\" label=\"Tên\">{({ field, id, invalid }) => <Input id={id} aria-invalid={invalid} {...field} />}</FormField></Form>",
+    "related": [
+      "field",
+      "input",
+      "number-input"
+    ],
+    "import": "@/components/blocks/form",
+    "exports": [
+      "Form",
+      "FormField",
+      "zodResolver"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "input",
+    "category": "form",
+    "summary": "Single-line text input.",
+    "use_when": [
+      "text, email, phone, search, numbers"
+    ],
+    "avoid_when": "Long text; use textarea.",
+    "keywords": [
+      "text box",
+      "textfield",
+      "ô nhập",
+      "nhập liệu"
+    ],
+    "example": "<Input placeholder=\"Tìm theo tên, SĐT\" />",
+    "related": [
+      "input-group",
+      "field"
+    ],
+    "import": "@/components/ui/input",
+    "exports": [
+      "Input"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/input"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "input-group",
+    "category": "form",
+    "summary": "Input with attached addons: icons, buttons, text (₫, %, https://).",
+    "use_when": [
+      "search with icon",
+      "money/percent inputs with a unit",
+      "input with clear/copy button"
+    ],
+    "avoid_when": "Plain inputs.",
+    "keywords": [
+      "addon",
+      "prefix",
+      "suffix",
+      "icon input",
+      "đơn vị",
+      "ô tìm kiếm"
+    ],
+    "example": "<InputGroup><InputGroupInput inputMode=\"numeric\" /><InputGroupAddon align=\"inline-end\"><InputGroupText>₫</InputGroupText></InputGroupAddon></InputGroup>",
+    "related": [],
+    "import": "@/components/ui/input-group",
+    "exports": [
+      "InputGroup",
+      "InputGroupAddon",
+      "InputGroupButton",
+      "InputGroupInput",
+      "InputGroupText",
+      "InputGroupTextarea"
+    ],
+    "variants": {
+      "align": [
+        "inline-start",
+        "inline-end",
+        "block-start",
+        "block-end"
+      ]
+    },
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "input-otp",
+    "category": "form",
+    "summary": "One-time code input split into slots.",
+    "use_when": [
+      "OTP / 2FA verification"
+    ],
+    "avoid_when": "Other numbers.",
+    "keywords": [
+      "otp",
+      "verification code",
+      "mã xác thực"
+    ],
+    "example": "<InputOTP maxLength={6}><InputOTPGroup><InputOTPSlot index={0} />…</InputOTPGroup></InputOTP>",
+    "related": [],
+    "import": "@/components/ui/input-otp",
+    "exports": [
+      "InputOTP",
+      "InputOTPGroup",
+      "InputOTPSeparator",
+      "InputOTPSlot"
+    ],
+    "variants": {},
+    "deps": [
+      "input-otp"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "label",
+    "category": "form",
+    "summary": "Accessible label for a control.",
+    "use_when": [
+      "standalone controls outside Field"
+    ],
+    "avoid_when": "Inside Field; use FieldLabel.",
+    "keywords": [
+      "label",
+      "nhãn"
+    ],
+    "example": "<Label htmlFor=\"x\">Tên</Label>",
+    "related": [],
+    "import": "@/components/ui/label",
+    "exports": [
+      "Label"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "native-select",
+    "category": "form",
+    "summary": "Browser-native select styled to match.",
+    "use_when": [
+      "mobile-first forms, very simple pickers"
+    ],
+    "avoid_when": "When you need search or rich items.",
+    "keywords": [
+      "native dropdown",
+      "chọn đơn giản"
+    ],
+    "example": "<NativeSelect><NativeSelectOption value=\"1\">Một</NativeSelectOption></NativeSelect>",
+    "related": [],
+    "import": "@/components/ui/native-select",
+    "exports": [
+      "NativeSelect",
+      "NativeSelectOptGroup",
+      "NativeSelectOption"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "number-input",
+    "category": "form",
+    "kind": "block",
+    "summary": "Numeric input that shows locale grouping while typing (1.250.000) and returns a number, with a unit suffix.",
+    "use_when": [
+      "money, percentages, quantities, durations"
+    ],
+    "avoid_when": "Codes or phone numbers (they are text, not numbers).",
+    "keywords": [
+      "money input",
+      "currency",
+      "amount",
+      "number",
+      "price",
+      "nhập tiền",
+      "số tiền",
+      "giá",
+      "số lượng",
+      "phần trăm"
+    ],
+    "example": "<NumberInput value={amount} onChange={setAmount} suffix=\"₫\" />",
+    "related": [
+      "input-group",
+      "form"
+    ],
+    "import": "@/components/blocks/number-input",
+    "exports": [
+      "NumberInput"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "questionnaire",
+    "category": "form",
+    "summary": "Step-by-step question flow with choices, progress, inputs, errors and actions.",
+    "use_when": [
+      "surveys, onboarding quizzes, guided intake forms"
+    ],
+    "avoid_when": "Ordinary data-entry forms; use field.",
+    "keywords": [
+      "survey",
+      "quiz",
+      "wizard",
+      "stepper",
+      "multi-step form",
+      "khảo sát",
+      "câu hỏi",
+      "từng bước"
+    ],
+    "example": "<Questionnaire><QuestionnaireTitle>…</QuestionnaireTitle><QuestionnaireChoices>…</QuestionnaireChoices><QuestionnaireActions>…</QuestionnaireActions></Questionnaire>",
+    "related": [],
+    "import": "@/components/ui/questionnaire",
+    "exports": [
+      "Questionnaire",
+      "QuestionnaireActions",
+      "QuestionnaireChoice",
+      "QuestionnaireChoiceDescription",
+      "QuestionnaireChoices",
+      "QuestionnaireDescription",
+      "QuestionnaireError",
+      "QuestionnaireInput",
+      "QuestionnaireItem",
+      "QuestionnaireNext",
+      "QuestionnairePrevious",
+      "QuestionnaireProgress",
+      "QuestionnaireSkip",
+      "QuestionnaireSubmit",
+      "QuestionnaireTitle"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "radio-group",
+    "category": "form",
+    "summary": "Pick exactly one of a few visible options.",
+    "use_when": [
+      "2–5 mutually exclusive options the user should compare"
+    ],
+    "avoid_when": "Many options; use select/combobox.",
+    "keywords": [
+      "radio",
+      "single choice",
+      "chọn một",
+      "lựa chọn"
+    ],
+    "example": "<RadioGroup value={v} onValueChange={setV}><RadioGroupItem value=\"percent\" /> …</RadioGroup>",
+    "related": [
+      "select",
+      "toggle-group"
+    ],
+    "import": "@/components/ui/radio-group",
+    "exports": [
+      "RadioGroup",
+      "RadioGroupItem"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/radio",
+      "@base-ui/react/radio-group"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "required-mark",
+    "category": "form",
+    "kind": "block",
+    "summary": "The red * after a required field's label; stays in the accessible name (\"Họ tên *\").",
+    "use_when": [
+      "nhãn của trường bắt buộc trong form"
+    ],
+    "avoid_when": "Explaining why a field is required: use FieldDescription.",
+    "keywords": [
+      "required",
+      "bắt buộc",
+      "dấu sao",
+      "trường bắt buộc",
+      "asterisk"
+    ],
+    "example": "<FieldLabel htmlFor=\"name\">Họ tên<RequiredMark /></FieldLabel>",
+    "related": [
+      "field",
+      "label",
+      "form"
+    ],
+    "import": "@/components/blocks/required-mark",
+    "exports": [
+      "RequiredMark"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "rich-text-editor",
+    "category": "form",
+    "kind": "addon",
+    "summary": "Rich text editor (Tiptap) with a token-styled toolbar: headings, bold/italic/underline/strike, lists, quote, link, undo; 'full' adds alignment and tables; optional character limit. Value is HTML; works inside FormField.",
+    "use_when": [
+      "clinical notes, orders, descriptions, emails, announcements where formatting matters"
+    ],
+    "avoid_when": "Short plain fields (use input/textarea). Load lazily (React.lazy) if it is not on the first screen: Tiptap is large.",
+    "keywords": [
+      "rich text",
+      "wysiwyg",
+      "editor",
+      "tiptap",
+      "formatting",
+      "soạn thảo",
+      "trình soạn thảo",
+      "văn bản định dạng",
+      "ghi chú",
+      "in đậm"
+    ],
+    "example": "<FormField name=\"note\" label=\"Nội dung\">{({ field, id, invalid }) => <RichTextEditor id={id} aria-invalid={invalid} value={field.value} onChange={field.onChange} placeholder=\"Nhập y lệnh…\" toolbar=\"full\" maxLength={2000} />}</FormField>",
+    "related": [
+      "rich-text-content",
+      "form",
+      "textarea"
+    ],
+    "import": "@/components/blocks/rich-text-editor",
+    "install": "node <this-skill-folder>/scripts/add-block.mjs rich-text-editor <app-dir>",
+    "exports": [
+      "RichTextEditor"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "select",
+    "category": "form",
+    "summary": "Dropdown to pick one option from a short list.",
+    "use_when": [
+      "5–15 known options"
+    ],
+    "avoid_when": "Long or searchable lists; use combobox.",
+    "keywords": [
+      "dropdown",
+      "picker",
+      "chọn",
+      "danh sách thả xuống",
+      "filter",
+      "lọc",
+      "lọc theo",
+      "bộ lọc"
+    ],
+    "example": "<Select value={v} onValueChange={setV}><SelectTrigger><SelectValue placeholder=\"Chi nhánh\" /></SelectTrigger><SelectContent><SelectItem value=\"q1\">Quận 1</SelectItem></SelectContent></Select>",
+    "related": [
+      "combobox",
+      "native-select",
+      "radio-group"
+    ],
+    "import": "@/components/ui/select",
+    "exports": [
+      "Select",
+      "SelectContent",
+      "SelectGroup",
+      "SelectItem",
+      "SelectLabel",
+      "SelectScrollDownButton",
+      "SelectScrollUpButton",
+      "SelectSeparator",
+      "SelectTrigger",
+      "SelectValue"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/select"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "signature-pad",
+    "category": "form",
+    "kind": "addon",
+    "summary": "Signature capture (mouse, pen, finger) as a transparent PNG; keeps strokes on resize; MIN_STROKE_LENGTH rejects a dot or a brushing thumb.",
+    "use_when": [
+      "người bệnh ký xác nhận, cam kết, biên bản",
+      "ký trên máy tính bảng tại quầy"
+    ],
+    "avoid_when": "Legal digital signatures (USB token, CA): use the signing service.",
+    "keywords": [
+      "signature",
+      "chữ ký",
+      "ký tên",
+      "ký xác nhận",
+      "ký điện tử",
+      "signature pad",
+      "cam kết"
+    ],
+    "example": "<SignaturePad ref={pad} label=\"Chữ ký người bệnh\" onStrokeLengthChange={setLength} />",
+    "related": [
+      "dialog",
+      "button"
+    ],
+    "import": "@/components/blocks/signature-pad",
+    "install": "node <this-skill-folder>/scripts/add-block.mjs signature-pad <app-dir>",
+    "exports": [
+      "MIN_STROKE_LENGTH",
+      "SignaturePad"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "slider",
+    "category": "form",
+    "summary": "Pick a number or range by dragging.",
+    "use_when": [
+      "approximate values, price ranges"
+    ],
+    "avoid_when": "Exact values; use input.",
+    "keywords": [
+      "range",
+      "slider",
+      "thanh trượt",
+      "khoảng giá"
+    ],
+    "example": "<Slider defaultValue={[20, 80]} />",
+    "related": [],
+    "import": "@/components/ui/slider",
+    "exports": [
+      "Slider"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/slider"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "switch",
+    "category": "form",
+    "summary": "On/off toggle that applies immediately.",
+    "use_when": [
+      "settings that take effect at once",
+      "'show only abnormal' style filters"
+    ],
+    "avoid_when": "Form choices saved later; use checkbox.",
+    "keywords": [
+      "toggle",
+      "on off",
+      "bật tắt",
+      "công tắc"
+    ],
+    "example": "<Switch checked={on} onCheckedChange={setOn} />",
+    "related": [
+      "checkbox"
+    ],
+    "import": "@/components/ui/switch",
+    "exports": [
+      "Switch"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/switch"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "textarea",
+    "category": "form",
+    "summary": "Multi-line text input.",
+    "use_when": [
+      "notes, descriptions, comments"
+    ],
+    "avoid_when": "Short values.",
+    "keywords": [
+      "multiline",
+      "notes",
+      "ghi chú",
+      "mô tả"
+    ],
+    "example": "<Textarea rows={4} />",
+    "related": [],
+    "import": "@/components/ui/textarea",
+    "exports": [
+      "Textarea"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "time-input",
+    "category": "form",
+    "kind": "block",
+    "summary": "24-hour HH:mm text input with a mask (colon fills itself, hour ≤ 23, minute ≤ 59); avoids the OS-locale 12-hour native time box.",
+    "use_when": [
+      "giờ hẹn, giờ khám, giờ bàn giao",
+      "any time of day typed by keyboard"
+    ],
+    "avoid_when": "A date and time together: date-picker + time-input side by side.",
+    "keywords": [
+      "time",
+      "giờ",
+      "giờ phút",
+      "giờ hẹn",
+      "nhập giờ",
+      "hh:mm",
+      "time picker"
+    ],
+    "example": "<TimeInput value={time} onChange={setTime} aria-label=\"Giờ hẹn\" />",
+    "related": [
+      "date-picker",
+      "input"
+    ],
+    "import": "@/components/blocks/time-input",
+    "exports": [
+      "maskTime",
+      "TimeInput"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "toggle",
+    "category": "form",
+    "summary": "Single pressable on/off button.",
+    "use_when": [
+      "toolbar formatting buttons (bold, pin)"
+    ],
+    "avoid_when": "Settings; use switch.",
+    "keywords": [
+      "toggle button",
+      "nút bật"
+    ],
+    "example": "<Toggle aria-label=\"Ghim\"><PinIcon /></Toggle>",
+    "related": [
+      "toggle-group"
+    ],
+    "import": "@/components/ui/toggle",
+    "exports": [
+      "Toggle",
+      "toggleVariants"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "outline"
+      ],
+      "size": [
+        "default",
+        "sm",
+        "lg"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/toggle"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "toggle-group",
+    "category": "form",
+    "summary": "Set of toggle buttons; single-select works as a segmented control.",
+    "use_when": [
+      "period pickers (7/30/90 ngày)",
+      "view switches (bảng/thẻ)",
+      "small filters"
+    ],
+    "avoid_when": "More than ~5 options.",
+    "keywords": [
+      "segmented control",
+      "button group select",
+      "period selector",
+      "chọn kỳ",
+      "chế độ xem",
+      "filter",
+      "lọc nhanh"
+    ],
+    "example": "<ToggleGroup value={[period]} onValueChange={(v) => setPeriod(v[0])}><ToggleGroupItem value=\"7d\">7 ngày</ToggleGroupItem><ToggleGroupItem value=\"30d\">30 ngày</ToggleGroupItem></ToggleGroup>",
+    "related": [
+      "tabs",
+      "radio-group"
+    ],
+    "import": "@/components/ui/toggle-group",
+    "exports": [
+      "ToggleGroup",
+      "ToggleGroupItem"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/toggle",
+      "@base-ui/react/toggle-group"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "accordion",
+    "category": "layout",
+    "summary": "Stacked sections that expand/collapse, usually one at a time.",
+    "use_when": [
+      "FAQs, grouped settings, long forms split into sections"
+    ],
+    "avoid_when": "Primary content the user always needs; don't hide it.",
+    "keywords": [
+      "faq",
+      "expand",
+      "sections",
+      "hỏi đáp",
+      "câu hỏi thường gặp",
+      "xổ xuống"
+    ],
+    "example": "<Accordion><AccordionItem value=\"a\"><AccordionTrigger>Câu hỏi</AccordionTrigger><AccordionContent>Trả lời</AccordionContent></AccordionItem></Accordion>",
+    "related": [
+      "collapsible",
+      "tabs"
+    ],
+    "import": "@/components/ui/accordion",
+    "exports": [
+      "Accordion",
+      "AccordionContent",
+      "AccordionItem",
+      "AccordionTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/accordion"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "aspect-ratio",
+    "category": "layout",
+    "summary": "Keeps media at a fixed width:height ratio.",
+    "use_when": [
+      "images, video, maps, thumbnails"
+    ],
+    "avoid_when": "Text content.",
+    "keywords": [
+      "ratio",
+      "16:9",
+      "image box",
+      "tỉ lệ khung hình"
+    ],
+    "example": "<AspectRatio ratio={16/9}><img … /></AspectRatio>",
+    "related": [],
+    "import": "@/components/ui/aspect-ratio",
+    "exports": [
+      "AspectRatio"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "card",
+    "category": "layout",
+    "summary": "Bordered surface grouping one topic: header (title, description, action), content, footer.",
+    "use_when": [
+      "a KPI or stat block",
+      "a panel of related info on a dashboard or detail page",
+      "a settings section"
+    ],
+    "avoid_when": "Wrapping every element in a card, or nesting cards; use spacing/Separator inside one card instead.",
+    "keywords": [
+      "panel",
+      "box",
+      "section",
+      "tile",
+      "khung",
+      "thẻ",
+      "khối"
+    ],
+    "example": "<Card><CardHeader><CardTitle>Doanh thu</CardTitle><CardAction>…</CardAction></CardHeader><CardContent>…</CardContent></Card>",
+    "related": [
+      "item",
+      "separator"
+    ],
+    "import": "@/components/ui/card",
+    "exports": [
+      "Card",
+      "CardAction",
+      "CardContent",
+      "CardDescription",
+      "CardFooter",
+      "CardHeader",
+      "CardTitle"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "collapsible",
+    "category": "layout",
+    "summary": "Show/hide one region with a trigger.",
+    "use_when": [
+      "optional details, advanced filters, 'xem thêm'"
+    ],
+    "avoid_when": "Several sections where only one opens; use accordion.",
+    "keywords": [
+      "expand",
+      "toggle section",
+      "show more",
+      "thu gọn",
+      "mở rộng",
+      "xem thêm"
+    ],
+    "example": "<Collapsible><CollapsibleTrigger>Bộ lọc nâng cao</CollapsibleTrigger><CollapsibleContent>…</CollapsibleContent></Collapsible>",
+    "related": [
+      "accordion"
+    ],
+    "import": "@/components/ui/collapsible",
+    "exports": [
+      "Collapsible",
+      "CollapsibleContent",
+      "CollapsibleTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/collapsible"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "direction",
+    "category": "layout",
+    "summary": "Provider that sets LTR/RTL direction for components.",
+    "use_when": [
+      "right-to-left languages"
+    ],
+    "avoid_when": "Vietnamese/English UIs; not needed.",
+    "keywords": [
+      "rtl",
+      "ltr",
+      "direction"
+    ],
+    "example": "<DirectionProvider direction=\"rtl\">…</DirectionProvider>",
+    "related": [],
+    "import": "@/components/ui/direction",
+    "exports": [
+      "DirectionProvider",
+      "useDirection"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/direction-provider"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "page-header",
+    "category": "layout",
+    "kind": "block",
+    "summary": "Page title block: breadcrumb, title, description, actions on the right, optional filter row below.",
+    "use_when": [
+      "the top of every page"
+    ],
+    "avoid_when": "Card titles inside the page; use CardTitle.",
+    "keywords": [
+      "page title",
+      "header",
+      "heading",
+      "tiêu đề trang",
+      "đầu trang",
+      "thanh tiêu đề"
+    ],
+    "example": "<PageHeader title=\"Đơn hàng\" description=\"128 đơn chờ xử lý\" actions={<Button>Tạo đơn</Button>}><DateRangePicker value={range} onChange={setRange} /></PageHeader>",
+    "related": [
+      "breadcrumb",
+      "date-range-picker"
+    ],
+    "import": "@/components/blocks/page-header",
+    "exports": [
+      "PageHeader"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "print-sheet",
+    "category": "layout",
+    "kind": "addon",
+    "summary": "A4 paper form to print (biên bản, phiếu, bảng bàn giao): sheet preview on screen, window.print(), app chrome hidden with print:hidden.",
+    "use_when": [
+      "in phiếu khám, biên bản, bảng bàn giao, giấy hẹn"
+    ],
+    "avoid_when": "Data downloads: export-menu. Server-generated PDFs: render on the server.",
+    "keywords": [
+      "print",
+      "in",
+      "in phiếu",
+      "biên bản",
+      "bản in",
+      "a4",
+      "phiếu in",
+      "printable"
+    ],
+    "example": "<PrintSheet title=\"Biên bản bàn giao\">…</PrintSheet>",
+    "related": [
+      "export-menu",
+      "table"
+    ],
+    "import": "@/components/blocks/print-sheet",
+    "install": "node <this-skill-folder>/scripts/add-block.mjs print-sheet <app-dir>",
+    "exports": [
+      "PrintSheet"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "resizable",
+    "category": "layout",
+    "summary": "Panels the user can resize by dragging a handle.",
+    "use_when": [
+      "master–detail views, editors, side-by-side compare"
+    ],
+    "avoid_when": "Normal page layouts; use CSS grid.",
+    "keywords": [
+      "split view",
+      "pane",
+      "drag to resize",
+      "chia khung",
+      "kéo giãn"
+    ],
+    "example": "<ResizablePanelGroup direction=\"horizontal\"><ResizablePanel>…</ResizablePanel><ResizableHandle /><ResizablePanel>…</ResizablePanel></ResizablePanelGroup>",
+    "related": [],
+    "import": "@/components/ui/resizable",
+    "exports": [
+      "ResizableHandle",
+      "ResizablePanel",
+      "ResizablePanelGroup"
+    ],
+    "variants": {},
+    "deps": [
+      "react-resizable-panels"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "scroll-area",
+    "category": "layout",
+    "summary": "Scrollable region with a styled scrollbar.",
+    "use_when": [
+      "a fixed-height list inside a card or popover"
+    ],
+    "avoid_when": "The whole page; let the document scroll.",
+    "keywords": [
+      "scroll",
+      "overflow",
+      "cuộn",
+      "thanh cuộn"
+    ],
+    "example": "<ScrollArea className=\"h-72\">…</ScrollArea>",
+    "related": [],
+    "import": "@/components/ui/scroll-area",
+    "exports": [
+      "ScrollArea",
+      "ScrollBar"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/scroll-area"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "separator",
+    "category": "layout",
+    "summary": "Thin horizontal or vertical divider line.",
+    "use_when": [
+      "separating groups inside one card or menu",
+      "between toolbar groups"
+    ],
+    "avoid_when": "Between every short list item; prefer spacing.",
+    "keywords": [
+      "divider",
+      "line",
+      "hr",
+      "đường kẻ",
+      "phân cách"
+    ],
+    "example": "<Separator orientation=\"vertical\" className=\"h-4\" />",
+    "related": [],
+    "import": "@/components/ui/separator",
+    "exports": [
+      "Separator"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/separator"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "sidebar",
+    "category": "layout",
+    "summary": "App navigation sidebar with groups, menu items, collapse to icons, and mobile sheet.",
+    "use_when": [
+      "the main navigation of a multi-page app or back office"
+    ],
+    "avoid_when": "Single-page tools or landing pages; use a top header instead.",
+    "keywords": [
+      "app shell",
+      "navigation",
+      "nav",
+      "menu",
+      "thanh bên",
+      "điều hướng",
+      "menu trái"
+    ],
+    "example": "<SidebarProvider><Sidebar><SidebarContent><SidebarGroup><SidebarMenu><SidebarMenuItem><SidebarMenuButton>Đơn hàng</SidebarMenuButton></SidebarMenuItem></SidebarMenu></SidebarGroup></SidebarContent></Sidebar><SidebarInset>…</SidebarInset></SidebarProvider>",
+    "related": [
+      "navigation-menu",
+      "sheet"
+    ],
+    "import": "@/components/ui/sidebar",
+    "exports": [
+      "Sidebar",
+      "SidebarContent",
+      "SidebarFooter",
+      "SidebarGroup",
+      "SidebarGroupAction",
+      "SidebarGroupContent",
+      "SidebarGroupLabel",
+      "SidebarHeader",
+      "SidebarInput",
+      "SidebarInset",
+      "SidebarMenu",
+      "SidebarMenuAction",
+      "SidebarMenuBadge",
+      "SidebarMenuButton",
+      "SidebarMenuItem",
+      "SidebarMenuSkeleton",
+      "SidebarMenuSub",
+      "SidebarMenuSubButton",
+      "SidebarMenuSubItem",
+      "SidebarProvider",
+      "SidebarRail",
+      "SidebarSeparator",
+      "SidebarTrigger",
+      "useSidebar"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "outline"
+      ],
+      "size": [
+        "default",
+        "sm",
+        "lg"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/merge-props",
+      "@base-ui/react/use-render"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "breadcrumb",
+    "category": "navigation",
+    "summary": "Path from section to current page.",
+    "use_when": [
+      "detail pages two or more levels deep"
+    ],
+    "avoid_when": "Top-level pages or flat apps.",
+    "keywords": [
+      "path",
+      "trail",
+      "đường dẫn",
+      "vị trí trang"
+    ],
+    "example": "<Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href=\"/don-hang\">Đơn hàng</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>#1024</BreadcrumbPage></BreadcrumbItem></BreadcrumbList></Breadcrumb>",
+    "related": [],
+    "import": "@/components/ui/breadcrumb",
+    "exports": [
+      "Breadcrumb",
+      "BreadcrumbEllipsis",
+      "BreadcrumbItem",
+      "BreadcrumbLink",
+      "BreadcrumbList",
+      "BreadcrumbPage",
+      "BreadcrumbSeparator"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/merge-props",
+      "@base-ui/react/use-render"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "command",
+    "category": "navigation",
+    "summary": "Searchable command list (⌘K palette); also the list inside comboboxes.",
+    "use_when": [
+      "global search / quick actions",
+      "jump to record"
+    ],
+    "avoid_when": "A plain dropdown of a few options.",
+    "keywords": [
+      "command palette",
+      "cmdk",
+      "search",
+      "quick actions",
+      "tìm nhanh",
+      "tìm kiếm"
+    ],
+    "example": "<CommandDialog open={open} onOpenChange={setOpen}><CommandInput placeholder=\"Tìm…\" /><CommandList><CommandGroup heading=\"Trang\"><CommandItem>Đơn hàng</CommandItem></CommandGroup></CommandList></CommandDialog>",
+    "related": [
+      "combobox",
+      "kbd"
+    ],
+    "import": "@/components/ui/command",
+    "exports": [
+      "Command",
+      "CommandDialog",
+      "CommandEmpty",
+      "CommandGroup",
+      "CommandInput",
+      "CommandItem",
+      "CommandList",
+      "CommandSeparator",
+      "CommandShortcut"
+    ],
+    "variants": {},
+    "deps": [
+      "cmdk"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "menubar",
+    "category": "navigation",
+    "summary": "Desktop-app style menu bar (File, Edit, View…).",
+    "use_when": [
+      "editor-like tools"
+    ],
+    "avoid_when": "Normal web apps.",
+    "keywords": [
+      "menu bar",
+      "file menu",
+      "thanh menu"
+    ],
+    "example": "<Menubar><MenubarMenu><MenubarTrigger>Tệp</MenubarTrigger><MenubarContent>…</MenubarContent></MenubarMenu></Menubar>",
+    "related": [],
+    "import": "@/components/ui/menubar",
+    "exports": [
+      "Menubar",
+      "MenubarCheckboxItem",
+      "MenubarContent",
+      "MenubarGroup",
+      "MenubarItem",
+      "MenubarLabel",
+      "MenubarMenu",
+      "MenubarPortal",
+      "MenubarRadioGroup",
+      "MenubarRadioItem",
+      "MenubarSeparator",
+      "MenubarShortcut",
+      "MenubarSub",
+      "MenubarSubContent",
+      "MenubarSubTrigger",
+      "MenubarTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/menu",
+      "@base-ui/react/menubar"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "navigation-menu",
+    "category": "navigation",
+    "summary": "Horizontal top navigation with dropdown panels.",
+    "use_when": [
+      "marketing sites and landing pages with a top nav"
+    ],
+    "avoid_when": "Back-office apps; use sidebar.",
+    "keywords": [
+      "top nav",
+      "header menu",
+      "mega menu",
+      "menu ngang",
+      "thanh điều hướng"
+    ],
+    "example": "<NavigationMenu><NavigationMenuList><NavigationMenuItem><NavigationMenuTrigger>Sản phẩm</NavigationMenuTrigger><NavigationMenuContent>…</NavigationMenuContent></NavigationMenuItem></NavigationMenuList></NavigationMenu>",
+    "related": [
+      "sidebar",
+      "menubar"
+    ],
+    "import": "@/components/ui/navigation-menu",
+    "exports": [
+      "NavigationMenu",
+      "NavigationMenuContent",
+      "NavigationMenuIndicator",
+      "NavigationMenuItem",
+      "NavigationMenuLink",
+      "NavigationMenuList",
+      "NavigationMenuPositioner",
+      "NavigationMenuTrigger",
+      "navigationMenuTriggerStyle"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/navigation-menu"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "pagination",
+    "category": "navigation",
+    "summary": "Page number links with previous/next.",
+    "use_when": [
+      "long tables and lists split into pages"
+    ],
+    "avoid_when": "Short lists, or feeds (use load more / infinite scroll).",
+    "keywords": [
+      "pages",
+      "next page",
+      "phân trang",
+      "trang sau"
+    ],
+    "example": "<Pagination><PaginationContent><PaginationItem><PaginationPrevious href=\"#\" /></PaginationItem>…</PaginationContent></Pagination>",
+    "related": [
+      "table"
+    ],
+    "import": "@/components/ui/pagination",
+    "exports": [
+      "Pagination",
+      "PaginationContent",
+      "PaginationEllipsis",
+      "PaginationItem",
+      "PaginationLink",
+      "PaginationNext",
+      "PaginationPrevious"
+    ],
+    "variants": {},
+    "deps": [],
+    "kind": "primitive"
+  },
+  {
+    "name": "stepper",
+    "category": "navigation",
+    "kind": "block",
+    "summary": "Step indicator for multi-step flows: done / current / upcoming, horizontal from sm and vertical on mobile.",
+    "use_when": [
+      "wizards, checkout, onboarding, long forms split into steps"
+    ],
+    "avoid_when": "Peer sections the user can visit in any order; use tabs.",
+    "keywords": [
+      "stepper",
+      "steps",
+      "wizard",
+      "progress steps",
+      "multi-step",
+      "các bước",
+      "từng bước",
+      "quy trình",
+      "checkout",
+      "thanh toán",
+      "đặt hàng"
+    ],
+    "example": "<Stepper steps={[{ title: \"Thông tin\" }, { title: \"Ưu đãi\" }, { title: \"Xác nhận\" }]} current={1} />",
+    "related": [
+      "questionnaire",
+      "tabs",
+      "form"
+    ],
+    "import": "@/components/blocks/stepper",
+    "exports": [
+      "Step",
+      "Stepper"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "tabs",
+    "category": "navigation",
+    "summary": "Switch between views of the same context; 'line' variant for page-level tabs.",
+    "use_when": [
+      "record detail sections (Thông tin / Lịch sử)",
+      "saved views of a list",
+      "settings pages"
+    ],
+    "avoid_when": "Sequential steps (use a stepper) or more than ~6 options (use select). On mobile, let a long TabsList scroll: <Tabs className=\"max-w-full overflow-x-auto\"><TabsList className=\"w-max\">.",
+    "keywords": [
+      "tab",
+      "views",
+      "segments",
+      "thẻ",
+      "tab",
+      "chế độ xem"
+    ],
+    "example": "<Tabs defaultValue=\"info\"><TabsList variant=\"line\"><TabsTrigger value=\"info\">Thông tin</TabsTrigger></TabsList><TabsContent value=\"info\">…</TabsContent></Tabs>",
+    "related": [
+      "toggle-group"
+    ],
+    "import": "@/components/ui/tabs",
+    "exports": [
+      "Tabs",
+      "TabsContent",
+      "TabsList",
+      "TabsTrigger",
+      "tabsListVariants"
+    ],
+    "variants": {
+      "variant": [
+        "default",
+        "line"
+      ]
+    },
+    "deps": [
+      "@base-ui/react/tabs"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "alert-dialog",
+    "category": "overlay",
+    "summary": "Blocking confirmation with cancel/confirm.",
+    "use_when": [
+      "destructive or irreversible actions"
+    ],
+    "avoid_when": "Non-destructive info.",
+    "keywords": [
+      "confirm",
+      "are you sure",
+      "xác nhận",
+      "xoá"
+    ],
+    "example": "<AlertDialog><AlertDialogTrigger render={<Button variant=\"destructive\">Xoá</Button>} /><AlertDialogContent>…<AlertDialogAction>Xoá</AlertDialogAction></AlertDialogContent></AlertDialog>",
+    "related": [],
+    "import": "@/components/ui/alert-dialog",
+    "exports": [
+      "AlertDialog",
+      "AlertDialogAction",
+      "AlertDialogCancel",
+      "AlertDialogContent",
+      "AlertDialogDescription",
+      "AlertDialogFooter",
+      "AlertDialogHeader",
+      "AlertDialogMedia",
+      "AlertDialogOverlay",
+      "AlertDialogPortal",
+      "AlertDialogTitle",
+      "AlertDialogTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/alert-dialog"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "confirm-dialog",
+    "category": "overlay",
+    "kind": "block",
+    "summary": "The last question before something is lost (Bỏ thay đổi? Xoá hồ sơ? Huỷ đăng ký?): AlertDialog with the screen's own copy; Esc/outside click = no.",
+    "use_when": [
+      "rời trang khi form chưa lưu",
+      "xoá, huỷ, thao tác không hoàn tác"
+    ],
+    "avoid_when": "Reversible actions: just do it and offer undo in a toast.",
+    "keywords": [
+      "confirm",
+      "xác nhận",
+      "bỏ thay đổi",
+      "xoá",
+      "huỷ",
+      "cảnh báo trước khi xoá",
+      "discard changes",
+      "are you sure"
+    ],
+    "example": "<ConfirmDialog open={pending !== null} title=\"Bỏ thay đổi?\" description=\"Nội dung chưa lưu sẽ mất.\" confirmLabel=\"Bỏ thay đổi\" onCancel={() => setPending(null)} onConfirm={leave} />",
+    "related": [
+      "alert-dialog",
+      "dialog"
+    ],
+    "import": "@/components/blocks/confirm-dialog",
+    "exports": [
+      "ConfirmDialog"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "dialog",
+    "category": "overlay",
+    "summary": "Modal window for a focused task.",
+    "use_when": [
+      "short forms (create/edit), previews"
+    ],
+    "avoid_when": "Long content (use a page or sheet); confirmations (use alert-dialog).",
+    "keywords": [
+      "modal",
+      "popup",
+      "hộp thoại",
+      "cửa sổ"
+    ],
+    "example": "<Dialog><DialogTrigger render={<Button>Thêm</Button>} /><DialogContent><DialogHeader><DialogTitle>Thêm khách</DialogTitle></DialogHeader>…</DialogContent></Dialog>",
+    "related": [
+      "alert-dialog",
+      "sheet",
+      "drawer"
+    ],
+    "import": "@/components/ui/dialog",
+    "exports": [
+      "Dialog",
+      "DialogClose",
+      "DialogContent",
+      "DialogDescription",
+      "DialogFooter",
+      "DialogHeader",
+      "DialogOverlay",
+      "DialogPortal",
+      "DialogTitle",
+      "DialogTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/dialog"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "drawer",
+    "category": "overlay",
+    "summary": "Bottom drawer with swipe handle (mobile-friendly).",
+    "use_when": [
+      "mobile actions and quick forms"
+    ],
+    "avoid_when": "Desktop detail panels; use sheet.",
+    "keywords": [
+      "bottom sheet",
+      "mobile drawer",
+      "ngăn kéo dưới"
+    ],
+    "example": "<Drawer><DrawerTrigger>…</DrawerTrigger><DrawerContent>…</DrawerContent></Drawer>",
+    "related": [
+      "sheet"
+    ],
+    "import": "@/components/ui/drawer",
+    "exports": [
+      "Drawer",
+      "DrawerClose",
+      "DrawerContent",
+      "DrawerDescription",
+      "DrawerFooter",
+      "DrawerHeader",
+      "DrawerOverlay",
+      "DrawerPortal",
+      "DrawerSwipeHandle",
+      "DrawerTitle",
+      "DrawerTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/drawer"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "file-lightbox",
+    "category": "overlay",
+    "kind": "addon",
+    "summary": "Full-screen file viewer: images (zoom), PDF (react-pdf, lazy pages, page counter), Word .docx (docx-preview), Excel/CSV/ODS (SheetJS, sheet tabs, first 1000 rows), text; paging between files, keyboard shortcuts and download. Each viewer is lazy-loaded.",
+    "use_when": [
+      "opening attachments of a record (results, consent forms, invoices, spreadsheets)",
+      "previewing files picked in file-upload (onPreview)"
+    ],
+    "avoid_when": "Editing documents; pptx and other formats show a download fallback. For print-exact Word/Excel, convert to PDF on a server.",
+    "keywords": [
+      "lightbox",
+      "file viewer",
+      "document viewer",
+      "preview",
+      "pdf viewer",
+      "docx",
+      "word",
+      "excel",
+      "xlsx",
+      "xem tệp",
+      "xem trước",
+      "xem pdf",
+      "đọc file",
+      "tệp đính kèm"
+    ],
+    "example": "<FileLightbox files={[{ name: \"ket-qua.pdf\", url: \"/files/ket-qua.pdf\" }]} index={openIndex} onIndexChange={setOpenIndex} />  // with uploads: files={uploads.map((f) => ({ name: f.name, file: f }))}",
+    "related": [
+      "file-upload",
+      "attachment",
+      "dialog"
+    ],
+    "import": "@/components/blocks/file-lightbox",
+    "install": "node <this-skill-folder>/scripts/add-block.mjs file-lightbox <app-dir>",
+    "exports": [
+      "FileLightbox"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "hover-card",
+    "category": "overlay",
+    "summary": "Rich preview on hover.",
+    "use_when": [
+      "person or link previews"
+    ],
+    "avoid_when": "Mobile-critical info (no hover on touch).",
+    "keywords": [
+      "preview",
+      "profile card",
+      "xem nhanh"
+    ],
+    "example": "<HoverCard><HoverCardTrigger>@an</HoverCardTrigger><HoverCardContent>…</HoverCardContent></HoverCard>",
+    "related": [],
+    "import": "@/components/ui/hover-card",
+    "exports": [
+      "HoverCard",
+      "HoverCardContent",
+      "HoverCardTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/preview-card"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "popover",
+    "category": "overlay",
+    "summary": "Floating panel anchored to a trigger.",
+    "use_when": [
+      "date pickers, small filter forms, inline editors"
+    ],
+    "avoid_when": "Plain hints; use tooltip.",
+    "keywords": [
+      "floating panel",
+      "popup",
+      "khung nổi"
+    ],
+    "example": "<Popover><PopoverTrigger render={<Button variant=\"outline\">Lọc</Button>} /><PopoverContent>…</PopoverContent></Popover>",
+    "related": [
+      "tooltip",
+      "hover-card"
+    ],
+    "import": "@/components/ui/popover",
+    "exports": [
+      "Popover",
+      "PopoverContent",
+      "PopoverDescription",
+      "PopoverHeader",
+      "PopoverTitle",
+      "PopoverTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/popover"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "sheet",
+    "category": "overlay",
+    "summary": "Panel sliding from a screen edge.",
+    "use_when": [
+      "record detail next to a list",
+      "filters on mobile",
+      "mobile navigation"
+    ],
+    "avoid_when": "Primary page content.",
+    "keywords": [
+      "drawer",
+      "side panel",
+      "slide over",
+      "ngăn kéo",
+      "bảng bên",
+      "detail panel",
+      "record detail",
+      "chi tiết",
+      "xem chi tiết",
+      "panel bên phải"
+    ],
+    "example": "<Sheet><SheetTrigger render={<Button>Chi tiết</Button>} /><SheetContent><SheetHeader><SheetTitle>Đơn #1024</SheetTitle></SheetHeader>…</SheetContent></Sheet>",
+    "related": [
+      "drawer",
+      "dialog"
+    ],
+    "import": "@/components/ui/sheet",
+    "exports": [
+      "Sheet",
+      "SheetClose",
+      "SheetContent",
+      "SheetDescription",
+      "SheetFooter",
+      "SheetHeader",
+      "SheetTitle",
+      "SheetTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/dialog"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "tooltip",
+    "category": "overlay",
+    "summary": "Short text hint on hover/focus.",
+    "use_when": [
+      "icon-only buttons",
+      "truncated text",
+      "explaining a metric"
+    ],
+    "avoid_when": "Essential info or anything interactive.",
+    "keywords": [
+      "hint",
+      "title",
+      "gợi ý",
+      "chú thích"
+    ],
+    "example": "<Tooltip><TooltipTrigger render={<Button size=\"icon\" aria-label=\"Xuất\"><DownloadIcon /></Button>} /><TooltipContent>Xuất Excel</TooltipContent></Tooltip>",
+    "related": [],
+    "import": "@/components/ui/tooltip",
+    "exports": [
+      "Tooltip",
+      "TooltipContent",
+      "TooltipProvider",
+      "TooltipTrigger"
+    ],
+    "variants": {},
+    "deps": [
+      "@base-ui/react/tooltip"
+    ],
+    "kind": "primitive"
+  },
+  {
+    "name": "format",
+    "category": "util",
+    "kind": "util",
+    "summary": "Locale formatting helpers (vi-VN): numbers, compact amounts, money, percent, signed change, points, dates, times, durations in words, relative time.",
+    "use_when": [
+      "every number, amount, date and duration shown in the UI"
+    ],
+    "avoid_when": "Raw toFixed(), toLocaleString without locale, or ISO dates on screen.",
+    "keywords": [
+      "format",
+      "number format",
+      "currency",
+      "money",
+      "date format",
+      "duration",
+      "định dạng",
+      "tiền",
+      "ngày giờ",
+      "thời lượng",
+      "phần trăm"
+    ],
+    "example": "formatMoney(1284500000, { compact: true }) // \"1,3 tỷ ₫\"  formatDuration(125) // \"2 phút 5 giây\"  formatPoints(1.3) // \"+1,3 điểm\"  formatDate(d) // \"23/10/2026\"",
+    "related": [
+      "stat",
+      "number-input"
+    ],
+    "import": "@/lib/format",
+    "exports": [
+      "LOCALE",
+      "CURRENCY",
+      "formatNumber",
+      "formatCompact",
+      "formatMoney",
+      "formatPercent",
+      "formatSigned",
+      "formatPoints",
+      "formatDate",
+      "formatDayMonth",
+      "formatTime",
+      "formatDateTime",
+      "formatDuration",
+      "formatRelative"
+    ],
+    "variants": {},
+    "deps": []
+  }
+]

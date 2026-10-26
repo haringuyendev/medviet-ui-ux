@@ -1,0 +1,5 @@
+{
+  "name": "excel-import",
+  "summary": "Nhập danh sách từ Excel/CSV: đọc sheet thành dòng theo tiêu đề cột (chuẩn hoá dấu, khoảng trắng), báo dòng lỗi, tải file mẫu có cột bắt buộc và ví dụ (health-exam import hồ sơ).",
+  "dependencies": { "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz" }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "print-sheet",
+  "summary": "Bản in khổ A4 (phiếu, biên bản, bảng bàn giao): xem trước như tờ giấy trên màn hình, in bằng window.print(), ẩn khung app khi in (gmhs).",
+  "dependencies": {}
+}
