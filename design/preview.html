@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedViet Design System v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.9794 0.0013 286.38); /* web-emr body bg #f8f8f9 */
+  --foreground: oklch(0.4134 0.0432 258.79); /* --normal #3d4c63 */
+  --card: oklch(1 0 0); /* --whites #ffffff — cards sit above the tinted bg */
+  --card-foreground: oklch(0.4134 0.0432 258.79);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.4134 0.0432 258.79);
+  --primary: oklch(0.6591 0.1012 181.55); /* --primary-brand #38a696 */
+  --primary-foreground: oklch(
+    1 0 0
+  ); /* --whites — matches web-emr's white-on-brand */
+  --secondary: oklch(0.9642 0 0); /* --bg-secondary #f3f3f3 */
+  --secondary-foreground: oklch(0.3211 0 0); /* --text-primary #333333 */
+  --muted: oklch(0.9642 0 0); /* --bg-secondary #f3f3f3 */
+  --muted-foreground: oklch(0.5032 0 0); /* --text-secondary #646464 */
+  --accent: oklch(
+    0.987 0.018 188.41
+  ); /* --primary-hover #eefffd — antd row/option hover */
+  --accent-foreground: oklch(0.5992 0.082 182.46); /* --primary-text #3e9084 */
+  --destructive: oklch(0.6831 0.2105 12.4); /* --danger-main #ff5075 */
+  --destructive-foreground: oklch(1 0 0);
+  --success: oklch(0.6853 0.1346 160.83); /* --success-main #36b37e */
+  --success-foreground: oklch(
+    0.3211 0 0
+  ); /* #333 reads AA on this green; white does not */
+  --warning: oklch(0.8308 0.1314 68.79); /* --warning-main #ffb762 */
+  --warning-foreground: oklch(0.3211 0 0);
+  --info: oklch(0.6749 0.1578 249.84); /* --info-main #3b9bf3 */
+  --info-foreground: oklch(0.3211 0 0);
+  --border: oklch(0.9551 0 0); /* --border_tbl #f0f0f0 */
+  --input: oklch(
+    0.9158 0 0
+  ); /* #e3e3e3 — a step darker so fields read on the tinted bg */
+  --ring: oklch(
+    0.8919 0.0466 184.56
+  ); /* --primary-active #bae6df — web-emr's focus outline */
+  /* Charts are web-emr's status palette (bin/color.json), not a single-hue ramp:
+     brand → reviewing → completed → waiting → missing. */
+  --chart-1: oklch(0.6591 0.1012 181.55); /* #38a696 brand */
+  --chart-2: oklch(
+    0.6749 0.1578 249.84
+  ); /* #3b9bf3 reviewing / waiting-approval */
+  --chart-3: oklch(0.6853 0.1346 160.83); /* #36b37e completed / archived */
+  --chart-4: oklch(0.8308 0.1314 68.79); /* #ffb762 waiting-for-review */
+  --chart-5: oklch(0.6831 0.2105 12.4); /* #ff5075 missing / supplementing */
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.4134 0.0432 258.79);
+  --sidebar-primary: oklch(0.6591 0.1012 181.55);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.987 0.018 188.41);
+  --sidebar-accent-foreground: oklch(0.5992 0.082 182.46);
+  --sidebar-border: oklch(0.9551 0 0);
+  --sidebar-ring: oklch(0.8919 0.0466 184.56);
+  --surface: oklch(0.9881 0 0); /* --bg-teriary #fbfbfb */
+  --surface-foreground: var(--foreground);
+  --code: var(--surface);
+  --code-foreground: var(--surface-foreground);
+  --code-highlight: oklch(0.9642 0 0); /* --bg-secondary #f3f3f3 */
+  --code-number: oklch(0.6268 0 0); /* --text-teriary #888888 */
+  --selection: oklch(0.6591 0.1012 181.55);
+  --selection-foreground: oklch(1 0 0);
+}
+html.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(
+    0.7893 0.0875 183.49
+  ); /* --primary-brand_mid #75cdc0 — brand lifted for dark */
+  --primary-foreground: oklch(
+    0.28 0.0382 184.2
+  ); /* deep teal, 7.7:1 on the above */
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(
+    0.35 0.0382 184.2
+  ); /* dark teal wash, mirrors --primary-hover's role */
+  --accent-foreground: oklch(
+    0.8919 0.0466 184.56
+  ); /* --primary-active #bae6df */
+  --destructive: oklch(0.6831 0.2105 12.4); /* --danger-main #ff5075 */
+  --destructive-foreground: oklch(1 0 0);
+  --success: oklch(0.6853 0.1346 160.83); /* --success-main #36b37e */
+  --success-foreground: oklch(0.3211 0 0);
+  --warning: oklch(0.8308 0.1314 68.79); /* --warning-main #ffb762 */
+  --warning-foreground: oklch(0.3211 0 0);
+  --info: oklch(0.6749 0.1578 249.84); /* --info-main #3b9bf3 */
+  --info-foreground: oklch(0.3211 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.6591 0.1012 181.55); /* --primary-brand #38a696 */
+  --chart-1: oklch(
+    0.7893 0.0875 183.49
+  ); /* #75cdc0 — brand, lifted to clear the dark bg */
+  --chart-2: oklch(0.6749 0.1578 249.84); /* #3b9bf3 */
+  --chart-3: oklch(0.6853 0.1346 160.83); /* #36b37e */
+  --chart-4: oklch(0.8308 0.1314 68.79); /* #ffb762 */
+  --chart-5: oklch(0.6831 0.2105 12.4); /* #ff5075 */
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.7893 0.0875 183.49);
+  --sidebar-primary-foreground: oklch(0.28 0.0382 184.2);
+  --sidebar-accent: oklch(0.35 0.0382 184.2);
+  --sidebar-accent-foreground: oklch(0.8919 0.0466 184.56);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.6591 0.1012 181.55);
+  --surface: oklch(0.2 0 0);
+  --surface-foreground: oklch(0.708 0 0);
+  --code: var(--surface);
+  --code-foreground: var(--surface-foreground);
+  --code-highlight: oklch(0.27 0 0);
+  --code-number: oklch(0.72 0 0);
+  --selection: oklch(0.7893 0.0875 183.49);
+  --selection-foreground: oklch(0.28 0.0382 184.2);
+}
+:root {
+  /* Primary: the brand teal #38a696 gives white text 2.97:1 (fails WCAG AA). Buttons, links and focus use a deeper
+     teal of the same family (5.1:1 with white, 4.8:1 as text on the background); #38a696 stays as --brand. */
+  --primary: oklch(0.5274 0.0798 182.64); /* #287a6f AA with white; derived from --primary-brand #38a696 */
+  --brand: oklch(0.6591 0.1012 181.55); /* #38a696 web-emr --primary-brand: logo, illustrations, charts, large fills */
+  --brand-foreground: oklch(1.0000 0 0); /* #ffffff */
+  --sidebar-primary: var(--primary); /* the active nav item carries white text too */
+  /* Text on the accent wash (selected/hovered rows and options): #3e9084 gives 3.7:1 on #eefffd; primary gives 5.0:1 */
+  --accent-foreground: var(--primary);
+  --sidebar-accent-foreground: var(--primary);
+  /* Status colours as text (4.5:1+ on background and card); the base status colours stay for fills, dots, icons. */
+  --success-text: oklch(0.5107 0.1117 158.09); /* #16794d from web-emr --green-dark #1a8054, 5.1:1 on bg, 4.7:1 on its chip tint */
+  --warning-text: oklch(0.5425 0.1242 62.55); /* #a15c00 derived from --warning-main hue, 4.9:1 on bg */
+  --info-text: oklch(0.4665 0.1518 260.11); /* #2055ad web-emr --info-dark, 6.7:1 on bg */
+  --destructive-text: oklch(0.5356 0.2040 17.45); /* #c8173f derived from --danger-main hue, 5.4:1 on bg */
+  /* Fields that can't be edited */
+  --readonly: oklch(0.9702 0 0); /* #f5f5f5 web-emr --bg-readonly */
+  --disabled: oklch(0.9158 0 0); /* #e3e3e3 web-emr --bg-disable */
+  --disabled-foreground: oklch(0.6268 0 0); /* #888888 web-emr --text-teriary */
+  /* Category tags (khoa, loại dịch vụ, nhóm): web-emr's 11 light/dark pairs; text darkened where it was below
+     4.5:1 on its own background (same hue). Categories only, never status. */
+  --tag-blue: oklch(0.9369 0.0449 219.48); /* #caf2ff web-emr --blue-light */
+  --tag-blue-foreground: oklch(0.5007 0.0997 229.94); /* #006d91 web-emr --blue-dark, 4.91:1 */
+  --tag-cyan: oklch(0.8867 0.0514 193.22); /* #b3e5e3 web-emr --cyan-light */
+  --tag-cyan-foreground: oklch(0.4769 0.0769 194.88); /* #116a6a from --cyan-dark #158484 (3.27:1), 4.63:1 */
+  --tag-green: oklch(0.8612 0.1086 146.40); /* #a2e5a7 web-emr --green-light */
+  --tag-green-foreground: oklch(0.4568 0.0963 159.01); /* #156743 from --green-dark #1a8054 (3.36:1), 4.68:1 */
+  --tag-navy: oklch(0.9010 0.0520 243.98); /* #c2e3ff web-emr --navy-light */
+  --tag-navy-foreground: oklch(0.3895 0.1293 268.19); /* #283d89 web-emr --navy-dark, 7.42:1 */
+  --tag-orange: oklch(0.9448 0.0429 72.91); /* #ffe9ce web-emr --orange-light */
+  --tag-orange-foreground: oklch(0.5294 0.1231 59.65); /* #9e5704 from --orange-dark #da7805 (2.67:1), 4.66:1 */
+  --tag-pink: oklch(0.8956 0.0942 327.48); /* #ffc7fd web-emr --pink-light */
+  --tag-pink-foreground: oklch(0.5090 0.2221 337.67); /* #ad0391 from --pink-dark #b70399 (4.26:1), 4.64:1 */
+  --tag-red: oklch(0.8854 0.0617 4.53); /* #fec9d4 web-emr --red-light */
+  --tag-red-foreground: oklch(0.5027 0.1968 19.95); /* #ba0c31 from --red-dark #f23059 (2.72:1), 4.56:1 */
+  --tag-violet: oklch(0.9434 0.0364 310.48); /* #f4e6ff web-emr --violet-light */
+  --tag-violet-foreground: oklch(0.5576 0.2852 300.95); /* #9518fb web-emr --violet-dark, 4.63:1 */
+  --tag-yellow: oklch(0.9474 0.1038 104.66); /* #f8f29f web-emr --yellow-light */
+  --tag-yellow-foreground: oklch(0.5337 0.1114 77.63); /* #906300 from --yellow-dark #9f6d00 (3.9:1), 4.58:1 */
+  --tag-brown: oklch(0.8243 0.0343 15.59); /* #dbbdbe web-emr --brown-light */
+  --tag-brown-foreground: oklch(0.3989 0.1084 23.38); /* #772a2a web-emr --brown-dark, 5.6:1 */
+  --tag-gray: oklch(0.9642 0 0); /* #f3f3f3 web-emr --gray-light */
+  --tag-gray-foreground: oklch(0.4748 0 0); /* #5c5c5c web-emr --gray-dark, 6.03:1 */
+}
+html.dark {
+  --primary: oklch(0.7893 0.0875 183.49); /* #75cdc0 web-emr --primary-brand_mid, as turbo-web dark */
+  --brand: oklch(0.7893 0.0875 183.49); /* #75cdc0 */
+  --brand-foreground: oklch(0.3342 0.0514 183.24); /* #0f3f39 */
+  --success-text: oklch(0.8546 0.1270 155.28); /* #86e8ab web-emr --success-mid */
+  --warning-text: oklch(0.8308 0.1314 68.79); /* #ffb762 web-emr --warning-main */
+  --info-text: oklch(0.8391 0.0846 237.41); /* #95d3fb web-emr --info-mid */
+  --destructive-text: oklch(0.7759 0.1367 7.62); /* #ff8fa6 derived, light danger */
+  --readonly: oklch(0.2686 0 0); /* #262626 */
+  --disabled: oklch(0.3211 0 0); /* #333333 */
+  --disabled-foreground: oklch(0.6334 0 0); /* #8a8a8a */
+  --tag-blue: color-mix(in oklab, oklch(0.5007 0.0997 229.94) 28%, transparent);
+  --tag-blue-foreground: oklch(0.9369 0.0449 219.48); /* #caf2ff */
+  --tag-cyan: color-mix(in oklab, oklch(0.5574 0.0908 194.86) 28%, transparent);
+  --tag-cyan-foreground: oklch(0.8867 0.0514 193.22); /* #b3e5e3 */
+  --tag-green: color-mix(in oklab, oklch(0.5327 0.1135 159.09) 28%, transparent);
+  --tag-green-foreground: oklch(0.8612 0.1086 146.40); /* #a2e5a7 */
+  --tag-navy: color-mix(in oklab, oklch(0.3895 0.1293 268.19) 28%, transparent);
+  --tag-navy-foreground: oklch(0.9010 0.0520 243.98); /* #c2e3ff */
+  --tag-orange: color-mix(in oklab, oklch(0.6688 0.1579 58.61) 28%, transparent);
+  --tag-orange-foreground: oklch(0.9448 0.0429 72.91); /* #ffe9ce */
+  --tag-pink: color-mix(in oklab, oklch(0.5303 0.2314 337.84) 28%, transparent);
+  --tag-pink-foreground: oklch(0.8956 0.0942 327.48); /* #ffc7fd */
+  --tag-red: color-mix(in oklab, oklch(0.6296 0.2253 15.80) 28%, transparent);
+  --tag-red-foreground: oklch(0.8854 0.0617 4.53); /* #fec9d4 */
+  --tag-violet: color-mix(in oklab, oklch(0.5576 0.2852 300.95) 28%, transparent);
+  --tag-violet-foreground: oklch(0.9434 0.0364 310.48); /* #f4e6ff */
+  --tag-yellow: color-mix(in oklab, oklch(0.5723 0.1197 77.04) 28%, transparent);
+  --tag-yellow-foreground: oklch(0.9474 0.1038 104.66); /* #f8f29f */
+  --tag-brown: color-mix(in oklab, oklch(0.3989 0.1084 23.38) 28%, transparent);
+  --tag-brown-foreground: oklch(0.8243 0.0343 15.59); /* #dbbdbe */
+  --tag-gray: color-mix(in oklab, oklch(0.4748 0 0) 28%, transparent);
+  --tag-gray-foreground: oklch(0.9642 0 0); /* #f3f3f3 */
+}
+:root {
+  --font-sans: "Roboto Variable", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --font-heading: var(--font-sans);
+}
+:root { --font-sans: "Roboto", "Helvetica Neue", Arial, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--background); color: var(--foreground); font: 14px/20px var(--font-sans); }
+main { max-width: 1200px; margin: 0 auto; padding: 32px 16px 64px; }
+header.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+h1 { font-size: 24px; line-height: 32px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: 18px; line-height: 28px; font-weight: 600; margin: 40px 0 4px; }
+p.lead, p.note { color: var(--muted-foreground); margin: 4px 0 16px; max-width: 80ch; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.sw .chip { height: 72px; border-radius: 10px; border: 1px solid var(--border); display: flex; align-items: flex-end; justify-content: space-between; padding: 8px 10px; font-size: 16px; }
+.sw .ratio { font-size: 11px; font-variant-numeric: tabular-nums; background: color-mix(in oklab, var(--card) 85%, transparent); color: var(--foreground); padding: 1px 6px; border-radius: 999px; }
+.sw .ratio.fail { background: var(--destructive); color: #fff; }
+.sw .lbl { font-weight: 500; margin-top: 6px; font-size: 13px; }
+.sw .sub { color: var(--muted-foreground); font-size: 12px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.btn { height: 32px; padding: 0 14px; border-radius: 8px; border: 1px solid transparent; font: 500 14px var(--font-sans); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.btn.primary { background: var(--primary); color: var(--primary-foreground); }
+.btn.old { background: var(--brand); color: #fff; }
+.btn.outline { background: var(--card); border-color: var(--input); color: var(--foreground); }
+.btn.destructive { background: var(--destructive); color: var(--destructive-foreground); }
+.btn:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.badge { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; height: 22px; padding: 0 8px; border-radius: 999px; font-size: 12px; font-weight: 500; }
+.dot { width: 6px; height: 6px; border-radius: 999px; }
+.t-info { background: color-mix(in oklab, var(--info) 15%, transparent); color: var(--info-text); } .t-info .dot { background: var(--info); }
+.t-warning { background: color-mix(in oklab, var(--warning) 25%, transparent); color: var(--warning-text); } .t-warning .dot { background: var(--warning); }
+.t-success { background: color-mix(in oklab, var(--success) 15%, transparent); color: var(--success-text); } .t-success .dot { background: var(--success); }
+.t-destructive { background: color-mix(in oklab, var(--destructive) 10%, transparent); color: var(--destructive-text); } .t-destructive .dot { background: var(--destructive); }
+.t-neutral { background: var(--secondary); color: var(--muted-foreground); } .t-neutral .dot { background: var(--muted-foreground); }
+.tag-blue { background: var(--tag-blue); color: var(--tag-blue-foreground); }
+.tag-cyan { background: var(--tag-cyan); color: var(--tag-cyan-foreground); }
+.tag-green { background: var(--tag-green); color: var(--tag-green-foreground); }
+.tag-navy { background: var(--tag-navy); color: var(--tag-navy-foreground); }
+.tag-orange { background: var(--tag-orange); color: var(--tag-orange-foreground); }
+.tag-pink { background: var(--tag-pink); color: var(--tag-pink-foreground); }
+.tag-red { background: var(--tag-red); color: var(--tag-red-foreground); }
+.tag-violet { background: var(--tag-violet); color: var(--tag-violet-foreground); }
+.tag-yellow { background: var(--tag-yellow); color: var(--tag-yellow-foreground); }
+.tag-brown { background: var(--tag-brown); color: var(--tag-brown-foreground); }
+.tag-gray { background: var(--tag-gray); color: var(--tag-gray-foreground); }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-weight: 500; color: var(--muted-foreground); background: var(--surface); padding: 10px 12px; border-bottom: 1px solid var(--border); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+tr.sel td { background: var(--accent); color: var(--accent-foreground); }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 500; }
+.input { height: 32px; border: 1px solid var(--input); border-radius: 8px; padding: 0 10px; background: var(--card); color: var(--foreground); font: 14px var(--font-sans); }
+.input.ro { background: var(--readonly); }
+.input:disabled { background: var(--disabled); color: var(--disabled-foreground); }
+.req { color: var(--destructive-text); }
+.alert { display: flex; justify-content: space-between; align-items: center; gap: 8px; border: 1px solid color-mix(in oklab, var(--destructive) 20%, transparent); background: color-mix(in oklab, var(--destructive) 5%, transparent); border-radius: 8px; padding: 8px 12px; }
+.type div { padding: 6px 0; border-bottom: 1px dashed var(--border); display: flex; justify-content: space-between; gap: 16px; }
+.type code, code { font-size: 12px; color: var(--muted-foreground); }
+.two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.kpi b { font-size: 28px; line-height: 36px; font-weight: 600; font-variant-numeric: tabular-nums; display: block; }
+.kpi .bad { color: var(--destructive-text); }
+@media (max-width: 640px) { th:nth-child(4), td:nth-child(4) { display: none; } }
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+  <div>
+    <h1>MedViet Design System v1</h1>
+    <p class="lead">Token thật của MedViet starter (turbo-web + bổ sung v1), tạo từ <code>template/src/index.css</code>. Số trên mỗi ô là độ tương phản giữa chữ và nền, đo ngay trong trình duyệt; ô đỏ là chưa đạt 4,5:1.</p>
+  </div>
+  <button class="btn outline" id="mode" type="button">Chế độ tối</button>
+</header>
+
+<h2>Thương hiệu và hành động chính</h2>
+<p class="note">Chữ trắng trên màu thương hiệu #38a696 chỉ đạt 2,97:1. v1 dùng teal đậm hơn #287a6f cho nút và liên kết; #38a696 giữ cho logo, biểu đồ, mảng màu lớn.</p>
+<div class="grid">
+  <div class="sw"><div class="chip" style="background:var(--primary);color:var(--primary-foreground)" data-bg="primary" data-fg="primary-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">primary</div><div class="sub">#287a6f · nút, liên kết</div></div>
+  <div class="sw"><div class="chip" style="background:var(--brand);color:var(--brand-foreground)" data-bg="brand" data-fg="brand-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">brand</div><div class="sub">#38a696 · không mang chữ</div></div>
+  <div class="sw"><div class="chip" style="background:var(--accent);color:var(--accent-foreground)" data-bg="accent" data-fg="accent-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">accent</div><div class="sub">hover, mục đang chọn</div></div>
+</div>
+<div class="card row" style="margin-top:12px">
+  <button class="btn primary" type="button">Lưu hồ sơ</button>
+  <button class="btn old" type="button">Lưu hồ sơ (màu cũ)</button>
+  <button class="btn outline" type="button">Huỷ</button>
+  <button class="btn destructive" type="button">Xoá hồ sơ</button>
+</div>
+
+<h2>Nền và chữ</h2>
+<div class="grid">
+  <div class="sw"><div class="chip" style="background:var(--background);color:var(--foreground)" data-bg="background" data-fg="foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">background / foreground</div><div class="sub">nền trang, chữ chính</div></div>
+  <div class="sw"><div class="chip" style="background:var(--card);color:var(--foreground)" data-bg="card" data-fg="foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">card</div><div class="sub">thẻ, panel, dialog</div></div>
+  <div class="sw"><div class="chip" style="background:var(--card);color:var(--muted-foreground)" data-bg="card" data-fg="muted-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">muted-foreground</div><div class="sub">chú thích</div></div>
+  <div class="sw"><div class="chip" style="background:var(--surface);color:var(--foreground)" data-bg="surface" data-fg="foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">surface</div><div class="sub">đầu bảng, thanh công cụ</div></div>
+  <div class="sw"><div class="chip" style="background:var(--secondary);color:var(--secondary-foreground)" data-bg="secondary" data-fg="secondary-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">secondary</div><div class="sub">nút phụ, vùng trống</div></div>
+  <div class="sw"><div class="chip" style="background:var(--readonly);color:var(--foreground)" data-bg="readonly" data-fg="foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">readonly</div><div class="sub">ô chỉ đọc</div></div>
+  <div class="sw"><div class="chip" style="background:var(--disabled);color:var(--disabled-foreground)" data-bg="disabled" data-fg="disabled-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">disabled</div><div class="sub">vô hiệu (không yêu cầu tương phản)</div></div>
+</div>
+
+<h2>Trạng thái</h2>
+<p class="note">Màu gốc dùng cho nền nhạt, chấm, icon; chữ dùng token <code>*-text</code>. Nghĩa giống nhau ở mọi app.</p>
+<div class="grid">
+  <div class="sw"><div class="chip" style="background:var(--card);color:var(--info-text)" data-bg="card" data-fg="info-text"><b>Aa</b><span class="ratio"></span></div><div class="lbl">info-text</div><div class="sub">đang làm, đang duyệt</div></div>
+  <div class="sw"><div class="chip" style="background:var(--card);color:var(--warning-text)" data-bg="card" data-fg="warning-text"><b>Aa</b><span class="ratio"></span></div><div class="lbl">warning-text</div><div class="sub">chờ, cần chú ý</div></div>
+  <div class="sw"><div class="chip" style="background:var(--card);color:var(--success-text)" data-bg="card" data-fg="success-text"><b>Aa</b><span class="ratio"></span></div><div class="lbl">success-text</div><div class="sub">xong</div></div>
+  <div class="sw"><div class="chip" style="background:var(--card);color:var(--destructive-text)" data-bg="card" data-fg="destructive-text"><b>Aa</b><span class="ratio"></span></div><div class="lbl">destructive-text</div><div class="sub">thiếu, huỷ, nguy hiểm</div></div>
+  <div class="sw"><div class="chip" style="background:var(--card);color:var(--success)" data-bg="card" data-fg="success"><b>Aa</b><span class="ratio"></span></div><div class="lbl">success (không dùng làm chữ)</div><div class="sub">chỉ cho nền, chấm, icon</div></div>
+  <div class="sw"><div class="chip" style="background:var(--card);color:var(--warning)" data-bg="card" data-fg="warning"><b>Aa</b><span class="ratio"></span></div><div class="lbl">warning (không dùng làm chữ)</div><div class="sub">chỉ cho nền, chấm, icon</div></div>
+</div>
+<div class="card row" style="margin-top:12px">
+  <span class="badge t-neutral"><span class="dot"></span>Chưa đăng ký</span>
+  <span class="badge t-warning"><span class="dot"></span>Chờ khám</span>
+  <span class="badge t-info"><span class="dot"></span>Đang khám</span>
+  <span class="badge t-success"><span class="dot"></span>Đã khám</span>
+  <span class="badge t-destructive"><span class="dot"></span>Đã huỷ</span>
+</div>
+
+<h2>Màu phân loại</h2>
+<p class="note">Cho danh mục (khoa, loại dịch vụ, gói khám), không cho trạng thái. Block <code>CategoryTag</code>.</p>
+<div class="grid">
+  <div class="sw"><div class="chip" style="background:var(--tag-blue);color:var(--tag-blue-foreground)" data-bg="tag-blue" data-fg="tag-blue-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">blue</div><div class="sub">bg-tag-blue</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-cyan);color:var(--tag-cyan-foreground)" data-bg="tag-cyan" data-fg="tag-cyan-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">cyan</div><div class="sub">bg-tag-cyan</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-green);color:var(--tag-green-foreground)" data-bg="tag-green" data-fg="tag-green-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">green</div><div class="sub">bg-tag-green</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-navy);color:var(--tag-navy-foreground)" data-bg="tag-navy" data-fg="tag-navy-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">navy</div><div class="sub">bg-tag-navy</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-orange);color:var(--tag-orange-foreground)" data-bg="tag-orange" data-fg="tag-orange-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">orange</div><div class="sub">bg-tag-orange</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-pink);color:var(--tag-pink-foreground)" data-bg="tag-pink" data-fg="tag-pink-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">pink</div><div class="sub">bg-tag-pink</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-red);color:var(--tag-red-foreground)" data-bg="tag-red" data-fg="tag-red-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">red</div><div class="sub">bg-tag-red</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-violet);color:var(--tag-violet-foreground)" data-bg="tag-violet" data-fg="tag-violet-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">violet</div><div class="sub">bg-tag-violet</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-yellow);color:var(--tag-yellow-foreground)" data-bg="tag-yellow" data-fg="tag-yellow-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">yellow</div><div class="sub">bg-tag-yellow</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-brown);color:var(--tag-brown-foreground)" data-bg="tag-brown" data-fg="tag-brown-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">brown</div><div class="sub">bg-tag-brown</div></div>
+  <div class="sw"><div class="chip" style="background:var(--tag-gray);color:var(--tag-gray-foreground)" data-bg="tag-gray" data-fg="tag-gray-foreground"><b>Aa</b><span class="ratio"></span></div><div class="lbl">gray</div><div class="sub">bg-tag-gray</div></div>
+</div>
+<div class="card row" style="margin-top:12px">
+  <span class="badge tag-blue">Khoa Nội</span><span class="badge tag-cyan">Khoa Ngoại</span><span class="badge tag-pink">Sản</span><span class="badge tag-orange">Nhi</span><span class="badge tag-violet">Gói VIP</span><span class="badge tag-navy">BHYT</span>
+</div>
+
+<h2>Biểu đồ</h2>
+<div class="grid">
+  <div class="sw"><div class="chip" style="background:var(--chart-1)"></div><div class="lbl">chart-1</div><div class="sub">thương hiệu</div></div>
+  <div class="sw"><div class="chip" style="background:var(--chart-2)"></div><div class="lbl">chart-2</div><div class="sub">đang duyệt</div></div>
+  <div class="sw"><div class="chip" style="background:var(--chart-3)"></div><div class="lbl">chart-3</div><div class="sub">hoàn thành</div></div>
+  <div class="sw"><div class="chip" style="background:var(--chart-4)"></div><div class="lbl">chart-4</div><div class="sub">chờ</div></div>
+  <div class="sw"><div class="chip" style="background:var(--chart-5)"></div><div class="lbl">chart-5</div><div class="sub">thiếu</div></div>
+</div>
+
+<h2>Chữ</h2>
+<div class="card type">
+  <div><span style="font-size:24px;line-height:32px;font-weight:600">Lịch khám hôm nay</span><code>text-2xl font-semibold · tiêu đề trang</code></div>
+  <div><span style="font-size:18px;line-height:28px;font-weight:600">Ca trễ giờ cần xử lý</span><code>text-lg font-semibold · khu vực</code></div>
+  <div><span style="font-size:16px;line-height:24px;font-weight:600">Bệnh nhân đang chờ</span><code>text-base font-semibold · tiêu đề thẻ</code></div>
+  <div><span>Nguyễn Thị Lan · 08:30 · BS. Trần Quang Minh</span><code>text-sm · chữ thường, bảng</code></div>
+  <div><span style="font-size:12px;line-height:16px;color:var(--muted-foreground)">Cập nhật lúc 10:30 · số liệu tạm tính</span><code>text-xs muted · chú thích</code></div>
+  <div class="kpi"><span><b>44</b></span><code>text-3xl font-semibold tabular-nums · KPI</code></div>
+</div>
+
+<h2>Mẫu màn hình</h2>
+<div class="two">
+  <div class="card">
+    <table>
+      <thead><tr><th>Giờ hẹn</th><th>Bệnh nhân</th><th>Khoa</th><th>Bác sĩ</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td>08:30</td><td>Nguyễn Thị Lan</td><td><span class="badge tag-blue">Nội</span></td><td>BS. Trần Quang Minh</td><td><span class="badge t-destructive"><span class="dot"></span>Trễ 45 phút</span></td></tr>
+        <tr class="sel"><td>08:45</td><td>Lê Văn Phúc</td><td><span class="badge tag-orange">Nhi</span></td><td>BS. Phạm Thu Hà</td><td><span class="badge t-info"><span class="dot"></span>Đang khám</span></td></tr>
+        <tr><td>09:00</td><td>Đỗ Minh Châu</td><td><span class="badge tag-cyan">Ngoại</span></td><td>BS. Vũ Ngọc Lan</td><td><span class="badge t-warning"><span class="dot"></span>Chờ khám</span></td></tr>
+        <tr><td>09:15</td><td>Hoàng Minh Tuấn</td><td><span class="badge tag-blue">Nội</span></td><td>BS. Lê Đăng Khoa</td><td><span class="badge t-success"><span class="dot"></span>Đã khám</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:12px">
+    <div class="row">
+      <div class="kpi" style="flex:1"><span class="sub" style="color:var(--muted-foreground);font-size:12px">Ca hôm nay</span><b>44</b></div>
+      <div class="kpi" style="flex:1"><span style="color:var(--muted-foreground);font-size:12px">Ca trễ giờ</span><b class="bad">4</b></div>
+    </div>
+    <div class="field"><label for="n">Họ tên <span class="req">*</span></label><input class="input" id="n" value="Nguyễn Thị Lan"></div>
+    <div class="field"><label for="m">Mã hồ sơ</label><input class="input ro" id="m" value="HS-2026-00128" readonly></div>
+    <div class="field"><label for="d">Bác sĩ phụ trách</label><input class="input" id="d" value="Chưa phân công" disabled></div>
+    <div class="alert" role="alert"><span>Không tải được lịch sử khám.</span><button class="btn outline" type="button">Thử lại</button></div>
+  </div>
+</div>
+<p class="note" style="margin-top:24px">77 token · 35 từ bổ sung v1 · chi tiết: design/DESIGN.md, design/tokens.json</p>
+</main>
+<script>
+// contrast of each swatch: the browser resolves oklch/var/color-mix, a 1px canvas reads back sRGB
+const ctx = document.createElement('canvas').getContext('2d', { willReadFrequently: true })
+// translucent colours (color-mix with transparent) are composited over the card, as on the page
+const rgb = (css, base) => { ctx.clearRect(0, 0, 1, 1); for (const c of [base, css]) if (c) { ctx.fillStyle = '#000'; ctx.fillStyle = c; ctx.fillRect(0, 0, 1, 1) } return [...ctx.getImageData(0, 0, 1, 1).data].slice(0, 3) }
+const lum = (c) => { const [r, g, b] = c.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4 }); return 0.2126 * r + 0.7152 * g + 0.0722 * b }
+function measure() {
+  for (const chip of document.querySelectorAll('.chip[data-fg]')) {
+    const s = getComputedStyle(chip)
+    const card = getComputedStyle(document.body).backgroundColor
+    const bgRgb = rgb(s.backgroundColor, card)
+    const a = lum(rgb(s.color, `rgb(${bgRgb.join(',')})`)), b = lum(bgRgb)
+    const r = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
+    const el = chip.querySelector('.ratio')
+    el.textContent = r.toFixed(1).replace('.', ',') + ':1'
+    el.classList.toggle('fail', r < 4.5 && !chip.dataset.bg.startsWith('disabled'))
+  }
+}
+document.getElementById('mode').onclick = (e) => { const dark = document.documentElement.classList.toggle('dark'); e.target.textContent = dark ? 'Chế độ sáng' : 'Chế độ tối'; measure() }
+measure()
+</script>
+</body>
+</html>

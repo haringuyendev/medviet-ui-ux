@@ -137,7 +137,7 @@ export function scanTokens(ctx) {
     const c = parseColor(resolve(t.light[`--${name}`]))
     const ratio = c ? Math.round(contrast(c, bg) * 100) / 100 : null
     // A text-safe companion, e.g. --success-foreground used as text on tinted backgrounds.
-    const fg = [`${name}-foreground`, `${name}-text`].find((n) => colors.includes(n) && parseColor(resolve(t.light[`--${n}`])) && contrast(parseColor(resolve(t.light[`--${n}`])), bg) >= 4.5)
+    const fg = [`${name}-text`, `${name}-foreground`].find((n) => colors.includes(n) && parseColor(resolve(t.light[`--${n}`])) && contrast(parseColor(resolve(t.light[`--${n}`])), bg) >= 4.5)
     status[role] = { token: name, contrastOnBackground: ratio, textSafe: ratio === null ? null : ratio >= 4.5, textToken: ratio !== null && ratio >= 4.5 ? name : fg ?? null }
   }
   return {

@@ -10,12 +10,25 @@ export type StatusTone =
   | "success"
   | "destructive";
 
-const TONES: Record<StatusTone, { variant: BadgeVariant; dot: string }> = {
+// `text` overrides the Badge variant's text colour with the DS v1 text tokens: the base status colours are
+// below 4.5:1 on their own tint (design/DESIGN.md §3). Drop it once @medviet/ui's badge uses them itself.
+const TONES: Record<
+  StatusTone,
+  { variant: BadgeVariant; dot: string; text?: string }
+> = {
   neutral: { variant: "secondary", dot: "bg-muted-foreground" },
-  info: { variant: "info", dot: "bg-info" },
-  warning: { variant: "warning", dot: "bg-warning" },
-  success: { variant: "success", dot: "bg-success" },
-  destructive: { variant: "destructive", dot: "bg-destructive" },
+  info: { variant: "info", dot: "bg-info", text: "text-info-text" },
+  warning: {
+    variant: "warning",
+    dot: "bg-warning",
+    text: "text-warning-text",
+  },
+  success: { variant: "success", dot: "bg-success", text: "text-success-text" },
+  destructive: {
+    variant: "destructive",
+    dot: "bg-destructive",
+    text: "text-destructive-text",
+  },
 };
 
 /**
@@ -44,7 +57,7 @@ export function StatusBadge({
 }) {
   const t = TONES[tone];
   return (
-    <Badge variant={t.variant} className={className}>
+    <Badge variant={t.variant} className={cn(t.text, className)}>
       <span
         aria-hidden="true"
         className={cn("size-1.5 shrink-0 rounded-full", t.dot)}

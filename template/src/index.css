@@ -216,6 +216,123 @@
 }
 /* turbo-web theme.css: end */
 
+/* MedViet Design System v1: additions, pending turbo-web (upstream/turbo-web-theme-v1.patch).
+ * Kept out of the turbo-web block so scripts/sync-turbo.mjs leaves them alone; delete a line here once turbo-web
+ * ships it. See design/DESIGN.md. */
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-success-text: var(--success-text);
+  --color-warning-text: var(--warning-text);
+  --color-info-text: var(--info-text);
+  --color-destructive-text: var(--destructive-text);
+  --color-readonly: var(--readonly);
+  --color-disabled: var(--disabled);
+  --color-disabled-foreground: var(--disabled-foreground);
+  --color-tag-blue: var(--tag-blue);
+  --color-tag-blue-foreground: var(--tag-blue-foreground);
+  --color-tag-cyan: var(--tag-cyan);
+  --color-tag-cyan-foreground: var(--tag-cyan-foreground);
+  --color-tag-green: var(--tag-green);
+  --color-tag-green-foreground: var(--tag-green-foreground);
+  --color-tag-navy: var(--tag-navy);
+  --color-tag-navy-foreground: var(--tag-navy-foreground);
+  --color-tag-orange: var(--tag-orange);
+  --color-tag-orange-foreground: var(--tag-orange-foreground);
+  --color-tag-pink: var(--tag-pink);
+  --color-tag-pink-foreground: var(--tag-pink-foreground);
+  --color-tag-red: var(--tag-red);
+  --color-tag-red-foreground: var(--tag-red-foreground);
+  --color-tag-violet: var(--tag-violet);
+  --color-tag-violet-foreground: var(--tag-violet-foreground);
+  --color-tag-yellow: var(--tag-yellow);
+  --color-tag-yellow-foreground: var(--tag-yellow-foreground);
+  --color-tag-brown: var(--tag-brown);
+  --color-tag-brown-foreground: var(--tag-brown-foreground);
+  --color-tag-gray: var(--tag-gray);
+  --color-tag-gray-foreground: var(--tag-gray-foreground);
+}
+
+:root {
+  /* Primary: the brand teal #38a696 gives white text 2.97:1 (fails WCAG AA). Buttons, links and focus use a deeper
+     teal of the same family (5.1:1 with white, 4.8:1 as text on the background); #38a696 stays as --brand. */
+  --primary: oklch(0.5274 0.0798 182.64); /* #287a6f AA with white; derived from --primary-brand #38a696 */
+  --brand: oklch(0.6591 0.1012 181.55); /* #38a696 web-emr --primary-brand: logo, illustrations, charts, large fills */
+  --brand-foreground: oklch(1.0000 0 0); /* #ffffff */
+  --sidebar-primary: var(--primary); /* the active nav item carries white text too */
+  /* Text on the accent wash (selected/hovered rows and options): #3e9084 gives 3.7:1 on #eefffd; primary gives 5.0:1 */
+  --accent-foreground: var(--primary);
+  --sidebar-accent-foreground: var(--primary);
+  /* Status colours as text (4.5:1+ on background and card); the base status colours stay for fills, dots, icons. */
+  --success-text: oklch(0.5107 0.1117 158.09); /* #16794d from web-emr --green-dark #1a8054, 5.1:1 on bg, 4.7:1 on its chip tint */
+  --warning-text: oklch(0.5425 0.1242 62.55); /* #a15c00 derived from --warning-main hue, 4.9:1 on bg */
+  --info-text: oklch(0.4665 0.1518 260.11); /* #2055ad web-emr --info-dark, 6.7:1 on bg */
+  --destructive-text: oklch(0.5356 0.2040 17.45); /* #c8173f derived from --danger-main hue, 5.4:1 on bg */
+  /* Fields that can't be edited */
+  --readonly: oklch(0.9702 0 0); /* #f5f5f5 web-emr --bg-readonly */
+  --disabled: oklch(0.9158 0 0); /* #e3e3e3 web-emr --bg-disable */
+  --disabled-foreground: oklch(0.6268 0 0); /* #888888 web-emr --text-teriary */
+  /* Category tags (khoa, loại dịch vụ, nhóm): web-emr's 11 light/dark pairs; text darkened where it was below
+     4.5:1 on its own background (same hue). Categories only, never status. */
+  --tag-blue: oklch(0.9369 0.0449 219.48); /* #caf2ff web-emr --blue-light */
+  --tag-blue-foreground: oklch(0.5007 0.0997 229.94); /* #006d91 web-emr --blue-dark, 4.91:1 */
+  --tag-cyan: oklch(0.8867 0.0514 193.22); /* #b3e5e3 web-emr --cyan-light */
+  --tag-cyan-foreground: oklch(0.4769 0.0769 194.88); /* #116a6a from --cyan-dark #158484 (3.27:1), 4.63:1 */
+  --tag-green: oklch(0.8612 0.1086 146.40); /* #a2e5a7 web-emr --green-light */
+  --tag-green-foreground: oklch(0.4568 0.0963 159.01); /* #156743 from --green-dark #1a8054 (3.36:1), 4.68:1 */
+  --tag-navy: oklch(0.9010 0.0520 243.98); /* #c2e3ff web-emr --navy-light */
+  --tag-navy-foreground: oklch(0.3895 0.1293 268.19); /* #283d89 web-emr --navy-dark, 7.42:1 */
+  --tag-orange: oklch(0.9448 0.0429 72.91); /* #ffe9ce web-emr --orange-light */
+  --tag-orange-foreground: oklch(0.5294 0.1231 59.65); /* #9e5704 from --orange-dark #da7805 (2.67:1), 4.66:1 */
+  --tag-pink: oklch(0.8956 0.0942 327.48); /* #ffc7fd web-emr --pink-light */
+  --tag-pink-foreground: oklch(0.5090 0.2221 337.67); /* #ad0391 from --pink-dark #b70399 (4.26:1), 4.64:1 */
+  --tag-red: oklch(0.8854 0.0617 4.53); /* #fec9d4 web-emr --red-light */
+  --tag-red-foreground: oklch(0.5027 0.1968 19.95); /* #ba0c31 from --red-dark #f23059 (2.72:1), 4.56:1 */
+  --tag-violet: oklch(0.9434 0.0364 310.48); /* #f4e6ff web-emr --violet-light */
+  --tag-violet-foreground: oklch(0.5576 0.2852 300.95); /* #9518fb web-emr --violet-dark, 4.63:1 */
+  --tag-yellow: oklch(0.9474 0.1038 104.66); /* #f8f29f web-emr --yellow-light */
+  --tag-yellow-foreground: oklch(0.5337 0.1114 77.63); /* #906300 from --yellow-dark #9f6d00 (3.9:1), 4.58:1 */
+  --tag-brown: oklch(0.8243 0.0343 15.59); /* #dbbdbe web-emr --brown-light */
+  --tag-brown-foreground: oklch(0.3989 0.1084 23.38); /* #772a2a web-emr --brown-dark, 5.6:1 */
+  --tag-gray: oklch(0.9642 0 0); /* #f3f3f3 web-emr --gray-light */
+  --tag-gray-foreground: oklch(0.4748 0 0); /* #5c5c5c web-emr --gray-dark, 6.03:1 */
+}
+
+.dark {
+  --primary: oklch(0.7893 0.0875 183.49); /* #75cdc0 web-emr --primary-brand_mid, as turbo-web dark */
+  --brand: oklch(0.7893 0.0875 183.49); /* #75cdc0 */
+  --brand-foreground: oklch(0.3342 0.0514 183.24); /* #0f3f39 */
+  --success-text: oklch(0.8546 0.1270 155.28); /* #86e8ab web-emr --success-mid */
+  --warning-text: oklch(0.8308 0.1314 68.79); /* #ffb762 web-emr --warning-main */
+  --info-text: oklch(0.8391 0.0846 237.41); /* #95d3fb web-emr --info-mid */
+  --destructive-text: oklch(0.7759 0.1367 7.62); /* #ff8fa6 derived, light danger */
+  --readonly: oklch(0.2686 0 0); /* #262626 */
+  --disabled: oklch(0.3211 0 0); /* #333333 */
+  --disabled-foreground: oklch(0.6334 0 0); /* #8a8a8a */
+  --tag-blue: color-mix(in oklab, oklch(0.5007 0.0997 229.94) 28%, transparent);
+  --tag-blue-foreground: oklch(0.9369 0.0449 219.48); /* #caf2ff */
+  --tag-cyan: color-mix(in oklab, oklch(0.5574 0.0908 194.86) 28%, transparent);
+  --tag-cyan-foreground: oklch(0.8867 0.0514 193.22); /* #b3e5e3 */
+  --tag-green: color-mix(in oklab, oklch(0.5327 0.1135 159.09) 28%, transparent);
+  --tag-green-foreground: oklch(0.8612 0.1086 146.40); /* #a2e5a7 */
+  --tag-navy: color-mix(in oklab, oklch(0.3895 0.1293 268.19) 28%, transparent);
+  --tag-navy-foreground: oklch(0.9010 0.0520 243.98); /* #c2e3ff */
+  --tag-orange: color-mix(in oklab, oklch(0.6688 0.1579 58.61) 28%, transparent);
+  --tag-orange-foreground: oklch(0.9448 0.0429 72.91); /* #ffe9ce */
+  --tag-pink: color-mix(in oklab, oklch(0.5303 0.2314 337.84) 28%, transparent);
+  --tag-pink-foreground: oklch(0.8956 0.0942 327.48); /* #ffc7fd */
+  --tag-red: color-mix(in oklab, oklch(0.6296 0.2253 15.80) 28%, transparent);
+  --tag-red-foreground: oklch(0.8854 0.0617 4.53); /* #fec9d4 */
+  --tag-violet: color-mix(in oklab, oklch(0.5576 0.2852 300.95) 28%, transparent);
+  --tag-violet-foreground: oklch(0.9434 0.0364 310.48); /* #f4e6ff */
+  --tag-yellow: color-mix(in oklab, oklch(0.5723 0.1197 77.04) 28%, transparent);
+  --tag-yellow-foreground: oklch(0.9474 0.1038 104.66); /* #f8f29f */
+  --tag-brown: color-mix(in oklab, oklch(0.3989 0.1084 23.38) 28%, transparent);
+  --tag-brown-foreground: oklch(0.8243 0.0343 15.59); /* #dbbdbe */
+  --tag-gray: color-mix(in oklab, oklch(0.4748 0 0) 28%, transparent);
+  --tag-gray-foreground: oklch(0.9642 0 0); /* #f3f3f3 */
+}
+
 /* Sans-serif Roboto everywhere, headings included (as apps/gmhs DESIGN.md) */
 :root {
   --font-sans: "Roboto Variable", "Roboto", "Helvetica Neue", Arial, sans-serif;

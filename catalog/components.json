@@ -432,6 +432,41 @@
     "kind": "primitive"
   },
   {
+    "name": "category-tag",
+    "category": "data",
+    "kind": "block",
+    "summary": "Category label in one of the 11 MedViet tag colours (web-emr light/dark pairs, AA): khoa, loại dịch vụ, gói khám, nhóm khách hàng.",
+    "use_when": [
+      "khoa, chuyên khoa, loại dịch vụ, gói khám, đối tượng (BHYT, dịch vụ)",
+      "any grouping shown as a coloured label, same colour on every screen"
+    ],
+    "avoid_when": "Workflow states (chờ, xong, huỷ): StatusBadge. More than ~11 categories: plain text.",
+    "keywords": [
+      "category",
+      "danh mục",
+      "phân loại",
+      "nhãn",
+      "tag",
+      "khoa",
+      "chuyên khoa",
+      "loại dịch vụ",
+      "gói khám",
+      "nhóm",
+      "màu nhóm"
+    ],
+    "example": "const KHOA_COLOR: Record<Khoa, TagColor> = { noi: \"blue\", nhi: \"orange\" };  <CategoryTag color={KHOA_COLOR[row.khoa]}>{label}</CategoryTag>",
+    "related": [
+      "status-badge",
+      "badge"
+    ],
+    "import": "@/components/blocks/category-tag",
+    "exports": [
+      "CategoryTag"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "chart",
     "category": "data",
     "summary": "Recharts wrapper: themed container, tooltip and legend that read chart-1…5 tokens.",

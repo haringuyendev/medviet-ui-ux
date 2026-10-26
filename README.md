@@ -27,7 +27,13 @@ Claude Desktop, dựng trên engine của [aura-ui](https://github.com/haringuye
   của mình ở lần chạy đầu.
 
 ## Có gì
-**Design system** (`references/design-system.md`). Token y hệt `turbo-web/tooling/tailwind/theme.css`:
+**Design system v1** (`design/DESIGN.md`, xem trực quan ở `design/preview.html`, token ở `design/tokens.json`; bản tóm tắt cho
+skill ở `references/design-system.md`). Bản v1 bổ sung so với turbo-web: `primary` đổi sang `#287a6f` (chữ trắng đạt 5,1:1, thay
+vì 2,97:1), `brand` `#38a696` dùng cho logo và biểu đồ, chữ trạng thái `*-text` đạt chuẩn tương phản, 11 cặp màu phân loại,
+`readonly`/`disabled`. Các bổ sung này nằm trong một khối riêng của `index.css`; bản vá cho turbo-web ở
+`upstream/turbo-web-theme-v1.patch`.
+
+Gốc lấy từ turbo-web (`references/design-system.md`). Token y hệt `turbo-web/tooling/tailwind/theme.css`:
 - màu chính `#38a696`, nền `#f8f8f9`, chữ `#3d4c63`;
 - màu trạng thái: info `#3b9bf3` (đang làm, đang duyệt), warning `#ffb762` (chờ), success `#36b37e` (xong), destructive
   `#ff5075` (thiếu, huỷ);
@@ -51,6 +57,7 @@ Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-bounda
   | `retry-alert` | health-exam | lỗi tải/lưu ngay tại chỗ, có nút Thử lại |
   | `info-hint` | gmhs | ⓘ giải thích ngắn |
   | `required-mark` | gmhs, manage-form | dấu * của trường bắt buộc |
+  | `category-tag` | DS v1 | nhãn danh mục (khoa, loại dịch vụ) bằng 11 màu phân loại |
   | `page-header`, `stat`, `description-list`, `form`, `number-input`, `file-upload`, `stepper` | aura | tiêu đề trang, KPI, form… |
 
 - `src/pages`: `NotFound` và `ServerError` dựng bằng token (bản trong template của turbo-web dùng màu xám thô).
@@ -98,6 +105,7 @@ node scripts/sync-turbo.mjs                  # chép primitive, hook, utils, tok
 cd template && npm install && npx tsc -b && npx biome check .
 node scripts/catalog.mjs sync                # primitive mới cần mục trong catalog (từ khoá tiếng Việt)
 node scripts/smoke.mjs                       # test end-to-end: app mới, check, scaffold, hook, verify, Studio
+node scripts/design-tokens.mjs && node scripts/design-preview.mjs   # cập nhật design/tokens.json và preview.html
 ```
 
 ## Cấu trúc
@@ -109,6 +117,8 @@ manager/          engine Aura: aura.mjs (init, find, add, scaffold, variant, che
 template/         MedViet starter
 catalog/          components.json: 87 mục, từ điển Việt–Anh cho aura find
 addons/           7 add-on
+design/           DESIGN.md (Design System v1), preview.html, tokens.json
+upstream/         turbo-web-theme-v1.patch (token v1 + badge cho turbo-web)
 references/       design-system.md (MedViet), dashboard.md
 scripts/          sync-turbo.mjs, add-block.mjs, catalog.mjs, smoke.mjs, install-node.sh|ps1, find-node.sh|ps1
 ```

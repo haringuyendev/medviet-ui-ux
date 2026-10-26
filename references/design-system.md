@@ -1,5 +1,9 @@
 # MedViet design system
 
+> The full standard is `design/DESIGN.md` (MedViet Design System v1: principles, every token with its source and
+> contrast, typography, spacing, icons, component usage, content rules), with `design/preview.html` to see it.
+> This page is the short version the build skill reads.
+
 One design system for every MedViet app. The source of truth is turbo-web: `tooling/tailwind/theme.css` and
 `globals.css` (`@medviet/tailwind-config`), with the palette ported from web-emr's `root.css` (the EMR brand). The
 starter's `src/index.css` inlines the same tokens so an app runs outside the monorepo; a screen built here renders the
@@ -14,8 +18,9 @@ turbo-web first (a PR to `tooling/tailwind`), then copied here.
 | `background` | #f8f8f9 (body bg) | page ground, slightly tinted so white cards stand out |
 | `foreground` | #3d4c63 (--normal) | body text: slate, not black |
 | `card`, `popover` | #ffffff | surfaces above the ground: cards, panels, menus, dialogs |
-| `primary` / `primary-foreground` | #38a696 teal / white | the brand: main action, selected state, links, focus |
-| `accent` / `accent-foreground` | #eefffd / #3e9084 | hover and selected rows/options (the antd hover of web-emr) |
+| `primary` / `primary-foreground` | #287a6f teal / white (DS v1) | main action, selected state, links, focus (5.1:1 with white) |
+| `brand` | #38a696 (web-emr) | logo, charts, large fills: never under text (2.97:1 with white) |
+| `accent` / `accent-foreground` | #eefffd / primary | hover and selected rows/options; text on it uses primary (5.0:1) |
 | `secondary`, `muted` | #f3f3f3 | quiet buttons, tags, empty areas |
 | `muted-foreground` | #646464 | captions, hints, secondary text |
 | `border` | #f0f0f0 | dividers, table lines, card edges |
@@ -46,11 +51,17 @@ The status palette is web-emr's workflow palette. Map every status of an app ont
 Use the `StatusBadge` block (`defineStatuses` maps an app's status type to tone + label). Status colours are identical
 in light and dark mode: a status hue must not change meaning between themes.
 
-**Status colours as text.** On the light ground `success`/`warning`/`info` are below 4.5:1, so don't colour body text
-with them. Use a tint plus normal text (`bg-success/10 text-foreground`, which is what StatusBadge does), or a dot/icon in
-the status colour next to normal text. `text-destructive` is acceptable for short critical words (an error under a
-field, "Dị ứng"). `*-foreground` tokens are the text colour *on* a filled status background (dark `#333` on
-success/warning/info, white on destructive).
+**Status colours as text.** The base status colours are 1.6–3:1 on the light ground: they are for fills, tints, dots
+and icons. Text in a status colour uses the DS v1 text tokens: `text-success-text` (#16794d), `text-warning-text`
+(#a15c00), `text-info-text` (#2055ad), `text-destructive-text` (#c8173f), all 4.5:1+ on background, card and their own
+chip tint, and lighter in dark mode. StatusBadge already uses them. `*-foreground` tokens are the text colour *on* a
+filled status background.
+
+**Categories** (khoa, loại dịch vụ, gói khám) use the 11 tag pairs `bg-tag-<color> text-tag-<color>-foreground`
+(blue, cyan, green, navy, orange, pink, red, violet, yellow, brown, gray) through the `CategoryTag` block: one colour
+per category, the same everywhere; never a status colour.
+
+**Read-only and disabled:** `bg-readonly` (#f5f5f5), `bg-disabled` / `text-disabled-foreground`.
 
 ## 3. Font
 Roboto Variable everywhere, headings included (`--font-sans`, `--font-heading`), self-hosted with

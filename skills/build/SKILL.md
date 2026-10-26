@@ -152,7 +152,10 @@ and everything else quiet:
   - **Charts** use the `chart-1…5` palette with confidence: the current series in a solid chart color,
     the comparison series in muted gray or dashed, categories (channels, revenue parts) in distinct
     chart colors used consistently everywhere they appear, with a legend or direct labels.
-  - **Status chips** are `StatusBadge` (tint + dot + normal text).
+  - **Status chips** are `StatusBadge`; status-coloured text uses `text-*-text` tokens (`text-success-text`…), never
+    `text-success`. **Categories** (khoa, loại dịch vụ) are `CategoryTag` with one tag colour per category.
+  - The MedViet Design System v1 (`${CLAUDE_PLUGIN_ROOT}/design/DESIGN.md`) is the reference for colour, type,
+    spacing, icons and component usage; `references/design-system.md` is its short version.
   - Brand color marks primary actions, the active selection and key links.
 - **Normal is unmarked.** Flag only what needs attention; an "OK/normal/active" value gets no badge,
   pill or tint. If most rows carry a marker, nothing stands out. (This is about status flags; chart
