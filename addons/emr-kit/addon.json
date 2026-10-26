@@ -1,0 +1,6 @@
+{
+  "name": "emr-kit",
+  "summary": "Bộ component giao diện giống hệt web-emr (EMR): token root.css, nút 29 kiểu btnType, ô nhập/ngày/chọn/số điện thoại có nhãn ngang, checkbox/radio, bảng đầu teal, dựng lại trên @medviet/ui.",
+  "dependencies": { "libphonenumber-js": "^1.12.0" },
+  "css": ["src/components/emr/emr.css"]
+}

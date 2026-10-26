@@ -1,0 +1,188 @@
+/*
+ * EMR kit tokens: web-emr public/assets/css/root.css, every variable kept with its value under --emr-*
+ * (underscores become dashes). Generated; the source of truth stays web-emr. Classes: bg-emr-primary-brand,
+ * text-emr-text-primary, border-emr-text-stroke…; gradients: bg-emr-gadient-green-enable, bg-emr-btn-error…
+ * Skipped from the source: --brand-dark: #97653 (invalid hex); --gradient-green-enable (empty); --gradient-green-hover (empty); --gradient-blue-enable (empty); --gradient-blue-hover (empty); --gradient-blue-pressed (empty); --gradient-yellow-enable (empty); --gradient-yellow-hover (empty); --gradient-red-enable (empty); --gradient-red-hover (empty).
+ */
+:root {
+  --emr-bg-disable-button: #c4cdd5;
+  --emr-bg-disable: #e3e3e3;
+  --emr-bg-readonly: #f5f5f5;
+  --emr-bg-secondary: #f3f3f3;
+  --emr-bg-teriary: #fbfbfb;
+  --emr-bg-disable-textfileld: #DDDDDD;
+  --emr-border-tbl: #f0f0f0;
+  --emr-btn-error: linear-gradient(270deg, #e37a7a 0%, #d04a4a 100%);
+  --emr-btn-submain: linear-gradient(89.77deg, #3786ce 0.18%, #7ebdf6 99.78%);
+  --emr-btn-warning: linear-gradient(90deg, #f19427 0%, #f0ba79 100%);
+  --emr-cancel: #6e4747;
+  --emr-danger-bright: #ffccd7;
+  --emr-danger-main: #ff5075;
+  --emr-gadient-green-enable: linear-gradient(270deg, #0bb59c 0%, #3e978a 100%);
+  --emr-info: #586983;
+  --emr-normal: #3d4c63;
+  --emr-notyet: #d9f4fd;
+  --emr-overlay: rgba(1, 149, 146, 0.2);
+  --emr-primary-active: #bae6df;
+  --emr-primary-brand: #38a696;
+  --emr-primary-bright: #eefffd;
+  --emr-primary-dark: #1d535d;
+  --emr-primary-hover: #eefffd;
+  --emr-primary-light: #f3fffd;
+  --emr-primary-brand-light: #97d9d0;
+  --emr-primary-brand-mid: #75cdc0;
+  --emr-primary-main: #52c0b0;
+  --emr-primary-text: #3e9084;
+  --emr-secondary-main: #3aa6b9;
+  --emr-secondary-normal: #3b9bf3;
+  --emr-secondary-dark: #006D91;
+  --emr-success-main: #36b37e;
+  --emr-success-mid: #86e8ab;
+  --emr-text-constrast: white;
+  --emr-text-primary: #333333;
+  --emr-text-secondary: #646464;
+  --emr-text-stroke: #bababa;
+  --emr-text-teriary: #888888;
+  --emr-transparents: transparent;
+  --emr-warning-light: #fef8ec;
+  --emr-warning-main: #ffb762;
+  --emr-whites: #ffffff;
+  --emr-info-main: #3b9bf3;
+  --emr-info-bright: #dceffd;
+  --emr-info-mid: #95d3fb;
+  --emr-info-dark: #2055ad;
+  --emr-blue-dark: #006D91;
+  --emr-blue-light: #CAF2FF;
+  --emr-brand-light: #BAE6DF;
+  --emr-brown-dark: #772A2A;
+  --emr-brown-light: #DBBDBE;
+  --emr-cyan-dark: #158484;
+  --emr-cyan-light: #B3E5E3;
+  --emr-gray-dark: #5C5C5C;
+  --emr-gray-light: #F3F3F3;
+  --emr-green-dark: #1A8054;
+  --emr-green-light: #A2E5A7;
+  --emr-navy-dark: #283D89;
+  --emr-navy-light: #C2E3FF;
+  --emr-orange-dark: #DA7805;
+  --emr-orange-light: #FFE9CE;
+  --emr-pink-dark: #B70399;
+  --emr-pink-light: #FFC7FD;
+  --emr-red-dark: #F23059;
+  --emr-red-light: #FEC9D4;
+  --emr-violet-dark: #9518FB;
+  --emr-violet-light: #F4E6FF;
+  --emr-yellow-dark: #9F6D00;
+  --emr-yellow-light: #F8F29F;
+  --emr-gradient-green-pressed: rgb(62, 151, 138);
+  --emr-gradient-yellow-pressed: rgb(241, 148, 39);
+  --emr-gradient-red-pressed: rgb(229, 74, 74);
+  --emr-secondary-light: #E6F8FE;
+  --emr-accent-warning-light: #FFF8EF;
+  --emr-accent-warning-dark: #EB996E;
+  --emr-blue-lignt-6: #EFFCFE;
+  --emr-blue-dark-6: #0CABC0;
+  /* EMR body (app.scss) and antd theme (ProviderAntd) values the kit needs */
+  --emr-body-bg: #f8f8f9;
+  --emr-body-color: #3d4c63;
+  --emr-btn-back: #dee1e6;
+  --emr-row-selected: #e0f7fa;
+}
+
+@theme inline {
+  --color-emr-bg-disable-button: var(--emr-bg-disable-button);
+  --color-emr-bg-disable: var(--emr-bg-disable);
+  --color-emr-bg-readonly: var(--emr-bg-readonly);
+  --color-emr-bg-secondary: var(--emr-bg-secondary);
+  --color-emr-bg-teriary: var(--emr-bg-teriary);
+  --color-emr-bg-disable-textfileld: var(--emr-bg-disable-textfileld);
+  --color-emr-border-tbl: var(--emr-border-tbl);
+  --color-emr-cancel: var(--emr-cancel);
+  --color-emr-danger-bright: var(--emr-danger-bright);
+  --color-emr-danger-main: var(--emr-danger-main);
+  --color-emr-info: var(--emr-info);
+  --color-emr-normal: var(--emr-normal);
+  --color-emr-notyet: var(--emr-notyet);
+  --color-emr-overlay: var(--emr-overlay);
+  --color-emr-primary-active: var(--emr-primary-active);
+  --color-emr-primary-brand: var(--emr-primary-brand);
+  --color-emr-primary-bright: var(--emr-primary-bright);
+  --color-emr-primary-dark: var(--emr-primary-dark);
+  --color-emr-primary-hover: var(--emr-primary-hover);
+  --color-emr-primary-light: var(--emr-primary-light);
+  --color-emr-primary-brand-light: var(--emr-primary-brand-light);
+  --color-emr-primary-brand-mid: var(--emr-primary-brand-mid);
+  --color-emr-primary-main: var(--emr-primary-main);
+  --color-emr-primary-text: var(--emr-primary-text);
+  --color-emr-secondary-main: var(--emr-secondary-main);
+  --color-emr-secondary-normal: var(--emr-secondary-normal);
+  --color-emr-secondary-dark: var(--emr-secondary-dark);
+  --color-emr-success-main: var(--emr-success-main);
+  --color-emr-success-mid: var(--emr-success-mid);
+  --color-emr-text-constrast: var(--emr-text-constrast);
+  --color-emr-text-primary: var(--emr-text-primary);
+  --color-emr-text-secondary: var(--emr-text-secondary);
+  --color-emr-text-stroke: var(--emr-text-stroke);
+  --color-emr-text-teriary: var(--emr-text-teriary);
+  --color-emr-transparents: var(--emr-transparents);
+  --color-emr-warning-light: var(--emr-warning-light);
+  --color-emr-warning-main: var(--emr-warning-main);
+  --color-emr-whites: var(--emr-whites);
+  --color-emr-info-main: var(--emr-info-main);
+  --color-emr-info-bright: var(--emr-info-bright);
+  --color-emr-info-mid: var(--emr-info-mid);
+  --color-emr-info-dark: var(--emr-info-dark);
+  --color-emr-blue-dark: var(--emr-blue-dark);
+  --color-emr-blue-light: var(--emr-blue-light);
+  --color-emr-brand-light: var(--emr-brand-light);
+  --color-emr-brown-dark: var(--emr-brown-dark);
+  --color-emr-brown-light: var(--emr-brown-light);
+  --color-emr-cyan-dark: var(--emr-cyan-dark);
+  --color-emr-cyan-light: var(--emr-cyan-light);
+  --color-emr-gray-dark: var(--emr-gray-dark);
+  --color-emr-gray-light: var(--emr-gray-light);
+  --color-emr-green-dark: var(--emr-green-dark);
+  --color-emr-green-light: var(--emr-green-light);
+  --color-emr-navy-dark: var(--emr-navy-dark);
+  --color-emr-navy-light: var(--emr-navy-light);
+  --color-emr-orange-dark: var(--emr-orange-dark);
+  --color-emr-orange-light: var(--emr-orange-light);
+  --color-emr-pink-dark: var(--emr-pink-dark);
+  --color-emr-pink-light: var(--emr-pink-light);
+  --color-emr-red-dark: var(--emr-red-dark);
+  --color-emr-red-light: var(--emr-red-light);
+  --color-emr-violet-dark: var(--emr-violet-dark);
+  --color-emr-violet-light: var(--emr-violet-light);
+  --color-emr-yellow-dark: var(--emr-yellow-dark);
+  --color-emr-yellow-light: var(--emr-yellow-light);
+  --color-emr-gradient-green-pressed: var(--emr-gradient-green-pressed);
+  --color-emr-gradient-yellow-pressed: var(--emr-gradient-yellow-pressed);
+  --color-emr-gradient-red-pressed: var(--emr-gradient-red-pressed);
+  --color-emr-secondary-light: var(--emr-secondary-light);
+  --color-emr-accent-warning-light: var(--emr-accent-warning-light);
+  --color-emr-accent-warning-dark: var(--emr-accent-warning-dark);
+  --color-emr-blue-lignt-6: var(--emr-blue-lignt-6);
+  --color-emr-blue-dark-6: var(--emr-blue-dark-6);
+  --color-emr-body-bg: var(--emr-body-bg);
+  --color-emr-body-color: var(--emr-body-color);
+  --color-emr-btn-back: var(--emr-btn-back);
+  --color-emr-row-selected: var(--emr-row-selected);
+}
+
+@utility bg-emr-btn-error {
+  background-image: var(--emr-btn-error);
+}
+@utility bg-emr-btn-submain {
+  background-image: var(--emr-btn-submain);
+}
+@utility bg-emr-btn-warning {
+  background-image: var(--emr-btn-warning);
+}
+@utility bg-emr-gadient-green-enable {
+  background-image: var(--emr-gadient-green-enable);
+}
+
+/* EMR's font stack: the app's self-hosted Roboto Variable first, web-emr's Google "Roboto" next */
+@utility font-emr {
+  font-family: "Roboto Variable", "Roboto", "Helvetica Neue", Arial, sans-serif;
+}

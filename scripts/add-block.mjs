@@ -45,6 +45,20 @@ for (const f of files) {
   console.log(`+ ${f}`)
 }
 
+// stylesheets the add-on needs in the app's CSS entry (its tokens registered with Tailwind): "css": ["src/…/x.css"]
+const entry = path.join(app, 'src', 'index.css')
+for (const css of [spec.css ?? []].flat()) {
+  if (!fs.existsSync(entry)) { console.log(`Add to your CSS entry: @import "${css}";`); continue }
+  const src = fs.readFileSync(entry, 'utf8')
+  const rel = './' + path.relative(path.dirname(entry), path.join(app, css)).split(path.sep).join('/')
+  if (src.includes(`"${rel}"`)) continue
+  // after the last top-of-file @import, so it can use the theme (and Tailwind sees its @theme block)
+  const imports = [...src.matchAll(/^@import [^\n]+\n/gm)]
+  const at = imports.length ? imports.at(-1).index + imports.at(-1)[0].length : 0
+  fs.writeFileSync(entry, src.slice(0, at) + `@import "${rel}";\n` + src.slice(at))
+  console.log(`+ @import "${rel}" in src/index.css`)
+}
+
 const deps = Object.entries(spec.dependencies || {}).map(([pkg, v]) => (/^(https?:|file:|git)/.test(v) ? v : `${pkg}@${v}`))
 if (deps.length) {
   console.log(`npm install ${deps.join(' ')}`)
