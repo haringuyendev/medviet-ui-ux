@@ -618,7 +618,7 @@
   {
     "name": "excel-import",
     "category": "data",
-    "kind": "addon",
+    "kind": "block",
     "summary": "Read rows from an Excel/CSV file by header (accents/case/spaces ignored, aliases), with per-row errors; download a template with required columns and an example row.",
     "use_when": [
       "nhập danh sách bệnh nhân, nhân viên, dịch vụ từ Excel",
@@ -641,7 +641,6 @@
       "data-table"
     ],
     "import": "@/lib/excel-import",
-    "install": "node <this-skill-folder>/scripts/add-block.mjs excel-import <app-dir>",
     "exports": [
       "readSheet",
       "downloadImportTemplate"
@@ -681,7 +680,7 @@
   {
     "name": "export-menu",
     "category": "data",
-    "kind": "addon",
+    "kind": "block",
     "summary": "[Xuất] → Excel (.xlsx with bold frozen header, filter, real numbers/dates) or CSV (UTF-8 BOM) for any rows; columns give raw values.",
     "use_when": [
       "xuất danh sách hồ sơ, báo cáo ra Excel",
@@ -704,7 +703,6 @@
       "excel-import"
     ],
     "import": "@/components/blocks/export-menu",
-    "install": "node <this-skill-folder>/scripts/add-block.mjs data-export <app-dir>",
     "exports": [
       "ExportMenu"
     ],
@@ -1605,21 +1603,28 @@
     "name": "date-field",
     "category": "form",
     "kind": "block",
-    "summary": "Typed date DD/MM/YYYY with an auto-filling mask (web-emr MaskDate); parseDate/formatDateField helpers. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "summary": "Date field: calendar to pick from (vi-VN, month/year dropdowns) plus DD/MM/YYYY typed with an auto-filling mask (web-emr MaskDate / SelectDate); parseDate/formatDateField helpers. The default for every single date. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
     "use_when": [
-      "ngày sinh, ngày cấp: fast keyboard entry"
+      "any date: ngày sinh, ngày khám, ngày hẹn, ngày cấp, filter by one day",
+      "form fields and filter bars"
     ],
-    "avoid_when": "Picking on a calendar: date-picker-field or DatePicker.",
+    "avoid_when": "A range: date-range-field. Typing only (picker={false}) just when the user asks for it.",
     "keywords": [
       "date",
       "ngày",
-      "ngày sinh",
+      "ô ngày",
+      "chọn ngày",
       "nhập ngày",
+      "ngày sinh",
+      "ngày khám",
+      "ngày hẹn",
+      "lịch",
+      "date picker",
       "dd/mm/yyyy",
       "web-emr MaskDate",
       "maskdate"
     ],
-    "example": "<DateField label=\"Ngày sinh:\" required value={dob} onChange={setDob} />",
+    "example": "<DateField label=\"Ngày khám:\" value={day} onChange={setDay} />  // calendar + typing; parseDate(day) → Date",
     "related": [
       "date-picker-field",
       "date-range-field"
@@ -1629,10 +1634,13 @@
       "maskDate",
       "parseDate",
       "formatDateField",
+      "DateCalendarButton",
       "DateField"
     ],
     "variants": {},
-    "deps": []
+    "deps": [
+      "react-day-picker"
+    ]
   },
   {
     "name": "date-picker",
@@ -1643,7 +1651,7 @@
       "ngày sinh, ngày khám, ngày hẹn",
       "lọc theo khoảng ngày (từ ngày – đến ngày)"
     ],
-    "avoid_when": "Only a time: use time-input. Free-text dates.",
+    "avoid_when": "In the MedViet starter use date-field / date-range-field (same calendar, sized by the design-system tokens). Only a time: time-input.",
     "keywords": [
       "date picker",
       "chọn ngày",
@@ -1678,11 +1686,11 @@
     "name": "date-picker-field",
     "category": "form",
     "kind": "block",
-    "summary": "Date typed as DD/MM/YYYY or picked from a Vietnamese calendar popover, kept in sync (web-emr SelectDate / PickerDate). Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "summary": "Same as DateField (calendar + typed DD/MM/YYYY, web-emr SelectDate / PickerDate); kept as a name for existing screens. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
     "use_when": [
-      "ngày khám, ngày hẹn when users both type and pick"
+      "any single date, like DateField"
     ],
-    "avoid_when": "Range: date-range-field / DateRangePicker.",
+    "avoid_when": "A range: date-range-field.",
     "keywords": [
       "date picker",
       "chọn ngày",
@@ -1709,21 +1717,25 @@
     "name": "date-range-field",
     "category": "form",
     "kind": "block",
-    "summary": "Từ ngày – đến ngày typed in one box, both masked, reports an end before the start (web-emr RangeDate); isValidRange helper. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
+    "summary": "Từ ngày – đến ngày in one box: picked on a two-month calendar or typed (both ends masked), reports an end before the start (web-emr RangeDate); isValidRange helper. The default for date-range filters. Sizes and colours come from the design-system tokens, so it follows the theme (DS v1 or EMR).",
     "use_when": [
-      "lọc báo cáo, danh sách theo khoảng ngày"
+      "lọc báo cáo, danh sách theo khoảng ngày (từ ngày – đến ngày)",
+      "any filter by period"
     ],
-    "avoid_when": "Calendar range picking: DateRangePicker.",
+    "avoid_when": "One date: date-field. Typing only (picker={false}) just when the user asks for it.",
     "keywords": [
       "date range",
       "khoảng ngày",
       "từ ngày",
       "đến ngày",
       "lọc ngày",
+      "lọc theo ngày",
+      "chọn khoảng ngày",
+      "lịch",
       "web-emr RangeDate",
       "rangedate"
     ],
-    "example": "<DateRangeField label=\"Khoảng ngày:\" value={range} onChange={setRange} />",
+    "example": "<DateRangeField label=\"Khoảng ngày:\" value={range} onChange={setRange} />  // { from, to } as DD/MM/YYYY",
     "related": [
       "date-field",
       "date-picker"
@@ -3509,7 +3521,7 @@
   {
     "name": "file-lightbox",
     "category": "overlay",
-    "kind": "addon",
+    "kind": "block",
     "summary": "Full-screen file viewer: images (zoom), PDF (react-pdf, lazy pages, page counter), Word .docx (docx-preview), Excel/CSV/ODS (SheetJS, sheet tabs, first 1000 rows), text; paging between files, keyboard shortcuts and download. Each viewer is lazy-loaded.",
     "use_when": [
       "opening attachments of a record (results, consent forms, invoices, spreadsheets)",
@@ -3539,7 +3551,6 @@
       "dialog"
     ],
     "import": "@/components/blocks/file-lightbox",
-    "install": "node <this-skill-folder>/scripts/add-block.mjs file-lightbox <app-dir>",
     "exports": [
       "FileLightbox"
     ],

@@ -64,6 +64,9 @@ Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-bounda
   | `info-hint` | gmhs | ⓘ giải thích ngắn |
   | `required-mark` | gmhs, manage-form | dấu * của trường bắt buộc |
   | `category-tag` | DS v1 | nhãn danh mục (khoa, loại dịch vụ) bằng 11 màu phân loại |
+  | `export-menu` | health-exam, gmhs | nút Xuất → Excel (.xlsx: header đậm, cố định dòng đầu, lọc, số và ngày đúng kiểu) hoặc CSV |
+  | `excel-import` (`src/lib`) | health-exam | nhập danh sách từ Excel/CSV theo tiêu đề cột, báo dòng lỗi, tải file mẫu |
+  | `file-lightbox` | health-exam | xem toàn màn hình ảnh, PDF, Word, Excel/CSV (mỗi trình xem tải khi cần) |
   | `page-header`, `stat`, `description-list`, `form`, `number-input`, `file-upload`, `stepper` | chung | tiêu đề trang, KPI, form… |
 
 - `src/pages`: `NotFound` và `ServerError` dựng bằng token (bản trong template của turbo-web dùng màu xám thô).
@@ -74,12 +77,9 @@ Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-bounda
 | Add-on | Dùng cho |
 |---|---|
 | `signature-pad` | người bệnh ký tên (health-exam) |
-| `data-export` | nút Xuất Excel/CSV cho bảng, danh sách |
-| `excel-import` | nhập danh sách từ Excel, file mẫu, báo dòng lỗi (health-exam) |
 | `print-sheet` | bản in A4: phiếu, biên bản, bảng bàn giao (gmhs) |
 | `virtual-list` | danh sách hàng nghìn dòng (health-exam) |
 | `rich-text-editor` | soạn văn bản có định dạng (Tiptap) |
-| `file-lightbox` | xem ảnh, PDF, Word, Excel |
 
 **Skill** (`/medviet-ui-ux:<tên>`):
 
@@ -117,13 +117,13 @@ node scripts/design-tokens.mjs && node scripts/design-preview.mjs   # cập nh�
 
 ## Cấu trúc
 ```
-.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.3.0)
+.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.4.0)
 hooks/            hook của medviet-ui-ux (SessionStart, PreToolUse, PostToolUse, Stop, SubagentStop)
 skills/           11 skill ở trên
 manager/          engine medviet-ui-ux: medviet-ui-ux.mjs (init, find, add, scaffold, variant, check, verify, inspect, studio, new, setup…)
 template/         MedViet starter
 catalog/          components.json: 108 mục, từ điển Việt–Anh cho medviet-ui-ux find
-addons/           7 add-on
+addons/           4 add-on
 design/           DESIGN.md (Design System v1), preview.html, tokens.json
 upstream/         turbo-web-theme-v1.patch (token v1 + badge cho turbo-web)
 references/       design-system.md (MedViet), dashboard.md

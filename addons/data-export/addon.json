@@ -1,5 +1,0 @@
-{
-  "name": "data-export",
-  "summary": "Nút Xuất Excel (.xlsx: header đậm, cố định dòng đầu, lọc, số và ngày đúng định dạng) / CSV (UTF-8 có BOM, Excel đọc đúng tiếng Việt) cho bảng, DataTable hay bất kỳ danh sách nào.",
-  "dependencies": { "fflate": "^0.8.3" }
-}

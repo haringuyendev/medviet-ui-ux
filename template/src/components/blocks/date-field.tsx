@@ -1,7 +1,21 @@
+import { CalendarIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { useId } from "react";
+import { useId, useState } from "react";
+import type { DateRange } from "react-day-picker";
 
-import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { calendarLocale } from "@/lib/calendar-locale";
 import type { ControlAppearance } from "./control-field";
 import {
   ControlField,
@@ -35,8 +49,83 @@ export const formatDateField = (date: Date) =>
   `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
 
 /**
- * A typed date (web-emr MaskDate): digits become "DD/MM/YYYY" as they are typed, centred like EMR. For picking from a
- * calendar use DatePicker; this is for fast keyboard entry (ngày sinh, ngày cấp).
+ * The calendar button at the end of a date box: one date, or a range on two months. Users pick dates; typing
+ * DD/MM/YYYY stays possible in the box itself.
+ */
+export function DateCalendarButton(
+  props: { disabled?: boolean } & (
+    | { mode: "single"; selected?: Date; onSelect: (date: Date) => void }
+    | {
+        mode: "range";
+        selected?: DateRange;
+        onSelect: (range: DateRange) => void;
+      }
+  ),
+) {
+  const [open, setOpen] = useState(false);
+  return (
+    <InputGroupAddon align="inline-end">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
+          disabled={props.disabled}
+          render={
+            <InputGroupButton
+              size="icon-xs"
+              aria-label={
+                props.mode === "range"
+                  ? "Chọn khoảng ngày trên lịch"
+                  : "Chọn ngày trên lịch"
+              }
+            />
+          }
+        >
+          <CalendarIcon />
+        </PopoverTrigger>
+        <PopoverContent align="end" className="w-auto p-0">
+          {props.mode === "single" ? (
+            <Calendar
+              mode="single"
+              locale={calendarLocale("vi")}
+              selected={props.selected}
+              defaultMonth={props.selected}
+              captionLayout="dropdown"
+              onSelect={(d) => {
+                if (d) props.onSelect(d);
+                setOpen(false);
+              }}
+            />
+          ) : (
+            <Calendar
+              mode="range"
+              locale={calendarLocale("vi")}
+              numberOfMonths={2}
+              selected={props.selected}
+              defaultMonth={props.selected?.from}
+              onSelect={(_, picked) => {
+                // first click: the start (or a new start after a full range); second click: the end, then close.
+                // react-day-picker would fill both ends on the first click.
+                const prev = props.selected;
+                const range: DateRange =
+                  !prev?.from || prev.to
+                    ? { from: picked, to: undefined }
+                    : picked < prev.from
+                      ? { from: picked, to: prev.from }
+                      : { from: prev.from, to: picked };
+                props.onSelect(range);
+                if (range.to) setOpen(false);
+              }}
+            />
+          )}
+        </PopoverContent>
+      </Popover>
+    </InputGroupAddon>
+  );
+}
+
+/**
+ * A date field: a calendar to pick from (vi-VN, month/year dropdowns), and DD/MM/YYYY typed with an auto-filling mask
+ * for fast keyboard entry (web-emr MaskDate / SelectDate). value is the masked text; parseDate(value) gives the Date.
+ * picker={false} only when the user asked for typing alone.
  */
 export function DateField({
   id,
@@ -45,12 +134,13 @@ export function DateField({
   value,
   onChange,
   appearance = "outline",
-  width = 130,
+  width = 150,
   readOnly,
   disabled,
   error,
   vertical,
   placeholder = "DD/MM/YYYY",
+  picker = true,
 }: {
   id?: string;
   label?: ReactNode;
@@ -64,6 +154,7 @@ export function DateField({
   error?: ReactNode;
   vertical?: boolean;
   placeholder?: string;
+  picker?: boolean;
 }) {
   const autoId = useId();
   const inputId = id ?? autoId;
@@ -94,8 +185,16 @@ export function DateField({
           required={required}
           aria-invalid={error ? true : undefined}
           onChange={(e) => onChange(maskDate(e.target.value))}
-          className={`${controlText} text-center`}
+          className={picker ? controlText : `${controlText} text-center`}
         />
+        {picker && (
+          <DateCalendarButton
+            mode="single"
+            disabled={readOnly || disabled}
+            selected={parseDate(value) ?? undefined}
+            onSelect={(d) => onChange(formatDateField(d))}
+          />
+        )}
       </InputGroup>
     </ControlField>
   );

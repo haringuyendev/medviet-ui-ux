@@ -11,7 +11,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-// Fonts, CMaps and wasm decoders copied to public/pdfjs/ by add-block.sh, so PDFs without
+// Fonts, CMaps and wasm decoders copied to public/pdfjs/ by scripts/pdfjs-assets.mjs (postinstall), so PDFs without
 // embedded fonts (common for Vietnamese forms) render correctly offline.
 const options = {
   cMapUrl: "/pdfjs/cmaps/",

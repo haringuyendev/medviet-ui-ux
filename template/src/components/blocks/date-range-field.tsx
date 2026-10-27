@@ -13,7 +13,12 @@ import {
   controlText,
   widthStyle,
 } from "./control-field";
-import { maskDate, parseDate } from "./date-field";
+import {
+  DateCalendarButton,
+  formatDateField,
+  maskDate,
+  parseDate,
+} from "./date-field";
 
 export type DateRangeText = { from: string; to: string };
 
@@ -25,8 +30,8 @@ export function isValidRange(range: DateRangeText) {
 }
 
 /**
- * Từ ngày – đến ngày typed in one box (web-emr RangeDate), each end masked as DD/MM/YYYY. An end before the start is
- * reported as an error. Picking from a calendar: DateRangePicker.
+ * Từ ngày – đến ngày in one box (web-emr RangeDate): picked on a two-month calendar, or typed with each end masked as
+ * DD/MM/YYYY. An end before the start is reported as an error. picker={false} only when the user asked for typing alone.
  */
 export function DateRangeField({
   id,
@@ -35,11 +40,12 @@ export function DateRangeField({
   value,
   onChange,
   appearance = "outline",
-  width = 240,
+  width = 270,
   readOnly,
   disabled,
   error,
   vertical,
+  picker = true,
 }: {
   id?: string;
   label?: ReactNode;
@@ -52,6 +58,7 @@ export function DateRangeField({
   disabled?: boolean;
   error?: ReactNode;
   vertical?: boolean;
+  picker?: boolean;
 }) {
   const autoId = useId();
   const fromId = id ?? autoId;
@@ -95,6 +102,19 @@ export function DateRangeField({
           –
         </InputGroupText>
         {input("to", `${fromId}-to`, "Đến ngày")}
+        {picker && (
+          <DateCalendarButton
+            mode="range"
+            disabled={readOnly || disabled}
+            selected={from ? { from, to: to ?? undefined } : undefined}
+            onSelect={(r) =>
+              onChange({
+                from: r.from ? formatDateField(r.from) : "",
+                to: r.to ? formatDateField(r.to) : "",
+              })
+            }
+          />
+        )}
       </InputGroup>
     </ControlField>
   );

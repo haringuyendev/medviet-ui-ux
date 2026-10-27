@@ -17,7 +17,7 @@ const src = path.join(root, 'template', 'src')
 const sources = [
   { dir: path.join(src, 'components', 'ui'), ext: '.tsx', importBase: '@/components/ui/' },
   { dir: path.join(src, 'components', 'blocks'), ext: '.tsx', importBase: '@/components/blocks/' },
-  { dir: path.join(src, 'lib'), ext: '.ts', importBase: '@/lib/', only: ['format'] },
+  { dir: path.join(src, 'lib'), ext: '.ts', importBase: '@/lib/', only: ['format', 'excel-import'] },
 ]
 // Optional heavy blocks installed on demand with add-block.mjs.
 const addonsDir = path.join(root, 'addons')
