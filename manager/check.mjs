@@ -119,7 +119,8 @@ export function checkFile(ctx, state, abs, { isNew = false } = {}) {
   if (!src) return []
   const out = []
   const lines = src.split('\n')
-  const ignored = (rule, line) => [lines[line - 1], lines[line - 2]].some((l) => l && new RegExp(`medviet-ignore\\s+${rule}\\b`).test(l))
+  // aura-ignore: the same comment in files written before 1.2.1
+  const ignored = (rule, line) => [lines[line - 1], lines[line - 2]].some((l) => l && new RegExp(`(?:medviet|aura)-ignore\\s+${rule}\\b`).test(l))
   const add = (rule, line, message) => state.rules[rule] && state.rules[rule] !== 'off' && !ignored(rule, line) && out.push({ rule, severity: state.rules[rule], line, message, key: findingKey(rule, message) })
   const relPath = ctx.rel(abs)
   // Inside the component's own package, use its local form (#components/x); elsewhere its public import.

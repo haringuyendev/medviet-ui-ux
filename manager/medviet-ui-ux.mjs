@@ -55,6 +55,8 @@ const flag = (name) => { const i = argv.indexOf(`--${name}`); return i >= 0 ? ar
 const has = (name) => argv.includes(`--${name}`)
 const positional = argv.slice(1).filter((a, i, all) => !a.startsWith('--') && !(i > 0 && all[i - 1].startsWith('--') && !['--changed', '--json', '--scripts', '--existing', '--full', '--shot', '--dry-run', '--write', '--force', '--no-open'].includes(all[i - 1])))
 
+const RULES_COMMENT = 'rules: error blocks the agent, warn reports, info hints, off disables. Optional: primitivesDir (folder of base components), tokenFiles (CSS entry files; @imports are followed), allowUiLibraries (import prefixes allowed besides the detected ones), cli ("local" makes hooks run .medviet-ui-ux/bin instead of the plugin copy), studio ({ port, model, permissionMode } for medviet-ui-ux studio), inspect ({ baseUrl (a URL, or { "apps/web": url } per app), widths, storageState, kpiRatio, minDataColor, repeatSections, maxKpis, tapTarget } for medviet-ui-ux inspect/verify; its rules go in "rules" too), verify ({ mode: "required" (Stop hook needs medviet-ui-ux verify) | "off", maxPages, maxStopBlocks })'
+
 /**
  * Repos set up before 1.2.1 kept medviet-ui-ux's files in .aura/, the folder aura-ui uses. Move ours to
  * .medviet-ui-ux/ (and the npm scripts that point into it); an .aura/ that belongs to aura-ui stays untouched.
@@ -67,6 +69,14 @@ function migrateLegacyDir(dir) {
   try { fs.renameSync(legacy, target) } catch { return }
   try { fs.renameSync(path.join(target, 'bin', 'aura.mjs'), path.join(target, 'bin', 'medviet-ui-ux.mjs')) } catch {}
   try { fs.renameSync(path.join(target, 'bin', 'aura-catalog.json'), path.join(target, 'bin', 'medviet-catalog.json')) } catch {}
+  // the help text in rules.json still names .aura/ and aura commands
+  const rules = path.join(target, 'rules.json')
+  try { const r = JSON.parse(fs.readFileSync(rules, 'utf8')); if (/\baura\b|\.aura\//.test(r.$comment ?? '')) fs.writeFileSync(rules, JSON.stringify({ ...r, $comment: RULES_COMMENT }, null, 2) + '\n') } catch {}
+  const baseline = path.join(target, 'baseline.json')
+  try { fs.writeFileSync(baseline, fs.readFileSync(baseline, 'utf8').replace(/^(\s*"\$comment":.*)$/m, (l) => l.replace(/\baura\b/g, 'medviet-ui-ux'))) } catch {}
+  // descriptions seeded from the catalog were marked "aura-catalog": keep them refreshable
+  const registry = path.join(target, 'registry.json')
+  try { fs.writeFileSync(registry, fs.readFileSync(registry, 'utf8').replaceAll('"describedBy": "aura-catalog"', '"describedBy": "medviet-catalog"')) } catch {}
   const pkgPath = path.join(dir, 'package.json')
   try {
     const raw = fs.readFileSync(pkgPath, 'utf8'), pkg = JSON.parse(raw)
@@ -258,7 +268,7 @@ async function main() {
     const r = refresh(ctx, { full: true })
     const f = files(ctx)
     if (!fs.existsSync(f.rules)) fs.writeFileSync(f.rules, JSON.stringify({
-      $comment: 'rules: error blocks the agent, warn reports, info hints, off disables. Optional: primitivesDir (folder of base components), tokenFiles (CSS entry files; @imports are followed), allowUiLibraries (import prefixes allowed besides the detected ones), cli ("local" makes hooks run .medviet-ui-ux/bin instead of the plugin copy), studio ({ port, model, permissionMode } for medviet-ui-ux studio), inspect ({ baseUrl (a URL, or { "apps/web": url } per app), widths, storageState, kpiRatio, minDataColor, repeatSections, maxKpis, tapTarget } for medviet-ui-ux inspect/verify; its rules go in "rules" too), verify ({ mode: "required" (Stop hook needs medviet-ui-ux verify) | "off", maxPages, maxStopBlocks })',
+      $comment: RULES_COMMENT,
       rules: DEFAULT_RULES,
       allowUiLibraries: [],
     }, null, 2) + '\n')
