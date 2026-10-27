@@ -35,8 +35,8 @@ hooks:
    `tokens`) instead of reading component folders. Prefer a block over re-assembling its primitives.
    **A primitive the project lacks** (find says `MISSING PRIMITIVE`): ask the user, and add it with
    `medviet-ui-ux add <name>` only if they agree; otherwise compose from what exists. Never hand-build it from divs.
-   For a rich text editor, a signature pad, an A4 print sheet or a very long list in a starter app, `medviet-ui-ux find`
-   prints the add-on's install command. Excel export/import and the PDF/Word/Excel viewer are already in the starter.
+   For a rich text editor, an A4 print sheet or a very long list in a starter app, `medviet-ui-ux find` prints the
+   add-on's install command. Excel export/import and the PDF/Word/Excel viewer are already in the starter.
 4. **Start a new page from a scaffold** in an existing project:
    `node .medviet-ui-ux/bin/medviet-ui-ux.mjs scaffold <dashboard|list|detail|form> <path/to/page.tsx> [--name Orders]`. It writes
    the page from the project's own components with the right structure already in place (what needs action
@@ -120,10 +120,12 @@ The project's design system wins over the starter:
    `DateRangeField` (từ ngày – đến ngày) from `src/components/blocks`: a calendar to pick from, typing DD/MM/YYYY still
    works. Never a plain `Input`, `type="date"` or a box with a DD/MM/YYYY placeholder (the `date-without-picker` hook
    rule blocks them); `picker={false}` only when the user asks for typing alone.
-10. **Excel and file viewing are built in.** A table or list of records that users report on gets an `ExportMenu`
+10. **Excel, file viewing, CCCD, signatures and history are built in.** A table or list of records that users report on gets an `ExportMenu`
    (Xuất Excel .xlsx / CSV) in its toolbar; importing a list uses `readSheet` and `downloadImportTemplate` from
-   `src/lib/excel-import` with `FileUpload`; opening an attached PDF, Word, Excel or image uses `FileLightbox`. Don't
-   build these by hand or add another library.
+   `src/lib/excel-import` with `FileUpload`; opening an attached PDF, Word, Excel or image uses `FileLightbox`.
+   Patient registration reads the CCCD with `CitizenIdScanButton` (reader or camera, fills số CCCD, họ tên, ngày sinh,
+   giới tính, địa chỉ) and shows `AgeHint` beside Ngày sinh; a signature is `SignaturePad`; a record's history is
+   `ActivityTimeline`. Don't build these by hand or add another library.
 
 ## First build of a new app
 Before writing code, post a short brief in chat (5–10 lines, no more):

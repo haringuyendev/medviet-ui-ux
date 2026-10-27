@@ -1,5 +1,0 @@
-{
-  "name": "signature-pad",
-  "summary": "Ký tên trên màn hình (chuột, bút, ngón tay): PNG nền trong suốt, giữ nét khi xoay/đổi cỡ, chặn chữ ký quá ngắn (health-exam).",
-  "dependencies": { "signature_pad": "^5.1.4" }
-}

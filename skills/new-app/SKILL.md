@@ -30,8 +30,9 @@ What the app has:
 
 Then build the first screen with the `medviet-ui-ux:build` skill (brief first: who uses it, v1 features; then status
 maps, screens). Built in: Excel/CSV export (`ExportMenu`), Excel import (`readSheet`, `downloadImportTemplate` in
-`src/lib/excel-import`) and the PDF/Word/Excel/image viewer (`FileLightbox`). Add-ons, installed on demand
-(`medviet-ui-ux find` prints the command when a need matches): signature-pad, print-sheet (A4), virtual-list,
+`src/lib/excel-import`), the PDF/Word/Excel/image viewer (`FileLightbox`), signatures (`SignaturePad`), CCCD scanning
+(`CitizenIdScanButton`), the age beside a birth date (`AgeHint`) and a record's history (`ActivityTimeline`). Add-ons,
+installed on demand (`medviet-ui-ux find` prints the command when a need matches): print-sheet (A4), virtual-list,
 rich-text-editor. `node "${CLAUDE_PLUGIN_ROOT}/scripts/add-block.mjs" list` shows them. Run
 `npm run dev` and give the user the URL.
 

@@ -353,6 +353,42 @@
     "kind": "primitive"
   },
   {
+    "name": "activity-timeline",
+    "category": "data",
+    "kind": "block",
+    "summary": "Lịch sử of a record: who did what and when, newest first, grouped by day (Hôm nay, Hôm qua, date), time and a dot coloured by meaning (the StatusBadge tones), optional detail line.",
+    "use_when": [
+      "record / ca / phiếu history: tạo, sửa, ký, chuyển trạng thái",
+      "audit trail beside a detail page"
+    ],
+    "avoid_when": "Steps still to do: stepper. A changing list of records: a table.",
+    "keywords": [
+      "lịch sử",
+      "lịch sử thay đổi",
+      "nhật ký",
+      "dòng thời gian",
+      "timeline",
+      "activity",
+      "audit log",
+      "history",
+      "ai làm gì",
+      "lịch sử hồ sơ",
+      "lịch sử ký"
+    ],
+    "example": "<ActivityTimeline items={[{ at: '2026-10-27T09:12', actor: 'BS.CKI Phạm Thu Hà', action: 'ký tường trình', tone: 'success' }]} />",
+    "related": [
+      "description-list",
+      "status-badge",
+      "stepper"
+    ],
+    "import": "@/components/blocks/activity-timeline",
+    "exports": [
+      "ActivityTimeline"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "avatar",
     "category": "data",
     "summary": "User image with initials fallback; groups with overflow count.",
@@ -1357,6 +1393,37 @@
     "kind": "primitive"
   },
   {
+    "name": "age-hint",
+    "category": "form",
+    "kind": "block",
+    "summary": "The age beside Ngày sinh: \"8 tháng\" under two, \"3 tuổi 2 tháng\" under six, \"35 tuổi\" after (health-exam bands); nothing until the date is complete. ageOf/formatAge in src/lib/age.",
+    "use_when": [
+      "next to a birth-date DateField in registration and patient forms",
+      "patient headers: age from the birth date"
+    ],
+    "avoid_when": "Showing the birth date itself: formatDate.",
+    "keywords": [
+      "tuổi",
+      "tính tuổi",
+      "tháng tuổi",
+      "ngày sinh",
+      "age",
+      "birth date",
+      "age from birth date",
+      "đối tượng khám"
+    ],
+    "example": "<DateField label=\"Ngày sinh:\" value={dob} onChange={setDob} /> <AgeHint birthDate={dob} />",
+    "related": [
+      "date-field"
+    ],
+    "import": "@/components/blocks/age-hint",
+    "exports": [
+      "AgeHint"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
     "name": "autocomplete-field",
     "category": "form",
     "kind": "block",
@@ -1511,6 +1578,47 @@
     "exports": [
       "CheckboxGroup",
       "RadioList"
+    ],
+    "variants": {},
+    "deps": []
+  },
+  {
+    "name": "citizen-id-scan",
+    "category": "form",
+    "kind": "block",
+    "summary": "Quét CCCD: a handheld QR reader types the card's QR (Enter), or the camera reads it (BarcodeDetector, jsQR on Windows Chrome); typing the 12 digits works too. Shows số CCCD, họ tên, ngày sinh, giới tính, địa chỉ, ngày cấp, then onScan(card) with dates as DD/MM/YYYY for DateField (health-exam scan-citizen-id).",
+    "use_when": [
+      "tiếp đón, đăng ký người bệnh: fill the patient from the CCCD",
+      "finding a patient by số CCCD"
+    ],
+    "avoid_when": "Other ID papers (BHYT card, passport): a MaskedField for the number.",
+    "keywords": [
+      "cccd",
+      "căn cước",
+      "căn cước công dân",
+      "quét cccd",
+      "quét qr",
+      "qr code",
+      "mã qr",
+      "citizen id",
+      "id card",
+      "scan",
+      "máy quét",
+      "camera",
+      "chip",
+      "tự nhận diện",
+      "điền thông tin người bệnh"
+    ],
+    "example": "<CitizenIdScanButton onScan={(c) => form.reset({ ...form.getValues(), cccd: c.citizenId, name: c.fullName, dob: c.birthDate, gender: c.gender, address: c.address })} />",
+    "related": [
+      "date-field",
+      "masked-field",
+      "text-field"
+    ],
+    "import": "@/components/blocks/citizen-id-scan",
+    "exports": [
+      "CitizenIdScanDialog",
+      "CitizenIdScanButton"
     ],
     "variants": {},
     "deps": []
@@ -2350,7 +2458,7 @@
   {
     "name": "signature-pad",
     "category": "form",
-    "kind": "addon",
+    "kind": "block",
     "summary": "Signature capture (mouse, pen, finger) as a transparent PNG; keeps strokes on resize; MIN_STROKE_LENGTH rejects a dot or a brushing thumb.",
     "use_when": [
       "người bệnh ký xác nhận, cam kết, biên bản",
@@ -2372,7 +2480,6 @@
       "button"
     ],
     "import": "@/components/blocks/signature-pad",
-    "install": "node <this-skill-folder>/scripts/add-block.mjs signature-pad <app-dir>",
     "exports": [
       "MIN_STROKE_LENGTH",
       "SignaturePad"
