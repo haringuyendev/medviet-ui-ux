@@ -1,20 +1,20 @@
 ---
 name: check
-description: Run and act on Aura's component rules - duplicate components, raw <button>/<input> when the project has the primitive, divs styled as Card/Item/Alert/Badge, primitives added without the user's approval, undefined color tokens, foreign UI libraries, raw colors, status colors used as text, missing alt or aria-label - and fix what they report, or tune rule severities. Use when an Aura hook blocks or notes an edit ("Aura blocked this change"), before finishing UI work, when the user asks to lint or check components, or to configure .aura/rules.json.
+description: Run and act on medviet-ui-ux's component rules - duplicate components, raw <button>/<input> when the project has the primitive, divs styled as Card/Item/Alert/Badge, primitives added without the user's approval, undefined color tokens, foreign UI libraries, raw colors, status colors used as text, missing alt or aria-label - and fix what they report, or tune rule severities. Use when a medviet-ui-ux hook blocks or notes an edit ("medviet-ui-ux blocked this change"), before finishing UI work, when the user asks to lint or check components, or to configure .medviet-ui-ux/rules.json.
 ---
 
-# Aura check
+# medviet-ui-ux check
 
 > `node` not found ("command not found", "not recognized")? Run the `medviet-ui-ux:setup` skill first: it installs Node.js for the user, no admin rights needed.
 
 ```bash
-node .aura/bin/aura.mjs check <file…>     # specific files
-node .aura/bin/aura.mjs check --changed   # files changed in git (what CI/pre-commit runs)
-node .aura/bin/aura.mjs check apps/web/src # a folder
-node .aura/bin/aura.mjs check             # all registered components (new findings only)
-node .aura/bin/aura.mjs check --existing  # also list baseline findings, with their current lines
-node .aura/bin/aura.mjs stats             # findings per rule: new vs existing, files with the most
-node .aura/bin/aura.mjs check --json      # machine-readable
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs check <file…>     # specific files
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs check --changed   # files changed in git (what CI/pre-commit runs)
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs check apps/web/src # a folder
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs check             # all registered components (new findings only)
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs check --existing  # also list baseline findings, with their current lines
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs stats             # findings per rule: new vs existing, files with the most
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs check --json      # machine-readable
 ```
 Exit code 1 when there is a new error. The first line says what was checked. `[existing]` findings come
 from the baseline and don't block.
@@ -22,35 +22,35 @@ from the baseline and don't block.
 These rules read source files: every UI file (pages, layouts and route files too), edited with Write/Edit or
 with a shell command (sed, heredocs, scripts are checked after the command runs). Classes in `cn()`, ternaries,
 and in maps or constants the className references (`LEVEL[x].accent`, `rowClass`) count. How the page looks once
-rendered is checked by `aura verify` / `aura inspect` (`medviet-ui-ux:inspect`).
+rendered is checked by `medviet-ui-ux verify` / `medviet-ui-ux inspect` (`medviet-ui-ux:inspect`).
 
 ## Fixing each rule
 | Rule | Default | Fix |
 |---|---|---|
 | `duplicate-component` | error | Delete the new copy and import the existing component the message names. If it lacks something, add a variant or prop to the existing one. |
 | `bypasses-primitive` | error | Replace the raw `<button>`/`<input>`/`<select>`/`<textarea>`/`<dialog>`/`<table>` with the project primitive the message names, using its variants. |
-| `hand-built-surface` | error | A `div`/`li`/`span` styled into a card, list row, tinted callout, chip, divider or skeleton. Use the primitive the message names (Card, Item, Alert, Badge, Separator, Skeleton). If the look you need (severity tone, accent bar) is missing, add a variant to that primitive with cva rather than styling the element. Truly not that thing (a dropzone, a selection toolbar)? Comment `aura-ignore hand-built-surface: <why>` on the line above or inside the tag. |
+| `hand-built-surface` | error | A `div`/`li`/`span` styled into a card, list row, tinted callout, chip, divider or skeleton. Use the primitive the message names (Card, Item, Alert, Badge, Separator, Skeleton). If the look you need (severity tone, accent bar) is missing, add a variant to that primitive with cva rather than styling the element. Truly not that thing (a dropzone, a selection toolbar)? Comment `medviet-ignore hand-built-surface: <why>` on the line above or inside the tag. |
 | `undefined-token` | error | Use one of the existing tokens listed in the message. If a new color is really needed, add the variable in the token file for light **and** dark and register it in `@theme` (`--color-<name>`), then use it. |
 | `foreign-ui-library` | error | Remove the import; build it from the project's components (`medviet-ui-ux:find`). |
 | `raw-color` | warn | Replace palette/hex/white/black classes with semantic tokens. |
 | `status-text-unsafe` | warn | Use the text-safe token the message names, or a tint with `text-foreground`. |
 | `img-alt`, `icon-button-label` | warn | Add `alt` (empty `alt=""` only for decoration) / `aria-label`. |
 | `undescribed-component` | info | Describe it with the `medviet-ui-ux:describe` skill. |
-| new primitive without approval | blocks | A file appeared in the primitives folder through a shell command, not `aura add`. Delete it and reuse a component (`aura find`), or ask the user and add a standard one with `aura add <name>`. A new primitive written with Write goes through a permission prompt. |
+| new primitive without approval | blocks | A file appeared in the primitives folder through a shell command, not `medviet-ui-ux add`. Delete it and reuse a component (`medviet-ui-ux find`), or ask the user and add a standard one with `medviet-ui-ux add <name>`. A new primitive written with Write goes through a permission prompt. |
 
 After fixing, run `check` on the file again. The Stop hook (SubagentStop for a subagent) re-checks every file
 touched in the session and won't let you finish with new errors, unapproved primitives, undescribed new
-components, or UI that `aura verify` hasn't passed. After a few reminders it lets the agent stop but tells the
+components, or UI that `medviet-ui-ux verify` hasn't passed. After a few reminders it lets the agent stop but tells the
 user what is left.
 
 The baseline matches old findings by what they are about (the element, class or tag), not by count or line:
 reformatting a file keeps them old, replacing an old violation with a different new one blocks.
-An intentional exception: a comment `aura-ignore <rule>: <why>` on the line above or inside the tag.
+An intentional exception: a comment `medviet-ignore <rule>: <why>` on the line above or inside the tag.
 
 In a monorepo, a message names the import to use from where the file is: the package's public path from
 an app (`@acme/ui/components/button`), its local path inside that package (`#components/button`).
 
-## Tuning (`.aura/rules.json`)
+## Tuning (`.medviet-ui-ux/rules.json`)
 Change it only when the user asks; explain the trade-off.
 - `rules`: each rule `error`, `warn`, `info` or `off` (e.g. a legacy area where raw elements are allowed).
 - `allowUiLibraries`: import prefixes allowed besides the detected UI libraries, e.g. `["@base-ui/react",
@@ -61,12 +61,12 @@ Change it only when the user asks; explain the trade-off.
   file is still checked and counted. `"all"` indexes every component.
 - `includeDirs`: extra folders of shared building blocks to index, e.g. `["packages/ui/src/patterns"]`.
 - `primitivesDir`: the folder of base components when it isn't found automatically (e.g.
-  `"packages/ui/src/components"`). Aura reads shadcn `components.json` aliases, tsconfig paths and
+  `"packages/ui/src/components"`). medviet-ui-ux reads shadcn `components.json` aliases, tsconfig paths and
   package.json `#imports` first.
 - `tokenFiles`: CSS entry files to read tokens from (default: every `.css` in the repo). `@import`s are
   followed, including workspace packages and packages in node_modules (Tailwind's own files are skipped).
-- `cli: "local"`: hooks run `.aura/bin/aura.mjs` instead of the plugin copy, for a patched local CLI.
-  Re-running `aura init` overwrites `.aura/bin` with the plugin version, so keep patches elsewhere too.
+- `cli: "local"`: hooks run `.medviet-ui-ux/bin/medviet-ui-ux.mjs` instead of the plugin copy, for a patched local CLI.
+  Re-running `medviet-ui-ux init` overwrites `.medviet-ui-ux/bin` with the plugin version, so keep patches elsewhere too.
 
-Re-run `aura scan` after editing it. To accept current findings as
-debt, use `aura baseline` (the `medviet-ui-ux:scan` skill), with the user's agreement.
+Re-run `medviet-ui-ux scan` after editing it. To accept current findings as
+debt, use `medviet-ui-ux baseline` (the `medviet-ui-ux:scan` skill), with the user's agreement.

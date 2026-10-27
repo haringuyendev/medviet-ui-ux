@@ -1,12 +1,12 @@
 ---
 name: build
-description: Build or redesign screens for MedViet apps (turbo-web apps, the MedViet starter, internal tools) the same way everywhere - the shared MedViet design system (turbo-web tokens, EMR teal, Roboto, web-emr status colours), screens composed only from @medviet/ui primitives and the MedViet blocks (StatusBadge, TimeInput, RowActionsMenu, ConfirmDialog, ReadonlyField…), purposeful data colour, band layouts for dashboards, vi-VN formatting and a rendered-page self-check with aura verify. Use when the user asks to create or change a page, screen, dashboard, form, table or prototype in a MedViet app, or says the UI looks generic, cluttered or inconsistent.
+description: Build or redesign screens for MedViet apps (turbo-web apps, the MedViet starter, internal tools) the same way everywhere - the shared MedViet design system (turbo-web tokens, EMR teal, Roboto, web-emr status colours), screens composed only from @medviet/ui primitives and the MedViet blocks (StatusBadge, TimeInput, RowActionsMenu, ConfirmDialog, ReadonlyField…), purposeful data colour, band layouts for dashboards, vi-VN formatting and a rendered-page self-check with medviet-ui-ux verify. Use when the user asks to create or change a page, screen, dashboard, form, table or prototype in a MedViet app, or says the UI looks generic, cluttered or inconsistent.
 hooks:
   PostToolUse:
     - matcher: "Write|Edit"
       hooks:
         - type: command
-          command: node "${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs" hook skill-nudge
+          command: node "${CLAUDE_PLUGIN_ROOT}/manager/medviet-ui-ux.mjs" hook skill-nudge
           once: true
 ---
 
@@ -17,9 +17,9 @@ hooks:
 `${CLAUDE_PLUGIN_ROOT}` is the medviet-ui-ux plugin folder (Claude Code fills it in; with other agents, use the folder where the medviet-ui-ux repo is cloned).
 
 ## Before building
-1. **New app?** Inside turbo-web, an app that ships: `bun run gen:app` (turbo-web's generator), then `aura init` at
+1. **New app?** Inside turbo-web, an app that ships: `bun run gen:app` (turbo-web's generator), then `medviet-ui-ux init` at
    the monorepo root. A prototype or a standalone tool: the `medviet-ui-ux:new-app` skill (MedViet starter +
-   `aura init`). The starter is turbo-web's stack: React 19 + Vite + TypeScript + Tailwind v4 + @medviet/ui
+   `medviet-ui-ux init`). The starter is turbo-web's stack: React 19 + Vite + TypeScript + Tailwind v4 + @medviet/ui
    primitives (shadcn base-vega on Base UI, copied from `packages/ui`) + lucide + react-router + TanStack Query +
    TanStack Table v9 + react-hook-form/zod + zustand + nuqs + react-error-boundary, the MedViet tokens and Roboto,
    MedViet blocks (`src/components/blocks`) and vi-VN formatters (`src/lib/format.ts`). Don't switch frameworks or
@@ -30,20 +30,20 @@ hooks:
    SectionTitle, TabBar, DialogFrame, ExpandableText). They follow the theme: DS v1 by default, the web-emr look with
    `<html data-theme="emr">` when a screen must match EMR (porting an EMR screen: same component names in the catalog,
    `btnType` works on ActionButton). Don't size or colour a control by hand to look like EMR.
-2. **Existing app without `.aura/`?** Run the `medviet-ui-ux:init` skill first (one-time scan).
-3. **Find components with the `medviet-ui-ux:find` skill** (`node .aura/bin/aura.mjs find "<need>"`, `snippet`,
+2. **Existing app without `.medviet-ui-ux/`?** Run the `medviet-ui-ux:init` skill first (one-time scan).
+3. **Find components with the `medviet-ui-ux:find` skill** (`node .medviet-ui-ux/bin/medviet-ui-ux.mjs find "<need>"`, `snippet`,
    `tokens`) instead of reading component folders. Prefer a block over re-assembling its primitives.
    **A primitive the project lacks** (find says `MISSING PRIMITIVE`): ask the user, and add it with
-   `aura add <name>` only if they agree; otherwise compose from what exists. Never hand-build it from divs.
-   For a rich text editor or a PDF/Word/Excel viewer in a starter app, `aura find` prints the add-on's
+   `medviet-ui-ux add <name>` only if they agree; otherwise compose from what exists. Never hand-build it from divs.
+   For a rich text editor or a PDF/Word/Excel viewer in a starter app, `medviet-ui-ux find` prints the add-on's
    install command.
 4. **Start a new page from a scaffold** in an existing project:
-   `node .aura/bin/aura.mjs scaffold <dashboard|list|detail|form> <path/to/page.tsx> [--name Orders]`. It writes
+   `node .medviet-ui-ux/bin/medviet-ui-ux.mjs scaffold <dashboard|list|detail|form> <path/to/page.tsx> [--name Orders]`. It writes
    the page from the project's own components with the right structure already in place (what needs action
    first, KPI band with exception colors, one `STATUS` map on the project's badge variants, vi-VN number and
    date formats, a table, filters/empty state, a form with field primitives). Wire the route, replace sample
    data and TODO text, keep the structure. A look a primitive lacks (an Item per severity, an accent bar):
-   `aura variant <Component> <name> --write`, never a styled `div`.
+   `medviet-ui-ux variant <Component> <name> --write`, never a styled `div`.
 5. Agent hooks check every UI edit, including edits made with shell commands. If one blocks you, follow the
    `medviet-ui-ux:check` skill. After creating a component, describe it (`medviet-ui-ux:describe`) so the next agent finds it.
 6. **Plan color and emphasis before laying out a screen** (write it down in code, not in your head):
@@ -51,7 +51,7 @@ hooks:
      and render it with `StatusBadge` everywhere the status shows. MedViet tones (web-emr palette, see
      `references/design-system.md`): waiting → `warning`, in progress / reviewing → `info`, done → `success`,
      missing / rejected / cancelled → `destructive`, not started / draft → `neutral`. Five statuses in one gray
-     outline is a defect (`aura inspect` reports it).
+     outline is a defect (`medviet-ui-ux inspect` reports it).
    - **Pick the key numbers.** Name the 3–5 numbers the user acts on; they get the KPI treatment
      (`text-2xl`–`3xl` semibold tabular-nums), and when one is in exception (overdue, over a limit) its
      value or card takes the status color with the words. Zero states are muted.
@@ -72,12 +72,12 @@ hooks:
 
 ## Working in another existing project
 The project's design system wins over the starter:
-- **Rule 8 becomes "compose only from the project's components"** (what `aura find` returns). Never add a
+- **Rule 8 becomes "compose only from the project's components"** (what `medviet-ui-ux find` returns). Never add a
   second UI library or copy starter files in. If a primitive is missing, ask the user and add it with
-  `aura add <name>` (shadcn with the project's `components.json` and package manager), or port an aura block by rewriting it for the
+  `medviet-ui-ux add <name>` (shadcn with the project's `components.json` and package manager), or port an catalog block by rewriting it for the
   project's primitives: Radix-based shadcn uses `asChild`, the starter's Base UI uses `render`; import
   `cn` from the project's path.
-- **Tokens are the project's** (`aura tokens`). If a status, info or chart token is missing or not
+- **Tokens are the project's** (`medviet-ui-ux tokens`). If a status, info or chart token is missing or not
   text-safe, add it in the project's token file following its `:root` / dark-selector / `@theme` pattern
   and say so. Don't restyle the brand.
 - **Follow its conventions** (listed in the session-start summary): file layout, CMS blocks (e.g. Payload:
@@ -201,12 +201,12 @@ Dense where the user scans many similar items, airy where they read. Cramped is 
 1. The build passes with no type or CSS errors: `npm run build` in a starter app; `bun run typecheck` and
    `bun run check` in turbo-web.
 2. The dev server runs (`npm run dev`) and the page loads with no console errors.
-   **Run `node .aura/bin/aura.mjs verify` and keep fixing until it prints `✓ verified`** (`medviet-ui-ux:inspect`).
+   **Run `node .medviet-ui-ux/bin/medviet-ui-ux.mjs verify` and keep fixing until it prints `✓ verified`** (`medviet-ui-ux:inspect`).
    It checks every UI file you changed (also through shell commands), finds the pages that render them
    through imports and the router, opens them at 1440/768/390 and reports layout breaks, KPI emphasis, status
    colors, contrast, repeated content and button problems as text. The Stop hook does not let you finish
    until the files you changed are verified. A page with a parameter needs a real one
-   (`aura verify /orders/123`); pages behind a login need `--storage` or, if they can't be opened,
+   (`medviet-ui-ux verify /orders/123`); pages behind a login need `--storage` or, if they can't be opened,
    `--skip-inspect "<why>"` and you tell the user. A finding that is wrong for the page:
    `--accept <rule> --reason "<why>"` (the user sees the reason). Don't judge screenshots; take one at the end
    only if the user wants to see it. At 390px wide tables become a stacked list and multi-column grids

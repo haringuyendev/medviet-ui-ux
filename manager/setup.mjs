@@ -1,4 +1,4 @@
-// aura setup: what this machine has for medviet-ui-ux (Node, npm, git, claude CLI, Playwright, Git Bash on Windows) and the
+// medviet-ui-ux setup: what this machine has for medviet-ui-ux (Node, npm, git, claude CLI, Playwright, Git Bash on Windows) and the
 // command that installs each missing piece on this OS. Read-only: the medviet-ui-ux:setup skill asks the user before installing.
 import fs from 'node:fs'
 import os from 'node:os'
@@ -29,31 +29,31 @@ export function checkSetup(ctx) {
   // hooks run "node …" and would fail. Fix: settings.json env.PATH with this folder first.
   const nodeOnPath = (process.env.PATH ?? '').split(path.delimiter).some((d) => d && (isWindows ? ['node.exe', 'node.cmd'] : ['node']).some((n) => fs.existsSync(path.join(d, n))))
   if (!nodeOnPath)
-    items.push({ id: 'node-path', label: 'Node có trong PATH của phiên Claude', ok: false, detail: `${path.dirname(process.execPath)} chưa có trong PATH, nên hook "node …" của aura không chạy`, fix: isWindows
+    items.push({ id: 'node-path', label: 'Node có trong PATH của phiên Claude', ok: false, detail: `${path.dirname(process.execPath)} chưa có trong PATH, nên hook "node …" của medviet-ui-ux không chạy`, fix: isWindows
       ? `thêm ${path.dirname(process.execPath)} vào PATH của user: [Environment]::SetEnvironmentVariable('Path', '${path.dirname(process.execPath)};' + [Environment]::GetEnvironmentVariable('Path','User'), 'User')   rồi mở lại Claude Desktop`
       : `thêm dòng sau vào ~/.zprofile (bash: ~/.bash_profile): export PATH="${path.dirname(process.execPath)}:$PATH"  # medviet-ui-ux: Node.js   rồi mở lại Claude Desktop` })
   const npm = version('npm')
   items.push({ id: 'npm', label: 'npm', ok: !!npm, detail: npm ? `v${npm}` : 'không có', fix: npm ? null : install('node') })
   const git = version('git')
-  items.push({ id: 'git', label: 'git', ok: !!git, optional: true, detail: git ?? 'không có (aura verify dùng git để biết file nào đã đổi)', fix: git ? null : install('git') })
+  items.push({ id: 'git', label: 'git', ok: !!git, optional: true, detail: git ?? 'không có (medviet-ui-ux verify dùng git để biết file nào đã đổi)', fix: git ? null : install('git') })
   const claudeBin = which('claude')
   const claude = claudeBin && version('claude')
-  items.push({ id: 'claude', label: 'Claude Code CLI (cho Aura Studio)', ok: !!claude, optional: true, detail: claude ? `${claude} (${claudeBin})${onPath(claudeBin) ? '' : ' — ngoài PATH, Studio vẫn tìm được'}` : 'không có: Studio cần lệnh claude (bản trong Claude Desktop không gọi từ ngoài được)', fix: claude ? null : install('claude') })
+  items.push({ id: 'claude', label: 'Claude Code CLI (cho medviet-ui-ux Studio)', ok: !!claude, optional: true, detail: claude ? `${claude} (${claudeBin})${onPath(claudeBin) ? '' : ' — ngoài PATH, Studio vẫn tìm được'}` : 'không có: Studio cần lệnh claude (bản trong Claude Desktop không gọi từ ngoài được)', fix: claude ? null : install('claude') })
   if (isWindows) {
     const bash = which('bash') ?? ['C:\\Program Files\\Git\\bin\\bash.exe'].find((f) => fs.existsSync(f))
-    items.push({ id: 'bash', label: 'Git Bash', ok: !!bash, optional: true, detail: bash ?? 'không có: Claude Code chạy lệnh và hook bằng PowerShell (aura vẫn chạy được)', fix: bash ? null : install('bash') })
+    items.push({ id: 'bash', label: 'Git Bash', ok: !!bash, optional: true, detail: bash ?? 'không có: Claude Code chạy lệnh và hook bằng PowerShell (medviet-ui-ux vẫn chạy được)', fix: bash ? null : install('bash') })
   }
   if (ctx) {
     let pw = false
     for (const dir of [ctx.repo, ...ctx.workspaces.map((w) => path.join(ctx.repo, w.dir))])
       for (const name of ['playwright', '@playwright/test', 'playwright-core']) { try { createRequire(path.join(dir, 'package.json')).resolve(name); pw = true } catch {} }
-    items.push({ id: 'playwright', label: 'Playwright (aura verify mở trang để kiểm tra)', ok: pw, optional: true, detail: pw ? 'có trong dự án' : 'chưa có: verify chỉ kiểm tra code', fix: pw ? null : install('playwright') })
+    items.push({ id: 'playwright', label: 'Playwright (medviet-ui-ux verify mở trang để kiểm tra)', ok: pw, optional: true, detail: pw ? 'có trong dự án' : 'chưa có: verify chỉ kiểm tra code', fix: pw ? null : install('playwright') })
   }
   return items
 }
 
 export function formatSetup(items) {
-  const lines = [`aura setup (${os.type()} ${os.release()}, ${process.arch})`]
+  const lines = [`medviet-ui-ux setup (${os.type()} ${os.release()}, ${process.arch})`]
   for (const i of items) {
     lines.push(`${i.ok ? '✓' : i.optional ? '○' : '✗'} ${i.label}: ${i.detail}`)
     if (!i.ok && i.fix) lines.push(`    cài/sửa: ${i.fix}`)

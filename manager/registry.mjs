@@ -1,4 +1,4 @@
-// The component registry (.aura/registry.json) and project profile (.aura/profile.json).
+// The component registry (.medviet-ui-ux/registry.json) and project profile (.medviet-ui-ux/profile.json).
 // refresh() is incremental: only files whose mtime/size changed are re-read, deleted files drop out,
 // and human/agent-written descriptions survive edits and moves.
 import fs from 'node:fs'
@@ -6,18 +6,18 @@ import path from 'node:path'
 import { SOURCE_EXT, read } from './context.mjs'
 import { analyseComponent, libraryImports, localImports } from './components.mjs'
 import { scanTokens } from './tokens.mjs'
-import { loadAuraCatalog } from './find.mjs'
+import { loadCatalog } from './find.mjs'
 
 const ENRICH = ['summary', 'use_when', 'avoid_when', 'extra_keywords', 'example', 'described', 'describedBy']
 const loadJson = (p, fallback) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')) } catch { return fallback } }
 const writeJson = (p, v) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, JSON.stringify(v, null, 2) + '\n') }
 
 export const files = (ctx) => ({
-  registry: path.join(ctx.auraDir, 'registry.json'),
-  profile: path.join(ctx.auraDir, 'profile.json'),
-  rules: path.join(ctx.auraDir, 'rules.json'),
-  baseline: path.join(ctx.auraDir, 'baseline.json'),
-  cache: path.join(ctx.auraDir, 'cache', 'index.json'),
+  registry: path.join(ctx.dataDir, 'registry.json'),
+  profile: path.join(ctx.dataDir, 'profile.json'),
+  rules: path.join(ctx.dataDir, 'rules.json'),
+  baseline: path.join(ctx.dataDir, 'baseline.json'),
+  cache: path.join(ctx.dataDir, 'cache', 'index.json'),
 })
 export const isInitialised = (ctx) => fs.existsSync(files(ctx).registry)
 export const loadRegistry = (ctx) => ({ library: [], ...loadJson(files(ctx).registry, { version: 1, components: [] }) })
@@ -31,8 +31,8 @@ export function refresh(ctx, { full = false } = {}) {
   const scope = ctx.config.scope === 'all' || !ctx.uiDir ? 'all' : 'primitives'
   const cached = loadJson(f.cache, { files: {}, tokens: {} })
   if (cached.scope !== scope) full = true
-  // Building blocks besides the primitives: a blocks/ folder next to them (the aura starter's data-table, form…)
-  // and any "includeDirs" from .aura/rules.json.
+  // Building blocks besides the primitives: a blocks/ folder next to them (the MedViet starter's data-table, form…)
+  // and any "includeDirs" from .medviet-ui-ux/rules.json.
   const buildingDirs = ctx.uiDir ? [ctx.uiDir, path.join(path.dirname(ctx.uiDir), 'blocks'), ...(ctx.config.includeDirs ?? []).map((d) => path.resolve(ctx.repo, d))] : []
   const isBuildingBlock = (abs) => buildingDirs.some((d) => abs.startsWith(d + path.sep))
   const cache = full ? { files: {}, tokens: {} } : cached
@@ -81,20 +81,20 @@ export function refresh(ctx, { full = false } = {}) {
     if (prev) for (const k of ENRICH) if (prev[k] !== undefined) c[k] = prev[k]
   }
 
-  // Seed descriptions from the aura catalog for primitives/blocks with the same name (shadcn-style files),
-  // so a fresh registry is already searchable in Vietnamese. Marked source: 'aura-catalog'.
-  const catalog = new Map(loadAuraCatalog().filter((e) => e.kind !== 'util').map((e) => [e.name, e]))
+  // Seed descriptions from the catalog for primitives/blocks with the same name (shadcn-style files),
+  // so a fresh registry is already searchable in Vietnamese. Marked source: 'medviet-catalog'.
+  const catalog = new Map(loadCatalog().filter((e) => e.kind !== 'util').map((e) => [e.name, e]))
   // Catalog-seeded entries are re-seeded each refresh (catalog updates reach them); the file must share an
   // export with the catalog entry, so a same-named but different component isn't mislabelled.
   for (const c of components.values()) {
-    if (c.described && c.describedBy !== 'aura-catalog') continue
+    if (c.described && c.describedBy !== 'medviet-catalog') continue
     const e = (c.category === 'primitive' || /\/blocks\//.test(c.path)) && catalog.get(c.name)
     const shared = e ? c.exports.filter((x) => (e.exports ?? []).includes(x)).length : 0
     if (!e || (e.exports?.length && shared < Math.min(2, e.exports.filter((x) => /^[A-Z]/.test(x)).length))) {
-      if (c.describedBy === 'aura-catalog') for (const k of ENRICH) delete c[k]
+      if (c.describedBy === 'medviet-catalog') for (const k of ENRICH) delete c[k]
       continue
     }
-    Object.assign(c, { summary: e.summary, use_when: e.use_when, avoid_when: e.avoid_when, extra_keywords: e.keywords, described: true, describedBy: 'aura-catalog' })
+    Object.assign(c, { summary: e.summary, use_when: e.use_when, avoid_when: e.avoid_when, extra_keywords: e.keywords, described: true, describedBy: 'medviet-catalog' })
   }
 
   // Usage graph: who imports each component file.
@@ -120,7 +120,7 @@ export function refresh(ctx, { full = false } = {}) {
     const prev = prevLib.get(key)
     if (prev) for (const k of ENRICH) if (prev[k] !== undefined) c[k] = prev[k]
     const e = !c.described && (catalog.get(kebab(name)) ?? catalog.get(kebab(name).replace(/^(text-field|textfield)$/, 'input')))
-    if (e) Object.assign(c, { summary: e.summary, use_when: e.use_when, avoid_when: e.avoid_when, extra_keywords: e.keywords, described: true, describedBy: 'aura-catalog' })
+    if (e) Object.assign(c, { summary: e.summary, use_when: e.use_when, avoid_when: e.avoid_when, extra_keywords: e.keywords, described: true, describedBy: 'medviet-catalog' })
     return c
   }).filter((c) => c.usedBy >= 1).sort((a, b) => b.usedBy - a.usedBy || a.name.localeCompare(b.name))
   const libChanged = library.length !== prevLib.size || library.some((c) => prevLib.get(c.path)?.usedBy !== c.usedBy)

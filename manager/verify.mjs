@@ -1,6 +1,6 @@
-// aura verify: the one check before an agent says a UI change is done.
+// medviet-ui-ux verify: the one check before an agent says a UI change is done.
 // check (the changed files) + inspect (the pages that render them, found through the import graph and the
-// router), one report, and a per-file record in .aura/cache/verify.json that the Stop hook reads.
+// router), one report, and a per-file record in .medviet-ui-ux/cache/verify.json that the Stop hook reads.
 import fs from 'node:fs'
 import path from 'node:path'
 import { formatFindings } from './check.mjs'
@@ -9,7 +9,7 @@ import { pagesFor } from './routes.mjs'
 
 const read = (p) => { try { return fs.readFileSync(p, 'utf8') } catch { return '' } }
 const mtime = (abs) => fs.statSync(abs, { throwIfNoEntry: false })?.mtimeMs ?? 0
-export const verifyFile = (ctx) => path.join(ctx.auraDir, 'cache', 'verify.json')
+export const verifyFile = (ctx) => path.join(ctx.dataDir, 'cache', 'verify.json')
 export function loadVerify(ctx) { try { return JSON.parse(fs.readFileSync(verifyFile(ctx), 'utf8')) } catch { return { files: {} } } }
 
 /** Is this file's latest content verified clean? */
@@ -69,7 +69,7 @@ function choosePages(pages, max) {
 export async function verify(ctx, deps, opts) {
   const out = [], rels = opts.files.map((f) => ctx.rel(f))
   const accepted = new Set(opts.accept ?? [])
-  out.push(`aura verify: ${rels.length} changed UI file(s)${rels.length ? `: ${rels.slice(0, 6).join(', ')}${rels.length > 6 ? ', …' : ''}` : ''}`)
+  out.push(`medviet-ui-ux verify: ${rels.length} changed UI file(s)${rels.length ? `: ${rels.slice(0, 6).join(', ')}${rels.length > 6 ? ', …' : ''}` : ''}`)
   if (!rels.length) return { ok: true, text: out.concat('Nothing to verify (no changed UI files; pass --files or commit-free changes).').join('\n') }
 
   // 1. check
@@ -101,7 +101,7 @@ export async function verify(ctx, deps, opts) {
     const dynamicOnly = rels.filter((r) => !targets.some((t) => t.via.includes(r)) && pages.some((p) => p.via.includes(r)))
     if (dynamicOnly.length) {
       const examples = [...new Set(pages.filter((p) => p.dynamic && p.via.some((f) => dynamicOnly.includes(f))).map((p) => p.path))].slice(0, 3)
-      out.push('', `Pages with a parameter render ${dynamicOnly.join(', ')}: ${examples.join(', ')}. Pass a real one: aura verify ${examples[0].replace(/:(\w+)/g, '<$1>')}`)
+      out.push('', `Pages with a parameter render ${dynamicOnly.join(', ')}: ${examples.join(', ')}. Pass a real one: medviet-ui-ux verify ${examples[0].replace(/:(\w+)/g, '<$1>')}`)
       if (!opts.skipInspect) dynamicOnly.forEach((r) => (fileOk[r] = false))
     }
     const extra = pages.filter((p) => !p.dynamic && !targets.includes(p) && !targets.some((t) => t.path === p.path && t.app === p.app))
@@ -152,11 +152,11 @@ export async function verify(ctx, deps, opts) {
   record.last = { at, ok, checkErrors: checkErr, pageErrors: pageErr, inspected, skipped, accepted: [...accepted], reason: opts.reason ?? null }
   fs.mkdirSync(path.dirname(verifyFile(ctx)), { recursive: true })
   fs.writeFileSync(verifyFile(ctx), JSON.stringify(record, null, 1))
-  if (accepted.size || skipped) fs.appendFileSync(path.join(ctx.auraDir, 'cache', 'feedback.jsonl'), JSON.stringify({ at: new Date(at).toISOString(), files: rels, accepted: [...accepted], skipped, reason: opts.reason ?? skipped }) + '\n')
+  if (accepted.size || skipped) fs.appendFileSync(path.join(ctx.dataDir, 'cache', 'feedback.jsonl'), JSON.stringify({ at: new Date(at).toISOString(), files: rels, accepted: [...accepted], skipped, reason: opts.reason ?? skipped }) + '\n')
 
   const nErr = Object.values(checkErr).reduce((a, b) => a + b, 0) + Object.values(pageErr).reduce((a, b) => a + b, 0)
   out.push('', ok
     ? `✓ verified${skipped ? ' (inspect skipped: tell the user why)' : ''}${accepted.size ? ` (accepted: ${[...accepted].join(', ')} — say why in your reply)` : ''}`
-    : `✗ not verified: ${nErr ? `${nErr} error(s) to fix` : 'pages not inspected'}. Fix, then run aura verify again. A finding that is wrong for this page: --accept <rule> --reason "<why>".`)
+    : `✗ not verified: ${nErr ? `${nErr} error(s) to fix` : 'pages not inspected'}. Fix, then run medviet-ui-ux verify again. A finding that is wrong for this page: --accept <rule> --reason "<why>".`)
   return { ok, text: out.join('\n') }
 }

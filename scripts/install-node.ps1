@@ -13,7 +13,7 @@ $releases = Invoke-RestMethod 'https://nodejs.org/dist/index.json'
 $ver = @(($releases | Where-Object { $_.lts -and $_.lts -ne $false } | Select-Object -First 1).version)[0]
 if ($ver -notmatch '^v\d') { throw 'Could not read the Node.js release list from nodejs.org' }
 $name = "node-$ver-win-$arch"; $file = "$name.zip"
-$tmp = Join-Path ([IO.Path]::GetTempPath()) ("aura-node-" + [guid]::NewGuid())
+$tmp = Join-Path ([IO.Path]::GetTempPath()) ("medviet-node-" + [guid]::NewGuid())
 New-Item -ItemType Directory $tmp | Out-Null
 try {
   [Console]::Error.WriteLine("Downloading Node.js $ver (win-$arch) from nodejs.org...")

@@ -91,7 +91,7 @@ function Stepper({
                 </>
               )}
               {i < steps.length - 1 && (
-                <span /* aura-ignore hand-built-surface: step connector that fills as steps complete */
+                <span /* medviet-ignore hand-built-surface: step connector that fills as steps complete */
                   aria-hidden
                   className={cn(
                     "hidden h-px flex-1 sm:block",

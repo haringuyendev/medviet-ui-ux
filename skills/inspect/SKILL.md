@@ -1,24 +1,24 @@
 ---
 name: inspect
-description: Verify UI work before saying it is done with aura verify (checks the changed files, finds the pages that render them and inspects those), and check how a built page actually renders - layout breaks at 1440/768/390, whether key numbers stand out, whether statuses and exceptions carry color, contrast, repeated content, cluttered first screen and button problems - with aura inspect, which opens the page headless and reports findings as text, so you fix the UI from a report instead of judging screenshots. Use after building or changing a page or dashboard, when the Aura stop hook asks you to verify, or when the user says the UI looks gray, flat, cluttered, inconsistent or badly organized.
+description: Verify UI work before saying it is done with medviet-ui-ux verify (checks the changed files, finds the pages that render them and inspects those), and check how a built page actually renders - layout breaks at 1440/768/390, whether key numbers stand out, whether statuses and exceptions carry color, contrast, repeated content, cluttered first screen and button problems - with medviet-ui-ux inspect, which opens the page headless and reports findings as text, so you fix the UI from a report instead of judging screenshots. Use after building or changing a page or dashboard, when the medviet-ui-ux stop hook asks you to verify, or when the user says the UI looks gray, flat, cluttered, inconsistent or badly organized.
 ---
 
-# Aura verify and inspect
+# medviet-ui-ux verify and inspect
 
 > `node` not found ("command not found", "not recognized")? Run the `medviet-ui-ux:setup` skill first: it installs Node.js for the user, no admin rights needed.
 
 ## verify: the check before you say it is done
 ```bash
-node .aura/bin/aura.mjs verify                                   # changed UI files (git + this session) → check + the pages that render them
-node .aura/bin/aura.mjs verify /orders/123                       # pages to open yourself (a real id for /orders/:id)
-node .aura/bin/aura.mjs verify --base http://localhost:3005      # when the dev server isn't found
-node .aura/bin/aura.mjs verify --files src/pages/orders.tsx      # only these files
-node .aura/bin/aura.mjs verify --accept contrast --reason "brand teal is a project token; proposed a darker one to the user"
-node .aura/bin/aura.mjs verify --skip-inspect "pages need a login and there is no storage state"
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs verify                                   # changed UI files (git + this session) → check + the pages that render them
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs verify /orders/123                       # pages to open yourself (a real id for /orders/:id)
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs verify --base http://localhost:3005      # when the dev server isn't found
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs verify --files src/pages/orders.tsx      # only these files
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs verify --accept contrast --reason "brand teal is a project token; proposed a darker one to the user"
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs verify --skip-inspect "pages need a login and there is no storage state"
 ```
 - It finds the pages through the import graph and the router (Next/Remix/TanStack file routes, React Router
   `<Route path element>` with path constants), picks up to 6 that cover every changed file, finds each app's dev
-  server (port from its vite/next config or scripts, or `"inspect": { "baseUrl": … }` in `.aura/rules.json`,
+  server (port from its vite/next config or scripts, or `"inspect": { "baseUrl": … }` in `.medviet-ui-ux/rules.json`,
   per app: `{ "apps/web": "http://localhost:3005" }`) and runs inspect on them.
 - Fix every `[error]` and re-run until it prints `✓ verified`. The Stop hook (and SubagentStop for subagents)
   won't let you finish while a file you changed is unverified or changed again after verifying.
@@ -28,12 +28,12 @@ node .aura/bin/aura.mjs verify --skip-inspect "pages need a login and there is n
 
 ## inspect: one page, by hand
 ```bash
-node .aura/bin/aura.mjs inspect http://localhost:5173/dashboard            # one page, widths 1440, 768, 390
-node .aura/bin/aura.mjs inspect http://localhost:5173 /orders /orders/42   # first URL is the base for paths
-node .aura/bin/aura.mjs inspect <url> --widths 1440,390 --wait 1500         # fewer widths, wait for slow data
-node .aura/bin/aura.mjs inspect <url> --storage .auth/state.json            # pages behind a login
-node .aura/bin/aura.mjs inspect <url> --shot                                # also save full-page PNGs (.aura/cache/inspect)
-node .aura/bin/aura.mjs inspect <url> --json                                # machine-readable
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs inspect http://localhost:5173/dashboard            # one page, widths 1440, 768, 390
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs inspect http://localhost:5173 /orders /orders/42   # first URL is the base for paths
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs inspect <url> --widths 1440,390 --wait 1500         # fewer widths, wait for slow data
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs inspect <url> --storage .auth/state.json            # pages behind a login
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs inspect <url> --shot                                # also save full-page PNGs (.medviet-ui-ux/cache/inspect)
+node .medviet-ui-ux/bin/medviet-ui-ux.mjs inspect <url> --json                                # machine-readable
 ```
 Needs the dev server running and Playwright in the project (`npm i -D playwright` / `bun add -d
 playwright`, then `npx playwright install chromium`). Don't install it without asking the user. Exit code 1
@@ -78,9 +78,9 @@ when there is an `[error]`.
 The rules are heuristics (Vietnamese and English wording, computed styles). When a finding is wrong for
 this page, say why in your reply and move on. Don't contort the design to silence it.
 
-## Tuning (`.aura/rules.json`)
+## Tuning (`.medviet-ui-ux/rules.json`)
 - Severities go in `"rules"` with the check rules, e.g. `"tap-target": "off"`, `"low-data-color": "info"`.
-- `"inspect"`: `baseUrl` (so `aura inspect /orders` works and the stop hook knows where to look),
+- `"inspect"`: `baseUrl` (so `medviet-ui-ux inspect /orders` works and the stop hook knows where to look),
   `widths`, `height`, `wait`, `storageState`, `nudge` (false stops the stop-hook reminder), and the
   thresholds `kpiRatio` (1.7), `minDataColor` (0.02), `repeatSections` (3), `unevenRow` (0.3),
   `maxKpis` (5), `maxPrimary` (1), `tapTarget` (32), `blankArea` (0.25), `foldBlocks` (8).

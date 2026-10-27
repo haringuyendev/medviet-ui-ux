@@ -137,7 +137,7 @@ export function SignaturePad({
 
   return (
     <div className="flex flex-col gap-2">
-      {/* aura-ignore raw-color: a signature is captured on white paper, whatever the theme */}
+      {/* medviet-ignore raw-color: a signature is captured on white paper, whatever the theme */}
       <div className="relative h-40 w-full overflow-hidden rounded-lg border border-input bg-white">
         {strokeLength === 0 && (
           <span

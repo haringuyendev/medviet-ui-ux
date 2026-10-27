@@ -82,7 +82,7 @@ export function resolveUrls(args, baseUrl) {
   for (const a of args) {
     if (/^https?:\/\//.test(a)) { base ??= a; urls.push(a) }
     else if (base) urls.push(new URL(a, base).href)
-    else throw new Error(`"${a}" is a path but there is no base URL. Pass a full URL first (aura inspect http://localhost:5173 ${a}) or set "inspect": { "baseUrl": "…" } in .aura/rules.json.`)
+    else throw new Error(`"${a}" is a path but there is no base URL. Pass a full URL first (medviet-ui-ux inspect http://localhost:5173 ${a}) or set "inspect": { "baseUrl": "…" } in .medviet-ui-ux/rules.json.`)
   }
   if (!urls.length && base) urls.push(base)
   return urls
@@ -113,7 +113,7 @@ export async function inspect(ctx, urls, opts = {}) {
         rep.outline[width] = out.outline
         if (i === 0) rep.stats = out.stats
         if (opts.shot) {
-          const dir = path.join(ctx.auraDir, 'cache', 'inspect')
+          const dir = path.join(ctx.dataDir, 'cache', 'inspect')
           fs.mkdirSync(dir, { recursive: true })
           const file = path.join(dir, `${new URL(url).pathname.replace(/[^\w]+/g, '-').replace(/^-|-$/g, '') || 'home'}-${width}.png`)
           await page.screenshot({ path: file, fullPage: true })
@@ -144,7 +144,7 @@ export function formatReport(rep, rules) {
   const [wide, narrow] = [rep.widths[0], rep.widths.at(-1)]
   const outline = (w) => (rep.outline[w] ?? []).map((o) => `  ${o.fold ? '▲' : ' '} ${o.text}`).join('\n')
   const lines = [
-    `aura inspect ${rep.url} · ${rep.widths.join(', ')}px`,
+    `medviet-ui-ux inspect ${rep.url} · ${rep.widths.join(', ')}px`,
     s && `Body text ${s.body}px · data color ${(s.dataColor * 100).toFixed(1)}% of content · ${s.kpis} KPI value(s)${s.kpiSize ? ` (largest ${s.kpiSize}px, ${(s.kpiSize / s.body).toFixed(1)}×)` : ''} · ${s.chips} status chip(s) in ${s.chipColors} color(s)`,
     `Outline @${wide} (▲ = visible without scrolling):\n${outline(wide)}`,
     narrow !== wide && `Above the fold @${narrow}: ${(rep.outline[narrow] ?? []).filter((o) => o.fold).map((o) => o.text.replace(/^y=\d+\s*/, '')).join(' › ') || '—'}`,

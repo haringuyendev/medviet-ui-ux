@@ -1,21 +1,21 @@
 {
-  "description": "Aura component manager: keeps .aura/registry.json in sync, checks UI edits (Write/Edit and shell), asks the user before primitives are added, and requires aura verify before the agent finishes. Silent in repos without .aura/.",
+  "description": "medviet-ui-ux component manager: keeps .medviet-ui-ux/registry.json in sync, checks UI edits (Write/Edit and shell), asks the user before primitives are added, and requires medviet-ui-ux verify before the agent finishes. Silent in repos without .medviet-ui-ux/.",
   "hooks": {
     "SessionStart": [
-      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook session-start", "timeout": 30 }] }
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/medviet-ui-ux.mjs\" hook session-start", "timeout": 30 }] }
     ],
     "PreToolUse": [
-      { "matcher": "Bash|Write", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook pre-tool", "timeout": 15 }] }
+      { "matcher": "Bash|Write", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/medviet-ui-ux.mjs\" hook pre-tool", "timeout": 15 }] }
     ],
     "PostToolUse": [
-      { "matcher": "Write|Edit", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook post-edit", "timeout": 30 }] },
-      { "matcher": "Bash", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook post-bash", "timeout": 30 }] }
+      { "matcher": "Write|Edit", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/medviet-ui-ux.mjs\" hook post-edit", "timeout": 30 }] },
+      { "matcher": "Bash", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/medviet-ui-ux.mjs\" hook post-bash", "timeout": 30 }] }
     ],
     "Stop": [
-      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook stop", "timeout": 30 }] }
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/medviet-ui-ux.mjs\" hook stop", "timeout": 30 }] }
     ],
     "SubagentStop": [
-      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/aura.mjs\" hook subagent-stop", "timeout": 30 }] }
+      { "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/manager/medviet-ui-ux.mjs\" hook subagent-stop", "timeout": 30 }] }
     ]
   }
 }

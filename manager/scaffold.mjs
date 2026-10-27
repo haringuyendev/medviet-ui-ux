@@ -125,7 +125,7 @@ const ROWS: Row[] = [
                 </TableRow>
               ))}
             </TableBody>
-          </Table>` : `          {/* TODO: the project has no Table primitive; ask the user to add one (aura add table) */}`
+          </Table>` : `          {/* TODO: the project has no Table primitive; ask the user to add one (medviet-ui-ux add table) */}`
 
   let body = '', top = '', imports = ''
   if (kind === 'dashboard') {
@@ -402,7 +402,7 @@ export function addVariant(ctx, c, tokens, opts) {
   let classes = opts.classes
   if (!classes) {
     if (!tone) throw new Error(`can't tell the tone of "${opts.name}": pass --tone <token> (e.g. destructive, warning) or --classes "…"`)
-    if (colors.size && !colors.has(tone)) throw new Error(`the design system has no "${tone}" color (aura tokens lists them)`)
+    if (colors.size && !colors.has(tone)) throw new Error(`the design system has no "${tone}" color (medviet-ui-ux tokens lists them)`)
     // Reuse the group's own destructive entry as the pattern when there is one: same structure, new tone.
     const sib = group.match(/\bdestructive\s*:\s*\n?\s*(["'`])([^"'`]+)\1/)
     const textSafe = tokens.status ? Object.values(tokens.status).find((s) => s.token === tone) : null

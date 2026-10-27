@@ -1,7 +1,7 @@
-// aura studio: a local Lovable-style page - chat on the left, the project's dev server on the right.
+// medviet-ui-ux studio: a local Lovable-style page - chat on the left, the project's dev server on the right.
 // Each message runs Claude Code headless in the repo (claude -p, stream-json), so the user's login, the medviet-ui-ux
 // skills and hooks (check, verify, primitive approval) apply exactly as in the terminal.
-// State (session id, transcript, chosen app/page) lives in .aura/cache/studio.json.
+// State (session id, transcript, chosen app/page) lives in .medviet-ui-ux/cache/studio.json.
 import fs from 'node:fs'
 import http from 'node:http'
 import os from 'node:os'
@@ -20,11 +20,11 @@ import { devServer } from './verify.mjs'
 const here = path.dirname(fileURLToPath(import.meta.url))
 const readJson = (p, fallback) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')) } catch { return fallback } }
 
-const SYSTEM = `You are running inside Aura Studio: a chat page next to a live preview of this project's dev server. The user reads your replies in the chat, not a terminal.
+const SYSTEM = `You are running inside medviet-ui-ux Studio: a chat page next to a live preview of this project's dev server. The user reads your replies in the chat, not a terminal.
 - Everything you write is shown to the user, including short notes between tool calls: write all of it in Vietnamese, or say nothing between tool calls.
 - Reply in Vietnamese, short: what you changed and where it shows (1-4 lines). No long reports, no code dumps unless asked.
-- Build UI with the medviet-ui-ux:build skill: compose screens from the project's components (aura find / scaffold / snippet / variant), semantic tokens only.
-- Before you finish a UI change, run node .aura/bin/aura.mjs verify and fix what it reports.
+- Build UI with the medviet-ui-ux:build skill: compose screens from the project's components (medviet-ui-ux find / scaffold / snippet / variant), semantic tokens only.
+- Before you finish a UI change, run node .medviet-ui-ux/bin/medviet-ui-ux.mjs verify and fix what it reports.
 - Studio runs the dev server and the preview reloads by itself: don't start, stop or restart dev servers.
 - Things that need the user's approval (a new primitive, deleting files, installing packages): ask in one line and stop; Studio shows them buttons.`
 
@@ -35,8 +35,8 @@ function describeTool(ctx, name, input = {}) {
   if (name === 'Write') return `${fs.existsSync(path.resolve(ctx.repo, input.file_path ?? '')) ? 'Ghi' : 'Tạo'} ${rel(input.file_path)}`
   if (name === 'Edit' || name === 'MultiEdit') return `Sửa ${rel(input.file_path)}`
   if (name === 'Bash') {
-    const aura = input.command?.match(/aura(?:\.mjs)?["']?\s+(\w+)(.*)/)
-    return aura ? `Aura ${aura[1]}${aura[2].trim() ? ' ' + aura[2].trim().slice(0, 60) : ''}` : `Chạy ${String(input.description || input.command || '').slice(0, 80)}`
+    const hit = input.command?.match(/medviet-ui-ux(?:\.mjs)?["']?\s+(\w+)(.*)/)
+    return hit ? `medviet-ui-ux ${hit[1]}${hit[2].trim() ? ' ' + hit[2].trim().slice(0, 60) : ''}` : `Chạy ${String(input.description || input.command || '').slice(0, 80)}`
   }
   if (name === 'Glob' || name === 'Grep') return `Tìm ${input.pattern ?? ''}`
   if (name === 'Skill') return `Dùng skill ${input.skill ?? ''}`
@@ -77,7 +77,7 @@ function attachmentHint(name) {
 const slug = (s) => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40)
 
 /**
- * ctx: the aura-managed repo, or null to start on the "new app" screen (create in opts.newDir, or in opts.base/<name>).
+ * ctx: the medviet-ui-ux-managed repo, or null to start on the "new app" screen (create in opts.newDir, or in opts.base/<name>).
  * opts: { port, app, open, model, permissionMode, newDir, base }
  */
 export async function studio(initialCtx, opts = {}) {
@@ -88,9 +88,9 @@ export async function studio(initialCtx, opts = {}) {
   /** The app's dev server: the one Studio started (its printed URL: another project may hold the default port), else found. */
   const devUrl = async (app) => devs[app]?.url ?? (await devServer(ctx, app)).url
   const save = () => fs.writeFileSync(stateFile, JSON.stringify(state, null, 1))
-  // Attachments live in .aura/cache/studio-uploads (git-ignored); before a new app exists, in a temp folder, moved in on use.
-  const staging = path.join(os.tmpdir(), `aura-studio-${process.pid}`)
-  const uploadsDir = () => ctx ? path.join(ctx.auraDir, 'cache', 'studio-uploads') : staging
+  // Attachments live in .medviet-ui-ux/cache/studio-uploads (git-ignored); before a new app exists, in a temp folder, moved in on use.
+  const staging = path.join(os.tmpdir(), `medviet-studio-${process.pid}`)
+  const uploadsDir = () => ctx ? path.join(ctx.dataDir, 'cache', 'studio-uploads') : staging
   const findUpload = (id) => {
     if (!/^[\w.-]+$/.test(id ?? '')) return null
     for (const dir of [ctx && uploadsDir(), staging].filter(Boolean)) if (fs.existsSync(path.join(dir, id))) return path.join(dir, id)
@@ -100,8 +100,8 @@ export async function studio(initialCtx, opts = {}) {
   /** Point Studio at a repo (at start, or once a new app exists). */
   async function attach(c) {
     ctx = c
-    stateFile = path.join(ctx.auraDir, 'cache', 'studio.json')
-    approvedFile = path.join(ctx.auraDir, 'cache', 'studio-approved.json')
+    stateFile = path.join(ctx.dataDir, 'cache', 'studio.json')
+    approvedFile = path.join(ctx.dataDir, 'cache', 'studio-approved.json')
     fs.mkdirSync(path.dirname(stateFile), { recursive: true })
     state = { sessionId: null, messages: [], app: null, path: '/', ...readJson(stateFile, {}) }
     appList = apps(ctx)
@@ -114,7 +114,7 @@ export async function studio(initialCtx, opts = {}) {
   if (initialCtx) await attach(initialCtx)
   const routeIndex = () => { refresh(ctx); return JSON.parse(fs.readFileSync(files(ctx).cache, 'utf8')).files }
 
-  /** New app from the MedViet starter (copy, install, aura init, git init), then point Studio at it. */
+  /** New app from the MedViet starter (copy, install, medviet-ui-ux init, git init), then point Studio at it. */
   async function createApp(name, onLog) {
     const target = opts.newDir ?? (isEmptyDir(opts.base) ? opts.base : path.join(opts.base, slug(name) || 'app-moi'))
     const created = await createFromStarter({ target, name: slug(name) || path.basename(target), onLog })
@@ -132,21 +132,21 @@ export async function studio(initialCtx, opts = {}) {
     state.messages.push(user, reply)
     save()
     const args = ['-p', `${ctxLine}\n\n${text}`, '--output-format', 'stream-json', '--verbose', '--include-partial-messages',
-      '--permission-mode', permissionMode, '--append-system-prompt', SYSTEM, '--allowedTools', 'Bash(node .aura/bin/aura.mjs:*)']
+      '--permission-mode', permissionMode, '--append-system-prompt', SYSTEM, '--allowedTools', 'Bash(node .medviet-ui-ux/bin/medviet-ui-ux.mjs:*)']
     if (state.sessionId) args.push('--resume', state.sessionId)
     if (model) args.push('--model', model)
-    const child = runProgram('claude', args, { cwd: ctx.repo, env: { AURA_STUDIO: '1' }, stdio: ['ignore', 'pipe', 'pipe'] })
+    const child = runProgram('claude', args, { cwd: ctx.repo, env: { MEDVIET_UI_UX_STUDIO: '1' }, stdio: ['ignore', 'pipe', 'pipe'] })
     run = { child, aborted: false }
     const emit = (e) => { send(e); return e }
     const lastText = () => reply.parts.at(-1)?.kind === 'text' ? reply.parts.at(-1) : null
     const tools = new Map()
     const approvals = new Set()
     const noteApproval = (s) => {
-      for (const m of String(s).matchAll(/\[aura-approve:([^\]]+)\]/g))
+      for (const m of String(s).matchAll(/\[medviet-approve:([^\]]+)\]/g))
         for (const n of m[1].split(',')) if (!approvals.has(n)) { approvals.add(n); reply.parts.push({ kind: 'approve', name: n }); emit({ t: 'approve', name: n }) }
     }
     let buf = '', stderr = '', fresh = true
-    const rawLog = path.join(ctx.auraDir, 'cache', 'studio-last.jsonl') // the last turn's stream, for debugging
+    const rawLog = path.join(ctx.dataDir, 'cache', 'studio-last.jsonl') // the last turn's stream, for debugging
     fs.writeFileSync(rawLog, '')
     const line = (raw) => {
       let o
@@ -155,18 +155,18 @@ export async function studio(initialCtx, opts = {}) {
       if (o.type === 'stream_event' && !o.parent_tool_use_id && o.event?.type === 'message_start') fresh = true
       if (o.type === 'system' && o.subtype === 'init') {
         if (state.sessionId !== o.session_id) { state.sessionId = o.session_id; save() }
-      } else if (o.type === 'system' && o.subtype === 'informational' && /Aura/.test(o.content ?? '')) {
-        // a hook's systemMessage ("Stop says: Aura: …")
+      } else if (o.type === 'system' && o.subtype === 'informational' && /medviet-ui-ux/.test(o.content ?? '')) {
+        // a hook's systemMessage ("Stop says: medviet-ui-ux: …")
         const label = String(o.content).replace(/^\w+ says:\s*/, '').split('\n')[0].slice(0, 200)
-        reply.parts.push({ kind: 'aura', text: label }); emit({ t: 'aura', text: label })
+        reply.parts.push({ kind: 'engine', text: label }); emit({ t: 'engine', text: label })
       } else if (o.type === 'system' && o.subtype === 'hook_response') {
         noteApproval(o.output ?? o.stdout ?? '')
-        // An Aura hook that blocked (Stop asking for verify, a rule violation): show it as a step.
+        // An medviet-ui-ux hook that blocked (Stop asking for verify, a rule violation): show it as a step.
         const parsed = (() => { try { return JSON.parse(o.stdout || o.output || '') } catch { return null } })()
         const reason = parsed?.decision === 'block' ? parsed.reason : o.exit_code === 2 ? o.stderr : null
-        if (reason && /Aura/.test(reason)) {
+        if (reason && /medviet-ui-ux/.test(reason)) {
           const label = String(reason).trim().split('\n')[0].slice(0, 160)
-          reply.parts.push({ kind: 'aura', text: label }); emit({ t: 'aura', text: label })
+          reply.parts.push({ kind: 'engine', text: label }); emit({ t: 'engine', text: label })
         }
       } else if (o.type === 'stream_event' && !o.parent_tool_use_id && o.event?.type === 'content_block_delta' && o.event.delta?.type === 'text_delta') {
         // each assistant message (a continuation after a hook, after tools) is its own paragraph
@@ -182,8 +182,8 @@ export async function studio(initialCtx, opts = {}) {
       } else if (o.type === 'user') {
         // a blocking hook's reason comes back to the model as a user turn (Stop asking for verify, a rule violation)
         const said = typeof o.message?.content === 'string' ? o.message.content : (o.message?.content ?? []).filter((b) => b.type === 'text').map((b) => b.text).join('\n')
-        const aura = said.match(/Aura (?:\(\d+\/\d+\)|blocked)[^\n]*/)?.[0]
-        if (aura && !o.parent_tool_use_id) { const label = aura.slice(0, 200); reply.parts.push({ kind: 'aura', text: label }); emit({ t: 'aura', text: label }) }
+        const hit = said.match(/medviet-ui-ux (?:\(\d+\/\d+\)|blocked)[^\n]*/)?.[0]
+        if (hit && !o.parent_tool_use_id) { const label = hit.slice(0, 200); reply.parts.push({ kind: 'engine', text: label }); emit({ t: 'engine', text: label }) }
         for (const b of Array.isArray(o.message?.content) ? o.message.content : []) if (b.type === 'tool_result' && tools.has(b.tool_use_id)) {
           const tool = tools.get(b.tool_use_id)
           tool.status = b.is_error ? 'error' : 'ok'
@@ -209,7 +209,7 @@ export async function studio(initialCtx, opts = {}) {
         emit({ t: 'done', message: reply })
         resolve()
       }
-      child.on('error', (e) => finish(1, e.code === 'ENOENT' ? 'không tìm thấy Claude Code CLI. Cài bằng native installer (xem aura setup), rồi mở lại Studio' : e.message))
+      child.on('error', (e) => finish(1, e.code === 'ENOENT' ? 'không tìm thấy Claude Code CLI. Cài bằng native installer (xem medviet-ui-ux setup), rồi mở lại Studio' : e.message))
       child.on('close', (code) => finish(code))
     })
   }
@@ -331,10 +331,10 @@ export async function studio(initialCtx, opts = {}) {
       if (b.app) state.app = b.app
       if (b.path) state.path = b.path
       const send = eventStream(res)
-      let where = `[Aura Studio] The user is looking at ${state.path} of ${state.app === '.' ? 'the app' : state.app} in the preview${b.width ? ` at ${b.width}px wide` : ''}.`
+      let where = `[medviet-ui-ux Studio] The user is looking at ${state.path} of ${state.app === '.' ? 'the app' : state.app} in the preview${b.width ? ` at ${b.width}px wide` : ''}.`
       if (state.fresh && !state.messages.length) where += ` This app was just created from the MedViet starter (src/pages/Index.tsx is a placeholder). Build what the user describes with the medviet-ui-ux:build skill: take their description as the brief (ask only if it is truly ambiguous), set the tokens, then compose the screens and routes from the project's components and blocks. Use realistic Vietnamese sample data.`
       state.fresh = false
-      if (!playwright) where += ` Playwright is not installed, so aura verify can't open pages: run it with --skip-inspect "Playwright chưa cài" (Studio shows the user a button to install it). Don't ask to install it yourself.`
+      if (!playwright) where += ` Playwright is not installed, so medviet-ui-ux verify can't open pages: run it with --skip-inspect "Playwright chưa cài" (Studio shows the user a button to install it). Don't ask to install it yourself.`
       // attachments: move staged files (uploaded before the app existed) into the repo, so the agent can read them
       const attached = []
       for (const f of Array.isArray(b.files) ? b.files.slice(0, 10) : []) {
@@ -356,7 +356,7 @@ export async function studio(initialCtx, opts = {}) {
       if (run) return sendJson(res, 409, { error: 'busy' })
       // keep the old conversation (and its Claude session id, for claude --resume) instead of dropping it
       if (state.messages.length) {
-        const dir = path.join(ctx.auraDir, 'cache', 'studio-history')
+        const dir = path.join(ctx.dataDir, 'cache', 'studio-history')
         fs.mkdirSync(dir, { recursive: true })
         fs.writeFileSync(path.join(dir, `${new Date().toISOString().replace(/[:.]/g, '-')}.json`), JSON.stringify({ sessionId: state.sessionId, messages: state.messages }, null, 1))
       }
@@ -418,8 +418,8 @@ export async function studio(initialCtx, opts = {}) {
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(port, '127.0.0.1', resolve) })
   const url = `http://localhost:${port}`
   console.log(ctx
-    ? `Aura Studio: ${url}  (repo ${ctx.repo}; Claude Code permission mode: ${permissionMode}; Ctrl+C to stop)`
-    : `Aura Studio: ${url}  (new app: describe it on the page; it is created in ${opts.newDir ?? opts.base}; Ctrl+C to stop)`)
+    ? `medviet-ui-ux Studio: ${url}  (repo ${ctx.repo}; Claude Code permission mode: ${permissionMode}; Ctrl+C to stop)`
+    : `medviet-ui-ux Studio: ${url}  (new app: describe it on the page; it is created in ${opts.newDir ?? opts.base}; Ctrl+C to stop)`)
   if (ctx && !appList.length) console.log('No package.json with a "dev" script found: the preview stays empty until one exists.')
   if (opts.open !== false) openBrowser(url)
   return server

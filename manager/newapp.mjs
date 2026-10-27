@@ -1,4 +1,4 @@
-// A new app from the MedViet starter (template/): copy, name it, install dependencies, aura init, first git commit.
+// A new app from the MedViet starter (template/): copy, name it, install dependencies, medviet-ui-ux init, first git commit.
 // Plain Node, so it works on Windows without bash (scripts/new-app.sh only calls this).
 import fs from 'node:fs'
 import path from 'node:path'
@@ -8,8 +8,8 @@ import { run, which } from './proc.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 export const templateDir = () => path.join(here, '..', 'template')
-export const isEmptyDir = (dir) => !fs.existsSync(dir) || fs.readdirSync(dir).every((f) => f.startsWith('.') && f !== '.aura')
-const SKIP = /(^|[\\/])(node_modules|dist|\.aura|\.vite|\.turbo)([\\/]|$)/
+export const isEmptyDir = (dir) => !fs.existsSync(dir) || fs.readdirSync(dir).every((f) => f.startsWith('.') && f !== '.medviet-ui-ux')
+const SKIP = /(^|[\\/])(node_modules|dist|\.medviet-ui-ux|\.vite|\.turbo)([\\/]|$)/
 
 const exec = (cmd, args, cwd, onLog) => new Promise((resolve, reject) => {
   const child = run(cmd, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
@@ -40,16 +40,16 @@ export async function createApp({ target, name = path.basename(target), onLog = 
   onLog(`Cài thư viện (${pm} install)…`)
   await exec(pm, pm === 'npm' ? ['install', '--no-audit', '--no-fund'] : ['install'], target, onLog)
 
-  onLog('Khởi tạo Aura (.aura/)')
-  await exec(process.execPath, [path.join(here, 'aura.mjs'), 'init', '--scripts'], target, () => {})
+  onLog('Khởi tạo medviet-ui-ux (.medviet-ui-ux/)')
+  await exec(process.execPath, [path.join(here, 'medviet-ui-ux.mjs'), 'init', '--scripts'], target, () => {})
 
   if (which('git')) {
     try {
       await exec('git', ['init', '-q'], target, onLog)
       await exec('git', ['add', '-A'], target, onLog)
       // the user's git identity; a placeholder only when none is configured
-      await exec('git', ['commit', '-qm', 'Aura starter'], target, () => {})
-        .catch(() => exec('git', ['-c', 'user.name=Aura', '-c', 'user.email=aura@localhost', 'commit', '-qm', 'Aura starter'], target, onLog))
+      await exec('git', ['commit', '-qm', 'medviet-ui-ux starter'], target, () => {})
+        .catch(() => exec('git', ['-c', 'user.name=medviet-ui-ux', '-c', 'user.email=medviet-ui-ux@localhost', 'commit', '-qm', 'medviet-ui-ux starter'], target, onLog))
     } catch { onLog('(bỏ qua git)') }
   } else onLog('Không có git: bỏ qua bước tạo lịch sử thay đổi')
   return target

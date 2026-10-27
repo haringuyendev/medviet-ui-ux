@@ -4,8 +4,8 @@
 //   node catalog.mjs show <name…>    full entries
 //   node catalog.mjs list [category] one line per component
 //   node catalog.mjs sync            refresh exports/variants/deps from the starter's source (maintainers)
-//   add --project <dir> (a folder with scan-project.mjs output, default ./.aura) to search an existing
-//   project's own components first; aura entries then serve as a reference and a vi/en thesaurus.
+//   add --project <dir> (a folder with scan-project.mjs output, default ./.medviet-ui-ux) to search an existing
+//   project's own components first; catalog entries then serve as a reference and a vi/en thesaurus.
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -122,7 +122,7 @@ function show(e) {
 
 const argv = process.argv.slice(2)
 const pIdx = argv.indexOf('--project')
-const projectDir = pIdx >= 0 ? argv[pIdx + 1] : fs.existsSync('.aura/components.json') ? '.aura' : null
+const projectDir = pIdx >= 0 ? argv[pIdx + 1] : fs.existsSync('.medviet-ui-ux/components.json') ? '.medviet-ui-ux' : null
 const [cmd, ...args] = pIdx >= 0 ? argv.filter((_, i) => i !== pIdx && i !== pIdx + 1) : argv
 const loadProject = () => {
   if (!projectDir) return null
@@ -136,12 +136,12 @@ else if (cmd === 'find' && args.length) {
   const words = phrase.split(' ')
   const rawWords = accented(args.join(' '))
   const rank = (list) => list.map((e) => [score(e, words, phrase, rawWords.length === words.length ? rawWords : []), e]).filter(([s]) => s > 0).sort((a, b) => b[0] - a[0])
-  const auraHits = rank(load())
+  const catalogHits = rank(load())
   const project = loadProject()
   if (project) {
-    // Direct matches on the project's names, plus "bridged" matches: aura hits for the query mapped to same-named project components.
+    // Direct matches on the project's names, plus "bridged" matches: catalog hits for the query mapped to same-named project components.
     const bridged = new Map()
-    for (const [s, a] of auraHits.slice(0, 4)) {
+    for (const [s, a] of catalogHits.slice(0, 4)) {
       const pascal = a.name.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join('')
       for (const e of project) if (e.name.toLowerCase() === a.name || (e.exports || []).includes(pascal)) bridged.set(e, Math.max(bridged.get(e) ?? 0, s))
     }
@@ -149,10 +149,10 @@ else if (cmd === 'find' && args.length) {
     for (const [e, s] of bridged) merged.set(e, (merged.get(e) ?? 0) + s)
     const hits = [...merged].sort((a, b) => b[1] - a[1] || (b[0].usedBy ?? 0) - (a[0].usedBy ?? 0)).slice(0, 5)
     console.log('In this project:')
-    console.log(hits.length ? hits.map(([e]) => '  ' + projectLine(e)).join('\n') : '  (no matching component: build it in the project\'s style, see the aura reference below)')
-    if (auraHits.length) console.log('\nAura reference (not installed here; port to the project\'s stack only if nothing above fits):\n' + auraHits.slice(0, 2).map(([, e]) => '  ' + line(e)).join('\n'))
+    console.log(hits.length ? hits.map(([e]) => '  ' + projectLine(e)).join('\n') : '  (no matching component: build it in the project\'s style, see the catalog reference below)')
+    if (catalogHits.length) console.log('\nCatalog reference (not installed here; port to the project\'s stack only if nothing above fits):\n' + catalogHits.slice(0, 2).map(([, e]) => '  ' + line(e)).join('\n'))
   } else {
-    const hits = auraHits.slice(0, 5)
+    const hits = catalogHits.slice(0, 5)
     if (!hits.length) console.log('No match. Try other words, or `list` to see every component.')
     for (const [, e] of hits) console.log(line(e))
     if (hits.length) console.log(`\nDetails: node ${path.relative(process.cwd(), fileURLToPath(import.meta.url))} show ${hits.slice(0, 2).map(([, e]) => e.name).join(' ')}`)

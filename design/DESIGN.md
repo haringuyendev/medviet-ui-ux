@@ -64,7 +64,7 @@ Màu trạng thái của web-emr, nghĩa giống nhau ở mọi app:
 
 Quy tắc:
 - **Màu gốc** (`bg-success`, `bg-success/15`, chấm, icon) **không dùng làm chữ**: trên nền sáng chỉ đạt 1,6–3:1. Chữ
-  dùng `text-success-text`, `text-info-text`, `text-warning-text`, `text-destructive-text`. Hook của Aura cảnh báo
+  dùng `text-success-text`, `text-info-text`, `text-warning-text`, `text-destructive-text`. Hook của medviet-ui-ux cảnh báo
   khi gặp `text-success` và gợi ý token đúng.
 - **Chip trạng thái dùng `StatusBadge`** (nền nhạt + chấm màu + chữ đạt chuẩn), khai báo một lần bằng `defineStatuses`.
 - **Bình thường thì không đánh dấu.** Chỉ những gì cần chú ý mới có màu; mỗi sự việc chỉ báo một lần (màu chữ, hoặc
@@ -159,7 +159,7 @@ sửa → `Pencil`, xoá → `Trash2`, thao tác khác → `Ellipsis`.
 - Chữ 4,5:1, chữ lớn 3:1, viền và icon có nghĩa 3:1. Mọi cặp màu trong tài liệu này đã được đo.
 - Mọi thành phần tương tác có focus nhìn thấy được (`focus-visible:ring`), kể cả dòng và thẻ bấm được.
 - Không truyền thông tin chỉ bằng màu; trạng thái luôn có chữ.
-- `aura verify` đo tương phản và kiểm tra bố cục trên trang thật trước khi báo xong.
+- `medviet-ui-ux verify` đo tương phản và kiểm tra bố cục trên trang thật trước khi báo xong.
 
 ## 14. Quản lý thay đổi
 - **turbo-web là nguồn chuẩn.** Đổi token: sửa `tooling/tailwind/theme.css` trong một MR, rồi `node scripts/sync-turbo.mjs`
@@ -205,8 +205,8 @@ Theme EMR (`template/src/themes/emr.css`) lấy mọi giá trị từ web-emr: `
 `TextField`, `DateField`, `DatePickerField`, `DateRangeField`, `SelectField`, `AutocompleteField`, `PhoneField`,
 `MaskedField`, `TextAreaField`, `SearchField`, `CheckboxGroup` / `RadioList`, `CheckboxField`, `SwitchField`,
 `ActionButton` (nhận cả 29 tên `btnType` của EMR), `GridTable`, `SectionTitle`, `TabBar`, `DialogFrame`, `ExpandableText`,
-`ControlField` / `ControlLabel`. Danh mục ghi kèm tên component EMR tương ứng, nên `aura find "ModalPro"` hay
-`aura find "CheckGroup"` đều ra primitive đúng.
+`ControlField` / `ControlLabel`. Danh mục ghi kèm tên component EMR tương ứng, nên `medviet-ui-ux find "ModalPro"` hay
+`medviet-ui-ux find "CheckGroup"` đều ra primitive đúng.
 
 Thêm token: khai báo giá trị DS v1 trong khối "component tokens" của `index.css` (đăng ký màu trong `@theme inline`),
 rồi khai báo giá trị cho từng theme. Theme mới: thêm `template/src/themes/<tên>.css` với selector `:root[data-theme="<tên>"]`.

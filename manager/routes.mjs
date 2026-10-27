@@ -1,7 +1,7 @@
-// Changed files → the pages that render them, so aura verify knows what to inspect.
+// Changed files → the pages that render them, so medviet-ui-ux verify knows what to inspect.
 // Routes come from file-based routing (Next app/pages, Remix/TanStack routes/) or from <Route path element>
 // / { path, element|Component } declarations (React Router), with path constants (ROUTES.X) resolved.
-// Each changed file is followed up the import graph (.aura/cache/index.json) to the route components above it.
+// Each changed file is followed up the import graph (.medviet-ui-ux/cache/index.json) to the route components above it.
 import fs from 'node:fs'
 import path from 'node:path'
 

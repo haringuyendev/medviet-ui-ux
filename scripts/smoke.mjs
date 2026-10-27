@@ -10,9 +10,9 @@ import { fileURLToPath } from 'node:url'
 import { killTree, run, which } from '../manager/proc.mjs'
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
-const aura = path.join(root, 'manager', 'aura.mjs')
+const engine = path.join(root, 'manager', 'medviet-ui-ux.mjs')
 // the temp folder as Windows gives it (8.3 short names like RUNNER~1): what users get from os.tmpdir() too
-const work = path.resolve(process.argv[2] ?? fs.mkdtempSync(path.join(os.tmpdir(), 'aura-smoke-')))
+const work = path.resolve(process.argv[2] ?? fs.mkdtempSync(path.join(os.tmpdir(), 'medviet-smoke-')))
 const app = path.join(work, 'app')
 let failed = 0
 const step = async (name, fn) => {
@@ -20,16 +20,16 @@ const step = async (name, fn) => {
   try { await fn(); console.log(`✓ ${name} (${((Date.now() - t) / 1000).toFixed(1)}s)`) } catch (e) { failed++; console.log(`✗ ${name}\n  ${String(e.stack ?? e).split('\n').slice(0, 6).join('\n  ')}`); process.exit(1) }
 }
 const assert = (ok, msg) => { if (!ok) throw new Error(msg) }
-const cli = (args, opts = {}) => spawnSync(process.execPath, [aura, ...args], { cwd: app, encoding: 'utf8', ...opts })
-const hook = (event, input) => spawnSync(process.execPath, [aura, 'hook', event], { cwd: app, encoding: 'utf8', input: JSON.stringify({ session_id: 'smoke', cwd: app, ...input }), env: { ...process.env, CLAUDE_PROJECT_DIR: app } })
+const cli = (args, opts = {}) => spawnSync(process.execPath, [engine, ...args], { cwd: app, encoding: 'utf8', ...opts })
+const hook = (event, input) => spawnSync(process.execPath, [engine, 'hook', event], { cwd: app, encoding: 'utf8', input: JSON.stringify({ session_id: 'smoke', cwd: app, ...input }), env: { ...process.env, CLAUDE_PROJECT_DIR: app } })
 
-/** Start aura studio in `cwd`, wait for its URL, return { base, stop }. */
+/** Start medviet-ui-ux studio in `cwd`, wait for its URL, return { base, stop }. */
 async function studio(cwd, port) {
-  const child = spawn(process.execPath, [aura, 'studio', '--no-open', '--port', String(port)], { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
+  const child = spawn(process.execPath, [engine, 'studio', '--no-open', '--port', String(port)], { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
   let out = ''
   child.stdout.on('data', (d) => { out += d }); child.stderr.on('data', (d) => { out += d })
-  for (let i = 0; i < 60 && !/Aura Studio:/.test(out); i++) await new Promise((r) => setTimeout(r, 250))
-  assert(/Aura Studio:/.test(out), `studio did not start: ${out}`)
+  for (let i = 0; i < 60 && !/medviet-ui-ux Studio:/.test(out); i++) await new Promise((r) => setTimeout(r, 250))
+  assert(/medviet-ui-ux Studio:/.test(out), `studio did not start: ${out}`)
   // Windows has no SIGTERM handler to run Studio's cleanup: ask it to stop its dev servers through the tree kill
   return { base: `http://localhost:${port}`, stop: () => killTree(child), out: () => out }
 }
@@ -42,26 +42,26 @@ await step('programs are found (npm through .cmd on Windows)', async () => {
   assert(r.code === 0 && /\d+\.\d+/.test(r.o), `npm --version failed: ${r.o}`)
 })
 
-await step('aura setup reports this machine', async () => {
+await step('medviet-ui-ux setup reports this machine', async () => {
   const r = cli(['setup'], { cwd: root })
   assert(/Node\.js/.test(r.stdout), r.stdout + r.stderr)
 })
 
-await step('aura new creates the app (copy, install, init)', async () => {
+await step('medviet-ui-ux new creates the app (copy, install, init)', async () => {
   fs.rmSync(app, { recursive: true, force: true })
-  const r = spawnSync(process.execPath, [aura, 'new', app, '--name', 'smoke-app'], { cwd: work, encoding: 'utf8', timeout: 600000 })
+  const r = spawnSync(process.execPath, [engine, 'new', app, '--name', 'smoke-app'], { cwd: work, encoding: 'utf8', timeout: 600000 })
   assert(r.status === 0, `exit ${r.status}\n${r.stdout}\n${r.stderr}`)
-  assert(fs.existsSync(path.join(app, '.aura', 'registry.json')), 'no .aura/registry.json')
+  assert(fs.existsSync(path.join(app, '.medviet-ui-ux', 'registry.json')), 'no .medviet-ui-ux/registry.json')
   assert(fs.existsSync(path.join(app, 'node_modules', 'react')), 'dependencies not installed')
   assert(JSON.parse(fs.readFileSync(path.join(app, 'package.json'), 'utf8')).name === 'smoke-app', 'package name not set')
 })
 
-await step('aura check passes on the starter', async () => {
+await step('medviet-ui-ux check passes on the starter', async () => {
   const r = cli(['check'])
   assert(r.status === 0, r.stdout + r.stderr)
 })
 
-await step('aura scaffold writes a dashboard that passes check', async () => {
+await step('medviet-ui-ux scaffold writes a dashboard that passes check', async () => {
   const r = cli(['scaffold', 'dashboard', 'src/pages/Smoke.tsx', '--name', 'Đơn hàng'])
   assert(r.status === 0, r.stdout + r.stderr)
   const c = cli(['check', 'src/pages/Smoke.tsx'])
@@ -72,18 +72,18 @@ await step('post-edit hook blocks a raw <button>', async () => {
   const file = path.join(app, 'src', 'pages', 'Raw.tsx')
   fs.writeFileSync(file, 'export default function Raw() {\n  return <button onClick={() => {}}>Lưu</button>\n}\n')
   const r = hook('post-edit', { hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: file } })
-  assert(r.status === 2 && /Aura blocked/.test(r.stderr) && /bypasses-primitive/.test(r.stderr), `exit ${r.status}\n${r.stdout}\n${r.stderr}`)
+  assert(r.status === 2 && /medviet-ui-ux blocked/.test(r.stderr) && /bypasses-primitive/.test(r.stderr), `exit ${r.status}\n${r.stdout}\n${r.stderr}`)
   fs.rmSync(file)
 })
 
 await step('pre-tool hook asks before adding a primitive (deny + marker under Studio)', async () => {
-  const input = { hook_event_name: 'PreToolUse', tool_name: 'Bash', tool_input: { command: 'node .aura/bin/aura.mjs add rating' } }
+  const input = { hook_event_name: 'PreToolUse', tool_name: 'Bash', tool_input: { command: 'node .medviet-ui-ux/bin/medviet-ui-ux.mjs add rating' } }
   assert(/"permissionDecision":"ask"/.test(hook('pre-tool', input).stdout), 'no ask')
-  const r = spawnSync(process.execPath, [aura, 'hook', 'pre-tool'], { cwd: app, encoding: 'utf8', input: JSON.stringify({ session_id: 'smoke', cwd: app, ...input }), env: { ...process.env, CLAUDE_PROJECT_DIR: app, AURA_STUDIO: '1' } })
-  assert(/"deny"/.test(r.stdout) && /\[aura-approve:rating\]/.test(r.stdout), r.stdout + r.stderr)
+  const r = spawnSync(process.execPath, [engine, 'hook', 'pre-tool'], { cwd: app, encoding: 'utf8', input: JSON.stringify({ session_id: 'smoke', cwd: app, ...input }), env: { ...process.env, CLAUDE_PROJECT_DIR: app, MEDVIET_UI_UX_STUDIO: '1' } })
+  assert(/"deny"/.test(r.stdout) && /\[medviet-approve:rating\]/.test(r.stdout), r.stdout + r.stderr)
 })
 
-await step('aura verify (inspect skipped) records the change', async () => {
+await step('medviet-ui-ux verify (inspect skipped) records the change', async () => {
   const r = cli(['verify', '--files', path.join(app, 'src', 'pages', 'Smoke.tsx'), '--skip-inspect', 'smoke test'])
   assert(r.status === 0 && /verified/.test(r.stdout), r.stdout + r.stderr)
 })
@@ -98,7 +98,7 @@ await step('Studio API: state, upload, file, origin guard', async () => {
     assert(up.ok && /^[\w.-]+$/.test(j.id) && j.name === 'Yêu cầu.csv', JSON.stringify(j))
     const f = await fetch(`${s.base}/api/file?id=${encodeURIComponent(j.id)}`)
     assert(f.ok && (await f.text()).startsWith('a,b'), `file ${f.status}`)
-    assert(fs.existsSync(path.join(app, '.aura', 'cache', 'studio-uploads', j.id)), 'upload not in .aura/cache/studio-uploads')
+    assert(fs.existsSync(path.join(app, '.medviet-ui-ux', 'cache', 'studio-uploads', j.id)), 'upload not in .medviet-ui-ux/cache/studio-uploads')
     const evil = await fetch(`${s.base}/api/reset`, { method: 'POST', headers: { origin: 'http://evil.example', 'content-type': 'application/json' }, body: '{}' })
     assert(evil.status === 403, `cross-site POST got ${evil.status}`)
     const trav = await fetch(`${s.base}/api/file?id=${encodeURIComponent('../studio.json')}`)

@@ -2,7 +2,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-// Items of the shadcn registry (aura catalog names that install as-is).
+// Items of the shadcn registry (catalog names that install as-is).
 export const SHADCN = new Set(['accordion', 'alert', 'alert-dialog', 'aspect-ratio', 'avatar', 'badge', 'breadcrumb', 'button', 'button-group', 'calendar', 'card', 'carousel', 'chart', 'checkbox', 'collapsible', 'combobox', 'command', 'context-menu', 'dialog', 'drawer', 'dropdown-menu', 'empty', 'field', 'form', 'hover-card', 'input', 'input-group', 'input-otp', 'item', 'kbd', 'label', 'menubar', 'native-select', 'navigation-menu', 'pagination', 'popover', 'progress', 'radio-group', 'resizable', 'scroll-area', 'select', 'separator', 'sheet', 'sidebar', 'skeleton', 'slider', 'sonner', 'spinner', 'switch', 'table', 'tabs', 'textarea', 'toggle', 'toggle-group', 'tooltip'])
 // Catalog entries that are compositions of registry items.
 export const COMPOSED = { 'date-picker': ['calendar', 'popover'], 'date-range-picker': ['calendar', 'popover'], 'data-table': ['table'], toast: ['sonner'] }
@@ -39,8 +39,8 @@ export function addCommand(ctx, names) {
   return { dir, argv, text: `${argv.join(' ')}${dir === ctx.repo ? '' : `  (in ${ctx.rel(dir)})`}` }
 }
 
-/** Bash commands that add primitives: aura add, shadcn add. Returns the names, or null. */
+/** Bash commands that add primitives: medviet-ui-ux add, shadcn add. Returns the names, or null. */
 export function addsPrimitives(command = '') {
-  const m = command.match(/(?:\baura(?:\.mjs)?["']?\s+add|\bshadcn(?:@[\w.-]+)?\s+add)\s+([^;&|]*)/)
+  const m = command.match(/(?:\bmedviet-ui-ux(?:\.mjs)?["']?\s+add|\bshadcn(?:@[\w.-]+)?\s+add)\s+([^;&|]*)/)
   return m ? m[1].split(/\s+/).filter((a) => a && !a.startsWith('-')) : null
 }

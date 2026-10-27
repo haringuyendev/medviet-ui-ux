@@ -83,7 +83,7 @@ function resolveCssImport(ctx, spec, fromFile) {
   }
 }
 
-/** CSS files with tokens: tokenFiles from .aura/rules.json, or every .css in the repo, plus what they @import. */
+/** CSS files with tokens: tokenFiles from .medviet-ui-ux/rules.json, or every .css in the repo, plus what they @import. */
 function tokenCssFiles(ctx) {
   const start = ctx.config?.tokenFiles?.length
     ? ctx.config.tokenFiles.map((f) => path.resolve(ctx.repo, f)).filter((f) => fs.existsSync(f))

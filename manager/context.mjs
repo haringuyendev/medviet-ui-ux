@@ -2,7 +2,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-export const IGNORE = /(^|\/)(node_modules|\.next|dist|build|out|coverage|\.git|\.turbo|\.vercel|public|playwright-report|test-results|\.pnpm-store|\.aura|storybook-static)(\/|$)/
+export const IGNORE = /(^|\/)(node_modules|\.next|dist|build|out|coverage|\.git|\.turbo|\.vercel|public|playwright-report|test-results|\.pnpm-store|\.medviet-ui-ux|\.aura|storybook-static)(\/|$)/
 export const SOURCE_EXT = ['.tsx', '.ts', '.jsx', '.js', '.vue', '.svelte']
 export const SECTION_DIR = /\/(blocks|heros|sections|features)\//
 
@@ -103,8 +103,8 @@ export function createContext(repoArg = '.') {
   const repo = path.resolve(repoArg)
   const rel = (p) => path.relative(repo, p).split(path.sep).join('/')
   const pkg = readJson(path.join(repo, 'package.json')) ?? {}
-  // Team overrides in .aura/rules.json: primitivesDir, tokenFiles, allowUiLibraries, cli.
-  const config = readJson(path.join(repo, '.aura', 'rules.json')) ?? {}
+  // Team overrides in .medviet-ui-ux/rules.json: primitivesDir, tokenFiles, allowUiLibraries, cli.
+  const config = readJson(path.join(repo, '.medviet-ui-ux', 'rules.json')) ?? {}
 
   // Packages: the repo itself plus, in a monorepo, every workspace package (apps/*, packages/*…).
   const packages = [repo, ...workspaceDirs(repo, pkg)].map((dir) => {
@@ -298,5 +298,5 @@ export function createContext(repoArg = '.') {
   const workspaces = monorepo ? packages.slice(1).map((p) => ({ name: p.name, dir: rel(p.dir) })) : []
   const aliases = packages[0].aliases
 
-  return { repo, rel, pkg, config, uiLibPrefixes, barrelNames, isBarrel, ownerOf, resolvePackageSpec, deps, stack, usedUiLibs, shadcn, aliases, resolveImport, importPathFor, localImportFor, packageOf, workspaces, monorepo, uiDir, srcRoot, walk, isComponentPath, isUiPath, isRouteFile, isTokenPath, auraDir: path.join(repo, '.aura') }
+  return { repo, rel, pkg, config, uiLibPrefixes, barrelNames, isBarrel, ownerOf, resolvePackageSpec, deps, stack, usedUiLibs, shadcn, aliases, resolveImport, importPathFor, localImportFor, packageOf, workspaces, monorepo, uiDir, srcRoot, walk, isComponentPath, isUiPath, isRouteFile, isTokenPath, dataDir: path.join(repo, '.medviet-ui-ux') }
 }

@@ -1,4 +1,4 @@
-// Rules run on component files (by the post-edit hook, the stop hook and `aura check`).
+// Rules run on component files (by the post-edit hook, the stop hook and `medviet-ui-ux check`).
 import fs from 'node:fs'
 import path from 'node:path'
 import { UI_LIB_IMPORTS, read } from './context.mjs'
@@ -17,7 +17,7 @@ export const DEFAULT_RULES = {
   'undescribed-component': 'info',
 }
 export const loadRules = (ctx) => {
-  try { return { ...DEFAULT_RULES, ...JSON.parse(fs.readFileSync(path.join(ctx.auraDir, 'rules.json'), 'utf8')).rules } } catch { return DEFAULT_RULES }
+  try { return { ...DEFAULT_RULES, ...JSON.parse(fs.readFileSync(path.join(ctx.dataDir, 'rules.json'), 'utf8')).rules } } catch { return DEFAULT_RULES }
 }
 
 const PALETTE = /\b(?:bg|text|border|ring|fill|stroke|from|via|to|outline|decoration|divide|placeholder|caret|shadow)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b|\b(?:bg|text|border)-\[#[0-9a-fA-F]{3,8}\]|\b(?:bg|text|border|ring|fill|stroke)-(?:white|black)\b/g
@@ -119,7 +119,7 @@ export function checkFile(ctx, state, abs, { isNew = false } = {}) {
   if (!src) return []
   const out = []
   const lines = src.split('\n')
-  const ignored = (rule, line) => [lines[line - 1], lines[line - 2]].some((l) => l && new RegExp(`aura-ignore\\s+${rule}\\b`).test(l))
+  const ignored = (rule, line) => [lines[line - 1], lines[line - 2]].some((l) => l && new RegExp(`medviet-ignore\\s+${rule}\\b`).test(l))
   const add = (rule, line, message) => state.rules[rule] && state.rules[rule] !== 'off' && !ignored(rule, line) && out.push({ rule, severity: state.rules[rule], line, message, key: findingKey(rule, message) })
   const relPath = ctx.rel(abs)
   // Inside the component's own package, use its local form (#components/x); elsewhere its public import.
@@ -150,7 +150,7 @@ export function checkFile(ctx, state, abs, { isNew = false } = {}) {
   }
 
   // raw-color
-  for (const m of code.matchAll(PALETTE)) add('raw-color', lineOf(src, m.index), `raw color class "${m[0]}". Use a semantic token (${['primary', 'muted-foreground', 'destructive'].filter((c) => colors.has(c)).join(', ') || 'see aura tokens'}).`)
+  for (const m of code.matchAll(PALETTE)) add('raw-color', lineOf(src, m.index), `raw color class "${m[0]}". Use a semantic token (${['primary', 'muted-foreground', 'destructive'].filter((c) => colors.has(c)).join(', ') || 'see medviet-ui-ux tokens'}).`)
 
   // foreign-ui-library
   for (const spec of packageImports(src)) {
@@ -191,7 +191,7 @@ export function checkFile(ctx, state, abs, { isNew = false } = {}) {
       const want = SURFACE_PRIMS[kind].map((n) => prims.get(n)).filter(Boolean)
       if (!want.length) continue
       const use = want.map((p) => `${p.exports.slice(0, 5).join(' + ')} from "${importFrom(p)}"${variantsOf(p)}`).join(', or ')
-      add('hand-built-surface', lineOf(src, el.index), `<${el.tag}> styled as ${SURFACE_LABEL[kind]} ("${el.classes.slice(0, 6).join(' ')}${el.classes.length > 6 ? ' …' : ''}"). Use ${use}. If the look you need (a severity tone, an accent bar) isn't a variant yet, add it to the primitive with cva instead of styling a ${el.tag}. Intentional? Put "aura-ignore hand-built-surface: <why>" in a comment on the line above.`)
+      add('hand-built-surface', lineOf(src, el.index), `<${el.tag}> styled as ${SURFACE_LABEL[kind]} ("${el.classes.slice(0, 6).join(' ')}${el.classes.length > 6 ? ' …' : ''}"). Use ${use}. If the look you need (a severity tone, an accent bar) isn't a variant yet, add it to the primitive with cva instead of styling a ${el.tag}. Intentional? Put "medviet-ignore hand-built-surface: <why>" in a comment on the line above.`)
     }
   }
 
@@ -206,18 +206,18 @@ export function checkFile(ctx, state, abs, { isNew = false } = {}) {
     if (dup) add('duplicate-component', 1, `"${self.name}" duplicates the existing ${dup.category} "${dup.name}" (${dup.path}, used in ${dup.usedBy} files). Reuse it (import from "${importFrom(dup)}") or extend it with a variant instead of a second copy.`)
   }
   if (self && state.registry.components.some((c) => c.path === relPath) && !self.described && (isNew || state.rules['undescribed-component'] === 'warn'))
-    add('undescribed-component', 1, `"${self.name}" has no description in the registry. Run: aura describe ${self.name} --summary "…" --use "…" --avoid "…" --keywords "vi, en"`)
+    add('undescribed-component', 1, `"${self.name}" has no description in the registry. Run: medviet-ui-ux describe ${self.name} --summary "…" --use "…" --avoid "…" --keywords "vi, en"`)
   return out
 }
 
 /**
- * Baseline: findings that existed when aura was added ({ [path]: { [rule]: count } }). Hooks block only
+ * Baseline: findings that existed when medviet-ui-ux was added ({ [path]: { [rule]: count } }). Hooks block only
  * new violations, so editing an old file doesn't force unrelated fixes. Marks the first N per rule as existing.
  */
 /** What a finding is about, without where it is: the baseline matches on this, so reformatting a file keeps old findings old, and swapping an old violation for a different new one still blocks. */
 export const findingKey = (rule, message) => `${rule}:${message.replace(/\b\d+ files\b/g, 'N files').slice(0, 200)}`
 export function loadBaseline(ctx) {
-  try { return JSON.parse(fs.readFileSync(path.join(ctx.auraDir, 'baseline.json'), 'utf8')).files ?? {} } catch { return {} }
+  try { return JSON.parse(fs.readFileSync(path.join(ctx.dataDir, 'baseline.json'), 'utf8')).files ?? {} } catch { return {} }
 }
 export function applyBaseline(relPath, findings, baseline) {
   const entries = baseline[relPath] ?? {}
@@ -237,7 +237,7 @@ export function snapshotBaseline(entries) {
       e.lines.push(f.line)
       e.keys.push(f.key)
     }
-  return { $comment: 'Findings present when aura was added; hooks only block new ones (matched by what the finding is about, so moved lines stay old; lines are where they were). List them: aura check --existing. Refresh: aura baseline', rules: Object.keys(DEFAULT_RULES), pagesChecked: true, files }
+  return { $comment: 'Findings present when medviet-ui-ux was added; hooks only block new ones (matched by what the finding is about, so moved lines stay old; lines are where they were). List them: medviet-ui-ux check --existing. Refresh: medviet-ui-ux baseline', rules: Object.keys(DEFAULT_RULES), pagesChecked: true, files }
 }
 
 export const hasErrors = (findings) => findings.some((f) => f.severity === 'error' && !f.existing)

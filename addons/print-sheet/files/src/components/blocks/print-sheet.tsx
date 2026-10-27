@@ -53,7 +53,7 @@ export function PrintSheet({
           </Button>
         </div>
       </div>
-      {/* aura-ignore raw-color: paper is white and ink is black on screen and in print, whatever the theme */}
+      {/* medviet-ignore raw-color: paper is white and ink is black on screen and in print, whatever the theme */}
       <article
         className={cn(
           "w-full bg-white text-black shadow-sm print:shadow-none",

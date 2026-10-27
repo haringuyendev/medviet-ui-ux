@@ -95,6 +95,6 @@ or colour in a component to imitate EMR: the theme does it.
   variants in `index.css`, or sliders, scrollbars and tabs flatten silently.
 - `#root { isolation: isolate }` keeps portaled popups above page content; don't remove it.
 - In turbo-web an app's CSS must `@source "../../../packages/ui"` so Tailwind sees the primitives' classes.
-- A token used in a component but missing from `@theme inline` produces no class and fails silently; aura check reports
+- A token used in a component but missing from `@theme inline` produces no class and fails silently; medviet-ui-ux check reports
   it (`undefined-token`).
 - Dark mode is derived (web-emr has none): neutrals are kept, only brand tokens are retinted. Test both with `?theme=dark`.
