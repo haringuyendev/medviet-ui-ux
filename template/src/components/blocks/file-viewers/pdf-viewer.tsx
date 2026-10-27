@@ -109,7 +109,7 @@ export default function PdfViewer({
             options={options}
             loading={spinner}
             error={
-              <p className="p-6 text-center text-sm text-destructive">
+              <p className="p-6 text-center text-sm text-destructive-text">
                 Không mở được tệp PDF này.
               </p>
             }
@@ -136,6 +136,7 @@ export default function PdfViewer({
       </div>
       {pages > 0 && (
         <div className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center">
+          {/* medviet-ignore hand-built-surface: floating page counter over the PDF canvas (add-on file), not a status badge */}
           <span className="rounded-full bg-popover px-3 py-1 text-xs tabular-nums text-popover-foreground shadow-sm ring-1 ring-foreground/10">
             Trang {formatNumber(current)}/{formatNumber(pages)}
           </span>

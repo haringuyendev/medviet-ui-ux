@@ -44,7 +44,7 @@ export default function DocxViewer({
         </div>
       )}
       {state === "error" && (
-        <p className="p-6 text-center text-sm text-destructive">
+        <p className="p-6 text-center text-sm text-destructive-text">
           Không mở được tệp Word này. Hãy tải về để xem.
         </p>
       )}

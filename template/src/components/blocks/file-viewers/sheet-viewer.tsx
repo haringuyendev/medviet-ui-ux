@@ -48,7 +48,7 @@ export default function SheetViewer({ data }: { data: ArrayBuffer }) {
 
   if (!workbook)
     return (
-      <p className="p-6 text-center text-sm text-destructive">
+      <p className="p-6 text-center text-sm text-destructive-text">
         Không đọc được bảng tính này. Hãy tải về để xem.
       </p>
     );

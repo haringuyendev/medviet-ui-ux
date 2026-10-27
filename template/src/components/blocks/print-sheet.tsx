@@ -53,9 +53,9 @@ export function PrintSheet({
           </Button>
         </div>
       </div>
-      {/* medviet-ignore raw-color: paper is white and ink is black on screen and in print, whatever the theme */}
       <article
         className={cn(
+          // medviet-ignore raw-color: paper is white and ink is black on screen and in print, whatever the theme
           "w-full bg-white text-black shadow-sm print:shadow-none",
           className,
         )}

@@ -5,6 +5,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { packageManager } from './primitives.mjs'
 import { run, which } from './proc.mjs'
+import { writeManifest } from './upgrade.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 export const templateDir = () => path.join(here, '..', 'template')
@@ -42,6 +43,10 @@ export async function createApp({ target, name = path.basename(target), onLog = 
 
   onLog('Khởi tạo medviet-ui-ux (.medviet-ui-ux/)')
   await exec(process.execPath, [path.join(here, 'medviet-ui-ux.mjs'), 'init', '--scripts'], target, () => {})
+  // what the starter put here, so `medviet-ui-ux upgrade` can later tell the files the team changed
+  let version = null
+  try { const p = JSON.parse(fs.readFileSync(path.join(here, '..', '.claude-plugin', 'plugin.json'), 'utf8')); version = `${p.name}@${p.version}` } catch {}
+  writeManifest(target, path.join(target, '.medviet-ui-ux'), template, version)
 
   if (which('git')) {
     try {

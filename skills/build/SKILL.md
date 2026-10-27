@@ -35,8 +35,9 @@ hooks:
    `tokens`) instead of reading component folders. Prefer a block over re-assembling its primitives.
    **A primitive the project lacks** (find says `MISSING PRIMITIVE`): ask the user, and add it with
    `medviet-ui-ux add <name>` only if they agree; otherwise compose from what exists. Never hand-build it from divs.
-   For a rich text editor, an A4 print sheet or a very long list in a starter app, `medviet-ui-ux find` prints the
-   add-on's install command. Excel export/import and the PDF/Word/Excel viewer are already in the starter.
+   For a rich text editor or a very long list in a starter app, `medviet-ui-ux find` prints the add-on's install
+   command. A block the catalog lists but the app lacks (an app made before it existed): the `medviet-ui-ux:upgrade`
+   skill. Excel export/import and the PDF/Word/Excel viewer are already in the starter.
 4. **Start a new page from a scaffold** in an existing project:
    `node .medviet-ui-ux/bin/medviet-ui-ux.mjs scaffold <dashboard|list|detail|form> <path/to/page.tsx> [--name Orders]`. It writes
    the page from the project's own components with the right structure already in place (what needs action

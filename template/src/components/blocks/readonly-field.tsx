@@ -38,7 +38,7 @@ export function ReadonlyField({
           isEmpty && "text-muted-foreground",
           tone === "destructive" &&
             !isEmpty &&
-            "border-destructive/40 bg-destructive/5 font-medium text-destructive",
+            "border-destructive/40 bg-destructive/5 font-medium text-destructive-text",
         )}
       >
         {icon}

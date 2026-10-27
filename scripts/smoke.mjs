@@ -56,6 +56,24 @@ await step('medviet-ui-ux new creates the app (copy, install, init)', async () =
   assert(JSON.parse(fs.readFileSync(path.join(app, 'package.json'), 'utf8')).name === 'smoke-app', 'package name not set')
 })
 
+await step('medviet-ui-ux upgrade keeps team changes and adds what is missing', async () => {
+  assert(fs.existsSync(path.join(app, '.medviet-ui-ux', 'template.json')), 'new app has no .medviet-ui-ux/template.json')
+  const blocks = path.join(app, 'src', 'components', 'blocks')
+  const stat = path.join(blocks, 'stat.tsx'), statBefore = fs.readFileSync(stat, 'utf8')
+  const age = path.join(blocks, 'age-hint.tsx'), ageBefore = fs.readFileSync(age, 'utf8')
+  const timeline = path.join(blocks, 'activity-timeline.tsx'), timelineBefore = fs.readFileSync(timeline, 'utf8')
+  fs.appendFileSync(stat, '// team change\n') // changed by the team: kept
+  fs.writeFileSync(age, ageBefore.replace('AgeHint', 'AgeHintOld')) // also changed by the team: kept
+  fs.rmSync(timeline) // removed by the team: not re-added
+  const r = cli(['upgrade', '--dry-run'])
+  assert(r.status === 0, r.stdout + r.stderr)
+  const kept = r.stdout.split('Kept')[1] ?? ''
+  assert(/stat\.tsx/.test(kept) && /age-hint\.tsx/.test(kept), `team changes should be kept:\n${r.stdout}`)
+  assert(/Not re-added[\s\S]*activity-timeline\.tsx/.test(r.stdout), `a removed block should stay removed:\n${r.stdout}`)
+  assert(!/Would (add|update)/.test(r.stdout), `nothing else should change on a fresh app:\n${r.stdout}`)
+  fs.writeFileSync(stat, statBefore); fs.writeFileSync(age, ageBefore); fs.writeFileSync(timeline, timelineBefore)
+})
+
 await step('medviet-ui-ux check passes on the starter', async () => {
   const r = cli(['check'])
   assert(r.status === 0, r.stdout + r.stderr)

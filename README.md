@@ -71,6 +71,7 @@ Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-bounda
   | `citizen-id-scan` | health-exam | quét CCCD bằng máy quét cầm tay hoặc camera, tự điền số CCCD, họ tên, ngày sinh, giới tính, địa chỉ |
   | `age-hint` | health-exam | tuổi cạnh ô ngày sinh: "8 tháng", "3 tuổi 2 tháng", "35 tuổi" |
   | `activity-timeline` | health-exam, gmhs | lịch sử hồ sơ: ai làm gì, lúc nào, nhóm theo ngày |
+  | `print-sheet` | gmhs | bản in A4: phiếu, biên bản, bảng bàn giao; xem trước như tờ giấy, in hoặc lưu PDF |
   | `page-header`, `stat`, `description-list`, `form`, `number-input`, `file-upload`, `stepper` | chung | tiêu đề trang, KPI, form… |
 
 - `src/pages`: `NotFound` và `ServerError` dựng bằng token (bản trong template của turbo-web dùng màu xám thô).
@@ -80,7 +81,6 @@ Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-bounda
 
 | Add-on | Dùng cho |
 |---|---|
-| `print-sheet` | bản in A4: phiếu, biên bản, bảng bàn giao (gmhs) |
 | `virtual-list` | danh sách hàng nghìn dòng (health-exam) |
 | `rich-text-editor` | soạn văn bản có định dạng (Tiptap) |
 
@@ -97,6 +97,7 @@ Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-bounda
 | `new-app` | app mới từ MedViet starter |
 | `studio` | trang chat và preview kiểu Lovable |
 | `setup` | kiểm tra máy, tự cài Node |
+| `upgrade` | cập nhật app tạo từ starter lên template mới (block, primitive, thư viện), không ghi đè file team đã sửa |
 | `export` | đóng gói source thành file .zip (không có node_modules, build, .env), như nút export của Lovable; Studio có nút **Tải code** |
 
 ## Dùng trong turbo-web
@@ -120,13 +121,13 @@ node scripts/design-tokens.mjs && node scripts/design-preview.mjs   # cập nh�
 
 ## Cấu trúc
 ```
-.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.5.0)
+.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.6.0)
 hooks/            hook của medviet-ui-ux (SessionStart, PreToolUse, PostToolUse, Stop, SubagentStop)
-skills/           11 skill ở trên
+skills/           12 skill ở trên
 manager/          engine medviet-ui-ux: medviet-ui-ux.mjs (init, find, add, scaffold, variant, check, verify, inspect, studio, new, setup…)
 template/         MedViet starter
 catalog/          components.json: 108 mục, từ điển Việt–Anh cho medviet-ui-ux find
-addons/           3 add-on
+addons/           2 add-on
 design/           DESIGN.md (Design System v1), preview.html, tokens.json
 upstream/         turbo-web-theme-v1.patch (token v1 + badge cho turbo-web)
 references/       design-system.md (MedViet), dashboard.md

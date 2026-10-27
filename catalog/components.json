@@ -2948,7 +2948,7 @@
   {
     "name": "print-sheet",
     "category": "layout",
-    "kind": "addon",
+    "kind": "block",
     "summary": "A4 paper form to print (biên bản, phiếu, bảng bàn giao): sheet preview on screen, window.print(), app chrome hidden with print:hidden.",
     "use_when": [
       "in phiếu khám, biên bản, bảng bàn giao, giấy hẹn"
@@ -2970,7 +2970,6 @@
       "table"
     ],
     "import": "@/components/blocks/print-sheet",
-    "install": "node <this-skill-folder>/scripts/add-block.mjs print-sheet <app-dir>",
     "exports": [
       "PrintSheet"
     ],

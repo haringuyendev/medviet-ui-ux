@@ -24,6 +24,9 @@
 //   medviet-ui-ux new <folder> [--name x]    a new app from the MedViet starter (copy, install, medviet-ui-ux init, git init)
 //   medviet-ui-ux export [--out file.zip|dir]   the source as one .zip (no node_modules, build output, caches, .env secrets);
 //                                   default ~/Downloads/<project>-<date>.zip
+//   medviet-ui-ux upgrade [--dry-run] [--overwrite a,b]   bring an app made from the starter up to this plugin's template:
+//                                   new/updated blocks, primitives, lib, themes, scripts and their dependencies; files the
+//                                   team changed are kept (listed). Run from the plugin (it needs template/).
 //   medviet-ui-ux setup [--json]             what this machine has for medviet-ui-ux (Node, npm, git, claude CLI, Playwright) and how to install the rest
 //   medviet-ui-ux doctor                     what medviet-ui-ux couldn't detect in this repo, and the rules.json key that fixes it
 //   medviet-ui-ux stats [--changed] [--json] findings per rule, new vs existing, and the files with the most
@@ -42,7 +45,7 @@ const readRegistry = (ctx) => { try { return JSON.parse(fs.readFileSync(files(ct
 import { DEFAULT_RULES, applyBaseline, checkFile, formatFindings, hasErrors, loadBaseline, loadRules, snapshotBaseline } from './check.mjs'
 import { findComponents, formatComponent } from './find.mjs'
 import { formatReport, inspect, resolveUrls } from './inspect.mjs'
-import { SHADCN, addCommand, addsPrimitives, hasComponent, installNames } from './primitives.mjs'
+import { SHADCN, addCommand, addsPrimitives, hasComponent, installNames, packageManager } from './primitives.mjs'
 import { loadVerify, verifiedClean, verify } from './verify.mjs'
 import { SCAFFOLDS, addVariant, scaffold, snippet } from './scaffold.mjs'
 import { studio } from './studio.mjs'
@@ -50,6 +53,7 @@ import { createApp } from './newapp.mjs'
 import { runSync } from './proc.mjs'
 import { checkSetup, formatSetup } from './setup.mjs'
 import { defaultExportDir, exportProject, formatSize } from './export.mjs'
+import { applyUpgrade, formatPlan, planUpgrade, writeManifest } from './upgrade.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const argv = process.argv.slice(2)
@@ -316,6 +320,28 @@ async function main() {
       if (r.skipped.length) console.log(`Left out (secrets, share them another way): ${r.skipped.join(', ')}`)
       console.log('Not included: node_modules, build output, caches. After unzipping: npm install && npm run dev')
     } catch (e) { console.error(`medviet-ui-ux export: ${e.message}`); process.exit(1) }
+    return
+  }
+  if (cmd === 'upgrade') {
+    const template = path.join(here, '..', 'template')
+    if (!fs.existsSync(path.join(template, 'package.json'))) { console.error('medviet-ui-ux upgrade needs the plugin\'s template/: run node "${CLAUDE_PLUGIN_ROOT}/manager/medviet-ui-ux.mjs" upgrade (not the copy in .medviet-ui-ux/bin).'); process.exit(2) }
+    if (!fs.existsSync(path.join(ctx.repo, 'src', 'components', 'blocks')) || !fs.existsSync(path.join(ctx.repo, 'package.json'))) { console.error(`${ctx.repo} isn't an app made from the MedViet starter (no src/components/blocks). In turbo-web, primitives come from @medviet/ui.`); process.exit(2) }
+    const dryRun = has('dry-run')
+    const plan = planUpgrade(ctx.repo, ctx.dataDir, template, { overwrite: (flag('overwrite') ?? '').split(',').map((f) => f.trim()).filter(Boolean) })
+    console.log(`medviet-ui-ux upgrade${dryRun ? ' (dry run)' : ''}: ${ctx.repo} → template ${VERSION ?? ''}`)
+    if (!dryRun) {
+      const depsChanged = applyUpgrade(ctx.repo, template, plan)
+      if (depsChanged || Object.keys(plan.scripts).length) {
+        const pm = fs.existsSync(path.join(ctx.repo, 'package-lock.json')) ? 'npm' : packageManager(ctx)
+        console.log(`${pm} install…`)
+        const r = runSync(pm, pm === 'npm' ? ['install', '--no-audit', '--no-fund'] : ['install'], { cwd: ctx.repo, stdio: 'inherit' })
+        if (r.status) console.error(`${pm} install failed (exit ${r.status}): run it yourself.`)
+      }
+      writeManifest(ctx.repo, ctx.dataDir, template, VERSION, plan)
+      if (isInitialised(ctx)) refresh(ctx)
+    }
+    console.log(formatPlan(plan, { dryRun }))
+    if (!dryRun && (plan.add.length || plan.update.length)) console.log('Next: npx tsc -b && npm run lint, check the screens that use the updated blocks, then commit (with .medviet-ui-ux/template.json).')
     return
   }
   if (cmd === 'setup') {

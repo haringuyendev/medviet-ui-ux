@@ -3,5 +3,5 @@
  * doesn't run into it; it stays in the accessible name ("Họ tên *"), which tests and screen readers rely on.
  */
 export function RequiredMark() {
-  return <span className="text-destructive"> *</span>;
+  return <span className="text-destructive-text"> *</span>;
 }

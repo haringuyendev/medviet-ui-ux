@@ -46,8 +46,8 @@ function Delta({
         isGood === null
           ? "text-muted-foreground"
           : isGood
-            ? "text-success"
-            : "text-destructive",
+            ? "text-success-text"
+            : "text-destructive-text",
         className,
       )}
       {...props}

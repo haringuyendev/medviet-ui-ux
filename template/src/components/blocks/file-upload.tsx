@@ -108,7 +108,7 @@ function FileUpload({
         />
       </label>
       {error && (
-        <p role="alert" className="text-sm text-destructive">
+        <p role="alert" className="text-sm text-destructive-text">
           {error}
         </p>
       )}
