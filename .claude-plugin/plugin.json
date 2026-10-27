@@ -1,7 +1,7 @@
 {
   "name": "medviet-ui-ux",
   "description": "MedViet UI/UX: build screens for MedViet apps fast and consistently. Ships the turbo-web design system (EMR teal palette, Roboto, status colours) and its @medviet/ui primitives as a starter, shared blocks the apps keep re-writing (status badge, time input, row actions, confirm dialog…), add-ons (signature, Excel import/export, A4 print, virtual list), and medviet-ui-ux's checks: hooks block hand-built UI, raw colours and duplicates, and medviet-ui-ux verify reviews the rendered page. Internal to MedViet.",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "author": {
     "name": "MedViet"
   },

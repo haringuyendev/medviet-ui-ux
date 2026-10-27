@@ -515,10 +515,24 @@ function renderPreview() {
   stage.innerHTML = `<div class="frame-wrap" id="wrap"><iframe id="frame" title="Xem trước" src="${esc(S.url + S.path)}"></iframe></div>`
   layoutFrame()
   $('frame').addEventListener('load', () => {
-    // Same-origin pages (rare) tell us their path; otherwise the address bar keeps what was typed.
-    try { const p = $('frame').contentWindow.location.pathname; if (p && p !== S.path) { S.path = p; $('path').value = p; saveView() } } catch {}
+    // Same-origin pages (rare) tell us their path; cross-origin ones report it with postMessage (below).
+    try { followPath($('frame').contentWindow.location.pathname) } catch {}
   })
 }
+/** The page in the preview moved (a click, the router, back/forward): show it in the address bar without reloading. */
+function followPath(p) {
+  if (typeof p !== 'string' || !p.startsWith('/') || p === S.path) return
+  S.path = p; $('path').value = p
+  $('newtab').href = S.url ? S.url + p : '#'
+  $('where').textContent = `Đang xem ${p}${S.width ? ` · ${S.width}px` : ''}`
+  saveView()
+}
+// Apps from the MedViet starter report their path from the iframe (src/lib/studio-bridge.ts).
+addEventListener('message', (e) => {
+  if (!S.url || e.data?.type !== 'medviet-studio:path') return
+  try { if (e.origin !== new URL(S.url).origin) return } catch { return }
+  followPath(e.data.path)
+})
 function layoutFrame() {
   const wrap = $('wrap'), stage = $('stage')
   if (!wrap) return

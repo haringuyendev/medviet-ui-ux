@@ -116,7 +116,7 @@ node scripts/design-tokens.mjs && node scripts/design-preview.mjs   # cập nh�
 
 ## Cấu trúc
 ```
-.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.2.4)
+.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.2.5)
 hooks/            hook của medviet-ui-ux (SessionStart, PreToolUse, PostToolUse, Stop, SubagentStop)
 skills/           10 skill ở trên
 manager/          engine medviet-ui-ux: medviet-ui-ux.mjs (init, find, add, scaffold, variant, check, verify, inspect, studio, new, setup…)
