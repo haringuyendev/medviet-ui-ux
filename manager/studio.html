@@ -177,7 +177,7 @@ iframe { display: block; border: 0; width: 100%; height: 100%; background: #fff;
 <body>
 <div class="create" id="create" hidden>
   <div class="create-card">
-    <div class="brand"><span class="brand-mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>medviet-ui-ux Studio</div>
+    <div class="brand"><span class="brand-mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>Medviet Studio</div>
     <h1>Mô tả app anh muốn dựng</h1>
     <p class="lead">Studio tạo app từ starter của medviet-ui-ux (React, shadcn, các block có sẵn), bật dev server, rồi agent dựng màn hình đầu tiên theo mô tả. Sau đó anh chat để sửa tiếp.</p>
     <div class="banner missing" id="cmissing" hidden></div>
@@ -645,7 +645,7 @@ const slugify = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replac
 let nameTouched = false
 function showCreate(st) {
   $('main').hidden = true; $('create').hidden = false
-  document.title = 'App mới · medviet-ui-ux Studio'
+  document.title = 'App mới · Medviet Studio'
   const where = () => { $('cwhere').textContent = st.empty ? `Tạo trong ${st.base}` : `Tạo trong ${st.base}/${$('cname').value.trim() || '…'}` }
   if (st.empty) { $('cname').value = st.name; $('cname').disabled = true; nameTouched = true }
   $('cideas').innerHTML = CIDEAS.map((i) => `<button class="chip" type="button">${esc(i)}</button>`).join('')
@@ -713,7 +713,7 @@ async function load() {
   if (st.mode === 'new') return showCreate(st)
   Object.assign(S, st)
   $('project').textContent = st.project
-  document.title = `${st.project} · medviet-ui-ux Studio`
+  document.title = `${st.project} · Medviet Studio`
   const sel = $('app')
   sel.hidden = st.apps.length < 2
   sel.innerHTML = st.apps.map((a) => `<option value="${esc(a.dir)}"${a.dir === st.app ? ' selected' : ''}>${esc(a.name)}</option>`).join('')
