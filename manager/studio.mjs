@@ -271,7 +271,8 @@ export async function studio(initialCtx, opts = {}) {
   }
 
   // ---- HTTP ----
-  const html = path.join(here, 'studio.html')
+  // read once: a page newer than this server (the plugin updated while Studio runs) would call APIs it doesn't have
+  const page = fs.readFileSync(path.join(here, 'studio.html'))
   const port = Number(opts.port ?? ctx?.config.studio?.port ?? 4400)
   const origins = new Set([`http://localhost:${port}`, `http://127.0.0.1:${port}`])
   const body = (req) => new Promise((resolve) => { let s = ''; req.on('data', (d) => { s += d; if (s.length > 1e6) req.destroy() }); req.on('end', () => { try { resolve(JSON.parse(s || '{}')) } catch { resolve({}) } }) })
@@ -285,7 +286,7 @@ export async function studio(initialCtx, opts = {}) {
 
     if (req.method === 'GET' && url.pathname === '/') {
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' })
-      return res.end(fs.readFileSync(html))
+      return res.end(page)
     }
     if (req.method === 'GET' && url.pathname === '/api/state') {
       if (!ctx) return sendJson(res, 200, { missing: missing(), mode: 'new', base: opts.newDir ?? opts.base, empty: isEmptyDir(opts.newDir ?? opts.base), name: path.basename(opts.newDir ?? opts.base), creating: !!creating })

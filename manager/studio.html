@@ -556,8 +556,9 @@ function showHistory(open) {
 }
 async function renderHistory() {
   const box = $('historypanel')
-  let items = []
-  try { items = (await (await api('/api/history')).json()).items } catch {}
+  let items = null
+  try { const r = await api('/api/history'); if (r.ok) items = (await r.json()).items ?? [] } catch {}
+  if (!items) { box.innerHTML = '<div class="hist-head"><b>Cuộc trò chuyện trước</b></div><p class="meta">Không tải được lịch sử. Nếu vừa cập nhật plugin, tắt Studio (Ctrl+C) rồi mở lại.</p>'; return }
   const when = (at) => at ? new Date(at).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' }) : ''
   box.innerHTML = '<div class="hist-head"><b>Cuộc trò chuyện trước</b></div>' + (items.length
     ? items.map((h) => `<button type="button" class="hist-item" data-id="${esc(h.id)}"><span class="hist-title">${esc(h.title || '(không có nội dung)')}</span><span class="meta">${esc(when(h.at))} · ${h.count} yêu cầu</span></button>`).join('')
