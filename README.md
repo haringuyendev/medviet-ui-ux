@@ -94,6 +94,7 @@ Query, TanStack Table v9, react-hook-form/zod, zustand, nuqs, react-error-bounda
 | `new-app` | app mới từ MedViet starter |
 | `studio` | trang chat và preview kiểu Lovable |
 | `setup` | kiểm tra máy, tự cài Node |
+| `export` | đóng gói source thành file .zip (không có node_modules, build, .env), như nút export của Lovable; Studio có nút **Tải code** |
 
 ## Dùng trong turbo-web
 Ở thư mục gốc turbo-web chạy `/medviet-ui-ux:init` một lần (tạo `.medviet-ui-ux/`). Sau đó:
@@ -116,9 +117,9 @@ node scripts/design-tokens.mjs && node scripts/design-preview.mjs   # cập nh�
 
 ## Cấu trúc
 ```
-.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.2.5)
+.claude-plugin/   plugin.json, marketplace.json (medviet-ui-ux 1.3.0)
 hooks/            hook của medviet-ui-ux (SessionStart, PreToolUse, PostToolUse, Stop, SubagentStop)
-skills/           10 skill ở trên
+skills/           11 skill ở trên
 manager/          engine medviet-ui-ux: medviet-ui-ux.mjs (init, find, add, scaffold, variant, check, verify, inspect, studio, new, setup…)
 template/         MedViet starter
 catalog/          components.json: 108 mục, từ điển Việt–Anh cho medviet-ui-ux find
